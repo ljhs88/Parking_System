@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xiyou3g.select.customer.register">
+
+    <application>
+        <activity android:name="com.xiyou3g.select.registers.register.Adm_RegisterActivity" />
+        <activity android:name="com.xiyou3g.select.registers.register.Adm_LoginActivity" />
+        <activity android:name=".Cus_RegisterActivity" />
+        <activity android:name=".Cus_LoginActivity" />
+    </application>
+
+</manifest>

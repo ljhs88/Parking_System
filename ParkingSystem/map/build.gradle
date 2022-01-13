@@ -1,0 +1,60 @@
+if (MapIsDebug.toBoolean()) {
+    apply plugin: 'com.android.application'   //需要单独调试的
+} else {
+    apply plugin: 'com.android.library'		 //不能单独运行，相当于一个依赖库，
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        if (MapIsDebug.toBoolean()) {
+            applicationId "com.xiyou3g.select.map"
+        }
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions{				//配置ARouter
+            annotationProcessorOptions{
+                arguments = [AROUTER_MODULE_NAME:project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        sourceSets{
+            main{
+                if(InformationIsDebug.toBoolean()){
+                    manifest.srcFile 'src/main/Debug/AndroidManifest.xml'
+                }else{
+                    manifest.srcFile 'src/main/AndroidManifest.xml'
+                }
+            }
+        }
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    api rootProject.ext.androidxLibs
+    api rootProject.ext.commonLibs
+    api rootProject.ext.annotationLibs
+    annotationProcessor rootProject.ext.annotationLibs
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
