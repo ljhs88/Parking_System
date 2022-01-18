@@ -39,7 +39,7 @@
         android:textStyle="bold"
         android:id="@+id/cus_account"
         android:hint="@string/account"
-        android:drawableStart="@color/black"
+        android:inputType="number"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -57,6 +57,7 @@
         android:inputType="textPassword"
         android:id="@+id/cus_password"
         android:hint="@string/password"
+        android:textStyle="bold"
         />
 
     <Button
@@ -69,6 +70,7 @@
         android:text="@string/login"
         android:textColor="@color/white"
         android:background="@drawable/button_background"
+        android:id="@+id/login_button"
         />
 
     <TextView
@@ -80,6 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="36dp"
+        android:textColor="@color/black"
         />
 
     <View
@@ -90,6 +93,7 @@
         app:layout_constraintTop_toTopOf="@id/phone_number_login"
         android:layout_marginStart="12dp"
         android:id="@+id/login_view1"
+        android:background="@color/black"
         />
 
     <View
@@ -100,6 +104,7 @@
         app:layout_constraintTop_toTopOf="@id/phone_number_login"
         android:layout_marginEnd="12dp"
         android:id="@+id/login_view2"
+        android:background="@color/black"
         />
 
     <TextView
@@ -110,6 +115,7 @@
         app:layout_constraintEnd_toStartOf="@id/login_view2"
         app:layout_constraintBottom_toBottomOf="@id/phone_number_login"
         android:layout_marginEnd="12dp"
+        android:textColor="@color/black"
         />
 
     <TextView
@@ -120,6 +126,7 @@
         app:layout_constraintStart_toEndOf="@id/login_view1"
         app:layout_constraintBottom_toBottomOf="@id/phone_number_login"
         android:layout_marginStart="12dp"
+        android:textColor="@color/black"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
