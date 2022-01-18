@@ -36,7 +36,6 @@ android {
 dependencies {
 
     api project(":customer")
-    api project(":administrator")
     annotationProcessor rootProject.ext.annotationLibs
 
 }

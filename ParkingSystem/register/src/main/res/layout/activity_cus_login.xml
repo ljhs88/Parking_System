@@ -6,13 +6,120 @@
     android:layout_height="match_parent"
     tools:context=".Cus_LoginActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:orientation="horizontal"
+        android:id="@+id/constraintLine1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/constraintLine1"
+        android:id="@+id/CircleImageView1_login"
+        android:src="@color/black"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/constraintLine1"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/dialog_login"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:id="@+id/cus_account"
+        android:hint="@string/account"
+        android:drawableStart="@color/black"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLine1"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/dialog_login"
+        android:paddingStart="48dp"
+        android:paddingEnd="48dp"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:id="@+id/cus_password"
+        android:hint="@string/password"
+        />
+
+    <Button
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cus_password"
+        android:layout_marginTop="24dp"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:background="@drawable/button_background"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/phone_number_login"
+        android:text="@string/phone_number_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="36dp"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="12dp"
+        app:layout_constraintStart_toEndOf="@id/phone_number_login"
+        app:layout_constraintBottom_toBottomOf="@id/phone_number_login"
+        app:layout_constraintTop_toTopOf="@id/phone_number_login"
+        android:layout_marginStart="12dp"
+        android:id="@+id/login_view1"
+        />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="12dp"
+        app:layout_constraintEnd_toStartOf="@id/phone_number_login"
+        app:layout_constraintBottom_toBottomOf="@id/phone_number_login"
+        app:layout_constraintTop_toTopOf="@id/phone_number_login"
+        android:layout_marginEnd="12dp"
+        android:id="@+id/login_view2"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forget_password"
+        android:text="@string/forget_password"
+        app:layout_constraintEnd_toStartOf="@id/login_view2"
+        app:layout_constraintBottom_toBottomOf="@id/phone_number_login"
+        android:layout_marginEnd="12dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_register"
+        android:text="@string/new_register"
+        app:layout_constraintStart_toEndOf="@id/login_view1"
+        app:layout_constraintBottom_toBottomOf="@id/phone_number_login"
+        android:layout_marginStart="12dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

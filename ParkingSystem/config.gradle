@@ -37,9 +37,14 @@ ext {
             "adapter"   : 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     ]
 
+    pictureDeps = [
+            "circleImageview" : 'de.hdodenhof:circleimageview:3.1.0'
+    ]
+
     androidxLibs = androidxDeps.values()
     commonLibs = commonDeps.values()
     annotationLibs = annotationDeps.values()
     retrofitLibs = retrofitDeps.values()
+    pictureLibs = pictureDeps.values()
 
 }

@@ -10,10 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/administrator" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/customer" />
-            <option value="$PROJECT_DIR$/customer2" />
             <option value="$PROJECT_DIR$/information" />
             <option value="$PROJECT_DIR$/map" />
             <option value="$PROJECT_DIR$/parking" />

@@ -3,7 +3,6 @@
     package="com.xiyou3g.select.stall">
 
     <application>
-        <activity android:name=".Adm_StallActivity" />
         <activity android:name=".Cus_StallActivity" />
     </application>
 
