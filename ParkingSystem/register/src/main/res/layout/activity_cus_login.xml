@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Cus_LoginActivity">
+    tools:context=".Cus_LoginActivity"
+    android:background="@color/white"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:orientation="horizontal"
@@ -40,6 +42,7 @@
         android:id="@+id/cus_account"
         android:hint="@string/account"
         android:inputType="number"
+        android:textCursorDrawable="@color/black"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -58,6 +61,7 @@
         android:id="@+id/cus_password"
         android:hint="@string/password"
         android:textStyle="bold"
+        android:textCursorDrawable="@color/black"
         />
 
     <Button

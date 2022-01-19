@@ -8,4 +8,6 @@
     <string name="new_register">新用户注册</string>
     <string name="find_password">找回密码</string>
     <string name="next">下一步</string>
+    <string name="get_code">获取验证码</string>
+    <string name="new_rigister">新用户注册</string>
 </resources>

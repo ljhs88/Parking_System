@@ -52,6 +52,7 @@ dependencies {
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
     api rootProject.ext.pictureLibs
+    implementation 'androidx.fragment:fragment:1.3.2'
     annotationProcessor rootProject.ext.annotationLibs
 
     testImplementation 'junit:junit:4.13.2'
