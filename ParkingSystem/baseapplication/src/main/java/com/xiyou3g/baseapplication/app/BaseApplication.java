@@ -1,9 +1,10 @@
-package com.xiyou3G.parkingsystem.app;
+package com.xiyou3g.baseapplication.app;
 
 import android.app.Application;
 
+import com.alibaba.android.arouter.BuildConfig;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.xiyou3G.parkingsystem.BuildConfig;
+
 
 public class BaseApplication extends Application {
 

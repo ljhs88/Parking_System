@@ -32,7 +32,7 @@ android {
         }
         sourceSets{
             main{
-                if(InformationIsDebug.toBoolean()){
+                if(StallIsDebug.toBoolean()){
                     manifest.srcFile 'src/main/Debug/AndroidManifest.xml'
                 }else{
                     manifest.srcFile 'src/main/AndroidManifest.xml'
@@ -52,6 +52,7 @@ dependencies {
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
     annotationProcessor rootProject.ext.annotationLibs
+    api project(":baseapplication")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

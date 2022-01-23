@@ -53,6 +53,7 @@ dependencies {
     api rootProject.ext.annotationLibs
     api rootProject.ext.pictureLibs
     annotationProcessor rootProject.ext.annotationLibs
+    api project(":baseapplication")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

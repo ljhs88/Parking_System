@@ -3,18 +3,14 @@
     package="com.xiyou3g.select.customer.register">
 
     <application
+        android:name="com.xiyou3g.baseapplication.app.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkingSystem">
-        <activity
-            android:name="com.xiyou3g.select.registers.register.Adm_RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.xiyou3g.select.registers.register.Adm_LoginActivity"
-            android:exported="false" />
+
         <activity
             android:name=".Cus_RegisterActivity"
             android:exported="false" />
