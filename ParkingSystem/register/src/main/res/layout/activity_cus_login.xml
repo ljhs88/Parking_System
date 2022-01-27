@@ -13,9 +13,9 @@
         android:id="@+id/constraintLine1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.35" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:layout_width="96dp"
         android:layout_height="96dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/constraintLine1"
         android:id="@+id/CircleImageView1_login"
-        android:src="@color/black"
+        android:src="@drawable/logo"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -45,23 +45,44 @@
         android:textCursorDrawable="@color/black"
         />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        app:layout_constraintStart_toStartOf="parent"
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@id/cus_account"
+        app:layout_constraintEnd_toStartOf="@id/get_code_button"
         app:layout_constraintTop_toBottomOf="@id/constraintLine1"
         android:layout_marginTop="12dp"
-        android:background="@drawable/dialog_login"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
-        android:maxLines="1"
-        android:inputType="textPassword"
         android:id="@+id/cus_password"
-        android:hint="@string/password"
-        android:textStyle="bold"
+        android:textColor="@color/black"
         android:textCursorDrawable="@color/black"
+        app:layout_constraintHorizontal_weight="6"
+        android:inputType="number"
+        tools:ignore="TextFields" />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/cus_password"
+        app:layout_constraintEnd_toEndOf="@id/cus_account"
+        app:layout_constraintTop_toTopOf="@id/cus_password"
+        app:layout_constraintBottom_toBottomOf="@id/cus_password"
+        app:layout_constraintHorizontal_weight="4"
+        android:text="@string/get_code"
+        android:padding="12dp"
+        android:background="@drawable/button_background"
+        android:id="@+id/get_code_button"
+        />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/cus_password"
+        app:layout_constraintTop_toBottomOf="@id/cus_password"
+        android:id="@+id/checkbox_login"
+        android:layout_marginTop="24dp"
+        android:theme="@style/MyCheckBox"
+        android:text="@string/read"
         />
 
     <Button
@@ -69,7 +90,7 @@
         android:layout_height="64dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cus_password"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_login"
         android:layout_marginTop="24dp"
         android:text="@string/login"
         android:textColor="@color/white"

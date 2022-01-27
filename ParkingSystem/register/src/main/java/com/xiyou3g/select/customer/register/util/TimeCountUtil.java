@@ -26,7 +26,7 @@ public class TimeCountUtil extends CountDownTimer {
     @Override
     public void onTick(long l) {
         button.setClickable(false);
-        button.setText(l/1000 + "秒后可重新发送");
+        button.setText(l/1000 + "秒后重新发送");
 
         button.setBackground(activity.getDrawable(R.drawable.get_code_button));
         Spannable spannable = new SpannableString(button.getText().toString());
