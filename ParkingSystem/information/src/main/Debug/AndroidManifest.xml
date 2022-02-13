@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkingSystem">
-
+        <activity
+            android:name=".personActivity"
+            android:exported="false" />
         <activity
             android:name=".Cus_InformationActivity"
             android:exported="true">

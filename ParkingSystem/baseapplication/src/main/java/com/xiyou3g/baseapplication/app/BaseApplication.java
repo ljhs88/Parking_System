@@ -5,8 +5,10 @@ import android.app.Application;
 import com.alibaba.android.arouter.BuildConfig;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import org.litepal.LitePalApplication;
 
-public class BaseApplication extends Application {
+
+public class BaseApplication extends LitePalApplication {
 
     @Override
     public void onCreate() {
