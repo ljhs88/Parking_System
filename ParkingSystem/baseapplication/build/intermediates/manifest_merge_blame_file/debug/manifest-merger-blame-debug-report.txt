@@ -1,0 +1,44 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.xiyou3g.baseapplication" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="21"
+6-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+7        android:targetSdkVersion="31" />
+7-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+8
+9    <application
+9-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:5:5-21:19
+10        android:allowBackup="true"
+10-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:6:9-35
+11        android:icon="@mipmap/ic_launcher"
+11-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:7:9-43
+12        android:label="@string/app_name"
+12-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:8:9-41
+13        android:roundIcon="@mipmap/ic_launcher_round"
+13-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:9:9-54
+14        android:supportsRtl="true"
+14-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:10:9-35
+15        android:theme="@style/Theme.ParkingSystem" >
+15-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:11:9-51
+16        <activity
+16-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:12:9-20:20
+17            android:name="com.xiyou3g.baseapplication.BaseActivity"
+17-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:13:13-41
+18            android:exported="true" >
+18-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:14:13-36
+19            <intent-filter>
+19-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:15:13-19:29
+20                <action android:name="android.intent.action.MAIN" />
+20-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:16:17-69
+20-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:16:25-66
+21
+22                <category android:name="android.intent.category.LAUNCHER" />
+22-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:18:17-77
+22-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:18:27-74
+23            </intent-filter>
+24        </activity>
+25    </application>
+26
+27</manifest>

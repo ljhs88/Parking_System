@@ -1,0 +1,6 @@
+com/xiyou3g/baseapplication/BaseActivity.java
+ com.xiyou3g.baseapplication.BaseActivity
+com/xiyou3g/baseapplication/app/BaseApplication.java
+ com.xiyou3g.baseapplication.app.BaseApplication
+com/xiyou3g/baseapplication/BuildConfig.java
+ com.xiyou3g.baseapplication.BuildConfig
