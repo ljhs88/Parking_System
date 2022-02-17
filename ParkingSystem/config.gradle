@@ -41,10 +41,21 @@ ext {
             "circleImageview" : 'de.hdodenhof:circleimageview:3.1.0'
     ]
 
+    AMapDeps = [
+            "3DMap"    : 'com.amap.api:3dmap:latest.integration',
+            "Location" : 'com.amap.api:location:latest.integration',
+            "Search"   : 'com.amap.api:search:latest.integration'
+    ]
+
+    EventBusDeps = [
+            "EventBus" : 'org.greenrobot:eventbus:3.3.1'
+    ]
+
     androidxLibs = androidxDeps.values()
     commonLibs = commonDeps.values()
     annotationLibs = annotationDeps.values()
     retrofitLibs = retrofitDeps.values()
     pictureLibs = pictureDeps.values()
-
+    AMapLibs = AMapDeps.values()
+    EventBusLibs = EventBusDeps.values()
 }

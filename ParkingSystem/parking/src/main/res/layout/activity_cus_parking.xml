@@ -4,15 +4,156 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Cus_ParkingActivity">
+    tools:context=".Cus_ParkingActivity"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/create_parking"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back_button"
+        />
 
     <TextView
+        android:layout_width="96dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_parking"
+        android:layout_margin="24dp"
+        android:id="@+id/parking_text1"
+        android:text=""
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="italic|bold"
+        />
+
+    <EditText
+        android:layout_width="192dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toEndOf="@id/parking_text1"
+        app:layout_constraintBottom_toBottomOf="@id/parking_text1"
+        android:id="@+id/parking_edit1"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/edit_background"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:scrollbars="horizontal"
+        />
+
+    <TextView
+        android:layout_width="96dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_text1"
+        android:layout_margin="24dp"
+        android:id="@+id/parking_text2"
+        android:text=""
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="italic|bold"
+        />
+
+    <EditText
+        android:layout_width="192dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toEndOf="@id/parking_text2"
+        app:layout_constraintBottom_toBottomOf="@id/parking_text2"
+        android:id="@+id/parking_edit2"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/edit_background"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:scrollbars="horizontal"
+        />
+
+    <TextView
+        android:layout_width="96dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_text2"
+        android:layout_margin="24dp"
+        android:id="@+id/parking_text3"
+        android:text=""
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="italic|bold"
+        />
+
+    <EditText
+        android:layout_width="192dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toEndOf="@id/parking_text3"
+        app:layout_constraintBottom_toBottomOf="@id/parking_text3"
+        android:id="@+id/parking_edit3"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/edit_background"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:scrollbars="horizontal"
+        />
+
+    <TextView
+        android:layout_width="96dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_text3"
+        android:layout_margin="24dp"
+        android:id="@+id/parking_text4"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="italic|bold"
+        />
+
+    <EditText
+        android:layout_width="192dp"
+        android:layout_height="36dp"
+        app:layout_constraintStart_toEndOf="@id/parking_text4"
+        app:layout_constraintBottom_toBottomOf="@id/parking_text4"
+        android:id="@+id/parking_edit4"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/edit_background"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:scrollbars="horizontal"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_edit4"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="24dp"
+        android:id="@+id/select_photo"
+        android:src="@drawable/select_photo"
+        android:padding="50dp"
+        />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_photo"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/commit_background"
+        android:text="@string/create"
+        android:id="@+id/commit_button"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

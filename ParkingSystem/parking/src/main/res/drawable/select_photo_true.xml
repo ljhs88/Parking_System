@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <!-- 这个标签表示纯色填充，通过android:color即可指定shape中填充的颜色 -->
+    <solid android:color="#D3D3D3" />
+
+    <!-- Shape的描边，下面指定了描边的宽度和描边的颜色 -->
+    <stroke
+        android:width="1dp"
+        android:color="#D3D3D3" />
+
+</shape>
