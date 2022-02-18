@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -33,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.UI.SetChargeUI;
 import com.xiyou3g.select.parking.UI.SetParkingUI;
+import com.xiyou3g.select.parking.UI.SetStallUI;
 import com.xiyou3g.select.parking.UI.SetUI;
 import com.xiyou3g.select.parking.bean.CreateInformation;
 import com.xiyou3g.select.parking.util.CameraUtil;
@@ -45,7 +45,7 @@ import java.io.IOException;
 public class Cus_ParkingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static int STATUS = 1;
-    private String title;
+    private String title = "创建停车位";
     private static final int CHARGING = 1;
     private static final int PARKING = 2;
     private static final int STALL = 3;
@@ -61,9 +61,8 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_cus_parking);
         //get();
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) actionBar.hide();
-
+        setSupportActionBar(findViewById(R.id.create_parking));
+        setSupportActionBar(findViewById(R.id.create_parking));
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             View decorView = getWindow().getDecorView();
             int systemUiVisibility = decorView.getSystemUiVisibility();
@@ -75,13 +74,14 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
 
     private void setUI() {
 
-        Toolbar toolbar = findViewById(R.id.create_parking);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.create_parking);
         toolbar.setNavigationOnClickListener(view -> finish());
         toolbar.setTitle(title);
 
+
         SetUI setChargeUI = new SetChargeUI(this);
         SetUI setParkingUI = new SetParkingUI(this);
-        SetUI setStallUI = new SetParkingUI(this);
+        SetUI setStallUI = new SetStallUI(this);
         if ("创建充电桩".equals(title)) {
             STATUS = CHARGING;
             set(setChargeUI);
@@ -184,6 +184,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         switch (requestCode) {
             case TAKE_PHOTO:
                 try {
+                    picture.setPadding(0, 0, 0, 0);
                     Glide.with(this).load(CameraUtil.getBitmapFormUri(this, CameraUtil.getOutputMediaFileUri(this))).into(picture);
                 } catch (IOException e) {
                     e.printStackTrace();

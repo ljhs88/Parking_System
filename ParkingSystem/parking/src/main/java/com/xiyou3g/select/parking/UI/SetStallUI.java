@@ -22,6 +22,8 @@ public class SetStallUI extends SetUI {
         TextView textView2 = activity.findViewById(R.id.parking_text2);
         TextView textView3 = activity.findViewById(R.id.parking_text3);
         TextView textView4 = activity.findViewById(R.id.parking_text4);
+        View view = activity.findViewById(R.id.parking_view4);
+        view.setVisibility(View.GONE);
         textView1.setText("姓名");
         textView2.setText("车位价格(元/小时)");
         textView3.setText("简介");
@@ -38,6 +40,7 @@ public class SetStallUI extends SetUI {
         editText2.setHint("价格");
         editText2.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText3.setHint("简介");
+        editText3.setMaxLines(3);
         editText4.setVisibility(View.GONE);
 
     }

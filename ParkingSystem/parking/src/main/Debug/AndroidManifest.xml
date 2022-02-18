@@ -20,12 +20,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ParkingSystem"
-        android:requestLegacyExternalStorage="true"
-        >
-
+        android:theme="@style/Theme.ParkingSystem">
+        <activity
+            android:name=".ShowInformationActivity"
+            android:exported="false" />
         <activity
             android:name=".Cus_ParkingActivity"
             android:exported="true">
@@ -41,14 +42,13 @@
             android:value="8b3f86bb7f0a09c36d1d1a0edf8e87ba" />
 
         <provider
-            android:authorities="com.xiyou3g.select.parking.provider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="com.xiyou3g.select.parking.provider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-
         </provider>
     </application>
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Cus_ParkingActivity"
     android:fitsSystemWindows="true"
-    android:background="@color/white"
+    android:background="#F8F8F8"
     >
 
     <androidx.appcompat.widget.Toolbar
@@ -16,72 +16,105 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back_button"
+        android:gravity="center"
+        android:background="@color/white"
         />
 
     <TextView
-        android:layout_width="96dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_information"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/parking_text1"
+        android:layout_marginStart="20dp"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/create_parking"
-        android:layout_margin="24dp"
+        android:layout_marginTop="24dp"
         android:id="@+id/parking_text1"
+        app:layout_constraintWidth_percent="0.3"
         android:text=""
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="italic|bold"
+        android:background="@color/white"
+
         />
 
     <EditText
-        android:layout_width="192dp"
-        android:layout_height="36dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         app:layout_constraintStart_toEndOf="@id/parking_text1"
         app:layout_constraintBottom_toBottomOf="@id/parking_text1"
         android:id="@+id/parking_edit1"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/edit_background"
-        android:maxLines="1"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:background="@color/white"        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:scrollbars="horizontal"
+        app:layout_constraintWidth_percent="0.7"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_text1"
+        android:background="#D1D1D1"
+        android:id="@+id/parking_view1"
         />
 
     <TextView
-        android:layout_width="96dp"
-        android:layout_height="36dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintWidth_percent="0.3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/parking_text1"
-        android:layout_margin="24dp"
+        app:layout_constraintTop_toBottomOf="@id/parking_view1"
         android:id="@+id/parking_text2"
         android:text=""
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="italic|bold"
+        android:background="@color/white"
         />
 
     <EditText
-        android:layout_width="192dp"
-        android:layout_height="36dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintWidth_percent="0.7"
         app:layout_constraintStart_toEndOf="@id/parking_text2"
         app:layout_constraintBottom_toBottomOf="@id/parking_text2"
         android:id="@+id/parking_edit2"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/edit_background"
-        android:maxLines="1"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:background="@color/white"        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:scrollbars="horizontal"
         />
 
-    <TextView
-        android:layout_width="96dp"
-        android:layout_height="36dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parking_text2"
-        android:layout_margin="24dp"
+        android:background="#D1D1D1"
+        android:id="@+id/parking_view2"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_view2"
         android:id="@+id/parking_text3"
         android:text=""
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="@color/black"
@@ -89,58 +122,77 @@
         />
 
     <EditText
-        android:layout_width="192dp"
-        android:layout_height="36dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintWidth_percent="0.7"
         app:layout_constraintStart_toEndOf="@id/parking_text3"
         app:layout_constraintBottom_toBottomOf="@id/parking_text3"
         android:id="@+id/parking_edit3"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/edit_background"
-        android:maxLines="1"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:background="@color/white"        android:maxLines="1"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:scrollbars="horizontal"
         />
 
-    <TextView
-        android:layout_width="96dp"
-        android:layout_height="36dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parking_text3"
-        android:layout_margin="24dp"
+        android:background="#D1D1D1"
+        android:id="@+id/parking_view3"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_view3"
         android:id="@+id/parking_text4"
         android:gravity="center"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="italic|bold"
+        android:background="@color/white"
         />
 
     <EditText
-        android:layout_width="192dp"
-        android:layout_height="36dp"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintWidth_percent="0.7"
         app:layout_constraintStart_toEndOf="@id/parking_text4"
         app:layout_constraintBottom_toBottomOf="@id/parking_text4"
         android:id="@+id/parking_edit4"
-        android:layout_marginStart="24dp"
-        android:background="@drawable/edit_background"
+        android:background="@color/white"
         android:maxLines="1"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:scrollbars="horizontal"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/parking_text4"
+        android:background="#D1D1D1"
+        android:id="@+id/parking_view4"
         />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parking_edit4"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="36dp"
         android:layout_marginTop="24dp"
         android:id="@+id/select_photo"
         android:src="@drawable/select_photo"
         android:padding="50dp"
+        android:background="@color/white"
         />
 
     <Button

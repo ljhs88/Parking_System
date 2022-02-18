@@ -17,6 +17,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.bean.CreateInformation;
 
@@ -33,6 +34,10 @@ public class ParkingFragment extends Fragment implements AMap.OnMapClickListener
     private AMap aMap;
     private LatLng thisLatLng;
     private BottomSheetDialog bottomSheetDialog;
+    private static int STATUS = 0;
+    private static final int CHARGE = 1;
+    private static final int PARKING = 2;
+    private static final int STALL = 3;
 
     @Nullable
     @Override
@@ -111,12 +116,15 @@ public class ParkingFragment extends Fragment implements AMap.OnMapClickListener
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.create_charge_button) {
+            STATUS = CHARGE;
             start("创建充电桩");
             bottomSheetDialog.cancel();
         } else if (view.getId() == R.id.create_parking_button) {
+            STATUS = PARKING;
             start("创建停车场");
             bottomSheetDialog.cancel();
         } else if (view.getId() == R.id.create_stall_button) {
+            STATUS = STALL;
             start("创建停车位");
             bottomSheetDialog.cancel();
         } else if (view.getId() == R.id.cancel_button) {
@@ -132,7 +140,8 @@ public class ParkingFragment extends Fragment implements AMap.OnMapClickListener
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void receiveInformation(CreateInformation createInformation) {
-
+        aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).snippet(createInformation.getBriefIntroduction()));
+        
     }
 
 

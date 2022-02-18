@@ -20,9 +20,11 @@ public class SetChargeUI extends SetUI {
         TextView textView1 = activity.findViewById(R.id.parking_text1);
         TextView textView2 = activity.findViewById(R.id.parking_text2);
         TextView textView3 = activity.findViewById(R.id.parking_text3);
+        TextView textView4 = activity.findViewById(R.id.parking_text4);
         textView1.setText("姓名");
         textView2.setText("充电桩数量(个)");
         textView3.setText("充电桩价格(元/时)");
+        textView4.setText("简介");
     }
 
     @Override
@@ -37,5 +39,6 @@ public class SetChargeUI extends SetUI {
         editText3.setHint("价格");
         editText2.setInputType(InputType.TYPE_CLASS_NUMBER);
         editText4.setHint("简介");
+        editText4.setMaxLines(3);
     }
 }
