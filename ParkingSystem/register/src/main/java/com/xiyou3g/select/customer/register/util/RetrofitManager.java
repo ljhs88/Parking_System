@@ -1,38 +1,40 @@
 package com.xiyou3g.select.customer.register.util;
 
-import com.xiyou3g.select.customer.register.Api.Api;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitManager {
 
-    private final Retrofit retrofit;
+    private static Retrofit retrofit;
+    private static String baseUrl;
+    private static RetrofitManager retrofitManager;
 
-    public RetrofitManager(String baseUrl) {
+    private RetrofitManager(String baseUrl) {
+        RetrofitManager.baseUrl = baseUrl;
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    private Retrofit getRetrofit() {
+    public static RetrofitManager createRetrofitManager(String baseUrl) {
+        if (retrofitManager == null) {
+            retrofitManager = new RetrofitManager(baseUrl);
+        }
+        return retrofitManager;
+    }
+
+    public void changeBaseUrl(String baseUrl) {
+        if (baseUrl.equals(RetrofitManager.baseUrl)) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        RetrofitManager.baseUrl = baseUrl;
+    }
+
+    public Retrofit getRetrofit() {
         return retrofit;
     }
-
-    public Api getApi() {
-        return getRetrofit().create(Api.class);
-    }
-
-    public Call<ResponseBody> returnGet(String account, String password) {
-        return getApi().get(account, password);
-    }
-
-    public Call<ResponseBody> returnPost(String account, String password) {
-        return getApi().post(account, password);
-    }
-
-
 }
