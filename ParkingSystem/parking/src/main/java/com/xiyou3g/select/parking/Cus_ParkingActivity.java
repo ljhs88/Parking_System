@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +37,7 @@ import com.xiyou3g.select.parking.UI.SetStallUI;
 import com.xiyou3g.select.parking.UI.SetUI;
 import com.xiyou3g.select.parking.bean.CreateInformation;
 import com.xiyou3g.select.parking.util.CameraUtil;
+import com.xiyou3g.select.parking.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,7 +48,7 @@ import java.io.IOException;
 public class Cus_ParkingActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static int STATUS = 1;
-    private String title = "创建停车位";
+    private String title = "创建充电桩";
     private static final int CHARGING = 1;
     private static final int PARKING = 2;
     private static final int STALL = 3;
@@ -174,7 +174,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
             if (checkCreateInformation(createInformation)) {
                 EventBus.getDefault().postSticky(createInformation);
             } else {
-                Toast.makeText(Cus_ParkingActivity.this, "请填写正确的信息", Toast.LENGTH_SHORT).show();
+                ToastUtil.getToast(Cus_ParkingActivity.this, "请填写正确的信息");
             }
         }
     }
@@ -186,7 +186,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openAlbum();
             } else {
-                Toast.makeText(this, "没有获取你的权限", Toast.LENGTH_SHORT).show();
+                ToastUtil.getToast(this, "没有获取你的权限");
             }
         }
     }
@@ -252,7 +252,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             picture.setImageBitmap(bitmap);
         } else {
-            Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(this, "无法获取图像");
         }
     }
 
@@ -300,7 +300,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
                 brief = editPrice.getText().toString();
             }
         } catch (NumberFormatException e) {
-            Toast.makeText(Cus_ParkingActivity.this, "请填写正确的信息", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(Cus_ParkingActivity.this, "请填写正确的信息");
         }
         return new CreateInformation(name, number, price, brief, selectPhoto);
     }

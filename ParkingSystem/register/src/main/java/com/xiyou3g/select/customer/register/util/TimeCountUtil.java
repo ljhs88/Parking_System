@@ -39,6 +39,6 @@ public class TimeCountUtil extends CountDownTimer {
     public void onFinish() {
         button.setText("重新获取验证码");
         button.setClickable(true);
-        button.setBackground(activity.getResources().getDrawable(R.drawable.get_code_button));
+        button.setBackground(activity.getResources().getDrawable(R.drawable.button_background));
     }
 }

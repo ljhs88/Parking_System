@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Parking</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -11,4 +11,7 @@
     <string name="takePhoto">拍照</string>
     <string name="select_photo">选择照片</string>
     <string name="text_information">请填写信息</string>
+    <string name="navigation_text">导航</string>
+    <string name="reserve">预定</string>
+
 </resources>

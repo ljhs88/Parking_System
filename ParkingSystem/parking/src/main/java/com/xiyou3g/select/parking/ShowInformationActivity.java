@@ -2,6 +2,7 @@ package com.xiyou3g.select.parking;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,7 +18,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class ShowInformationActivity extends AppCompatActivity {
 
-    private static int STATUS = 0;
+    private static int STATUS = 1;
     private static final int CHARGE = 1;
     private static final int PARKING = 2;
     private static final int STALL = 3;
@@ -28,8 +29,14 @@ public class ShowInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_information);
         EventBus.getDefault().register(this);
-        getStatus();
-        show();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            View decorView = getWindow().getDecorView();
+            int systemUiVisibility = decorView.getSystemUiVisibility();
+            decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
+        //getStatus();
+        //show();
     }
 
     private void show() {

@@ -20,11 +20,15 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xiyou3g.select.customer.register.Api.IdentifyingCodeService;
 import com.xiyou3g.select.customer.register.Api.LoginService;
 import com.xiyou3g.select.customer.register.bean.IdentifyingCodeResponse;
+import com.xiyou3g.select.customer.register.bean.LoginData;
 import com.xiyou3g.select.customer.register.bean.LoginResponse;
 import com.xiyou3g.select.customer.register.util.NumberMatch;
 import com.xiyou3g.select.customer.register.util.RetrofitManager;
 import com.xiyou3g.select.customer.register.util.TimeCountUtil;
+import com.xiyou3g.select.customer.register.util.ToastUtil;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,13 +70,13 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                     mobile = accountEditText.getText().toString();
                     smsCode = passwordEditText.getText().toString();
                     if (passwordMatch(mobile, smsCode)) {
-                        Toast.makeText(Cus_LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+                        ToastUtil.getToast(Cus_LoginActivity.this, "登录成功");
                     }
                 } else {
-                    Toast.makeText(this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
+                    ToastUtil.getToast(this, "请填写正确的手机号");
                 }
             } else {
-                Toast.makeText(this, "请勾选协议", Toast.LENGTH_SHORT).show();
+                    ToastUtil.getToast(this, "请勾选协议");
             }
 
         } /*else if (id == R.id.new_register) {
@@ -89,22 +93,31 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
 
 
         LoginService loginService = retrofitManager.getRetrofit().create(LoginService.class);
-        loginService.login(mobile, smsCode).enqueue(new Callback<LoginResponse>() {
+        LoginData loginData = new LoginData(mobile, smsCode);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), loginData.toString());
+
+        loginService.login(requestBody).enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 LoginResponse loginResponse = response.body();
+                assert loginResponse != null;
+                loginSuccess = loginResponse.getSuccess();
+                getSharedPreferences("data", MODE_PRIVATE)
+                        .edit().putString("userId", loginResponse.getData().getId()).apply();
+                getSharedPreferences("data", MODE_PRIVATE)
+                        .edit().putString("userToken", loginResponse.getData().getUserToken()).apply();
 
-                //loginSuccess = loginResponse.getSuccess();
                 Log.d("TAG", "onResponse: " + loginResponse);
             }
 
             @Override
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 loginSuccess = false;
+                //Log.e("TAG", "LoginOnFailure: ");
                 runOnUiThread(() -> {
-                    Toast.makeText(Cus_LoginActivity.this, "请检查您的网络情况", Toast.LENGTH_SHORT).show();
+                    ToastUtil.getToast(Cus_LoginActivity.this, "连接服务器失败");
                 });
-                Log.d("TAG", "LoginOnFailure: ");
+
             }
         });
 
@@ -129,7 +142,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                         assert identifyingCodeResponse != null;
                         success = identifyingCodeResponse.getSuccess();
 
-                        Log.d("TAG", "onResponse: " + identifyingCodeResponse);
+                        //Log.d("TAG", "onResponse: " + identifyingCodeResponse);
                         if (!success) {
                             String msg = identifyingCodeResponse.getMsg();
                             runOnUiThread(()->{
@@ -140,14 +153,12 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
 
                     @Override
                     public void onFailure(@NonNull Call<IdentifyingCodeResponse> call, @NonNull Throwable t) {
-                        Log.d("TAG", "smsOnFailure: " + t);
-                        runOnUiThread(() ->{
-                            Toast.makeText(Cus_LoginActivity.this, "请检查您的网络情况", Toast.LENGTH_SHORT).show();
-                        });
+                        //Log.e("TAG", "smsOnFailure: " + t);
+                        runOnUiThread(() -> ToastUtil.getToast(Cus_LoginActivity.this, "连接服务器失败"));
                     }
                 });
             } else {
-                Toast.makeText(Cus_LoginActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
+                ToastUtil.getToast(Cus_LoginActivity.this, "请填写正确的手机号");
             }
         });
 
