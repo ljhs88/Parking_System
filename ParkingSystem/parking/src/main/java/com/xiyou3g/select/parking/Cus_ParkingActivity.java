@@ -11,8 +11,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +41,7 @@ import com.xiyou3g.select.parking.util.CameraUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.io.IOException;
 
 @Route(path = "/parking/Cus_ParkingActivity")
@@ -74,7 +77,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
 
     private void setUI() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.create_parking);
+        Toolbar toolbar = findViewById(R.id.create_parking);
         toolbar.setNavigationOnClickListener(view -> finish());
         toolbar.setTitle(title);
 
@@ -96,6 +99,17 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         commit_button.setOnClickListener(this);
 
         setImage();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+        File mediaFile = new File(mediaStorageDir.getPath()
+                + File.separator
+                + "Pictures/temp.jpg");
+        mediaFile.deleteOnExit();
+        Log.d("TAG", "onDestroy: ");
     }
 
     public void setImage() {
@@ -184,8 +198,14 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         switch (requestCode) {
             case TAKE_PHOTO:
                 try {
-                    picture.setPadding(0, 0, 0, 0);
-                    Glide.with(this).load(CameraUtil.getBitmapFormUri(this, CameraUtil.getOutputMediaFileUri(this))).into(picture);
+                    File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+                    File mediaFile = new File(mediaStorageDir.getPath()
+                            + File.separator
+                            + "Pictures/temp.jpg");
+                    if (mediaFile.exists()) {
+                        picture.setPadding(0, 0, 0, 0);
+                        Glide.with(this).load(CameraUtil.getBitmapFormUri(this, CameraUtil.getOutputMediaFileUri(this))).into(picture);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

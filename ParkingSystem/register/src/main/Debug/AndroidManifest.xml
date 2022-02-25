@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiyou3g.select.customer.register">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name="com.xiyou3g.baseapplication.app.BaseApplication"
@@ -9,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ParkingSystem">
+        android:theme="@style/Theme.ParkingSystem"
+        android:networkSecurityConfig="@xml/network_security_config">
 
         <activity
             android:name=".Cus_RegisterActivity"

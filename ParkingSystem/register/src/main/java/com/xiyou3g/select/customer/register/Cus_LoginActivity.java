@@ -1,23 +1,33 @@
 package com.xiyou3g.select.customer.register;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.xiyou3g.select.customer.register.Api.IdentifyingCodeService;
+import com.xiyou3g.select.customer.register.Api.LoginService;
+import com.xiyou3g.select.customer.register.bean.IdentifyingCodeResponse;
+import com.xiyou3g.select.customer.register.bean.LoginResponse;
 import com.xiyou3g.select.customer.register.util.NumberMatch;
+import com.xiyou3g.select.customer.register.util.RetrofitManager;
 import com.xiyou3g.select.customer.register.util.TimeCountUtil;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @SuppressLint("NonConstantResourceId")
 @Route(path = "/customer/Cus_LoginActivity")
@@ -25,6 +35,10 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
 
     private EditText accountEditText;
     private EditText passwordEditText;
+    private boolean success;
+    private RetrofitManager retrofitManager;
+    private boolean loginSuccess;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +57,16 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
+        String mobile;
+        String smsCode;
         int id = view.getId();
         if (id == R.id.login_button) {
             if (isCheckBox()) {
                 if (accountMatch(accountEditText.getText().toString())) {
-                    if (passwordMatch()) {
-
+                    mobile = accountEditText.getText().toString();
+                    smsCode = passwordEditText.getText().toString();
+                    if (passwordMatch(mobile, smsCode)) {
+                        Toast.makeText(Cus_LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
@@ -66,21 +84,70 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
         }*/
     }
 
-    private boolean passwordMatch() {
-        return true;
+
+    private boolean passwordMatch(String mobile, String smsCode) {
+
+
+        LoginService loginService = retrofitManager.getRetrofit().create(LoginService.class);
+        loginService.login(mobile, smsCode).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
+                LoginResponse loginResponse = response.body();
+
+                //loginSuccess = loginResponse.getSuccess();
+                Log.d("TAG", "onResponse: " + loginResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+                loginSuccess = false;
+                runOnUiThread(() -> {
+                    Toast.makeText(Cus_LoginActivity.this, "请检查您的网络情况", Toast.LENGTH_SHORT).show();
+                });
+                Log.d("TAG", "LoginOnFailure: ");
+            }
+        });
+
+        return loginSuccess;
+
     }
 
     private void getCodeButton() {
         Button get_code_button = findViewById(R.id.get_code_button);
-        get_code_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (accountMatch(accountEditText.getText().toString())) {
-                    TimeCountUtil timeCountUtil = new TimeCountUtil(60000L, 1000L, Cus_LoginActivity.this, get_code_button);
-                    timeCountUtil.start();
-                } else {
-                    Toast.makeText(Cus_LoginActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
-                }
+        get_code_button.setOnClickListener(view -> {
+            String mobile = accountEditText.getText().toString();
+            if (accountMatch(mobile)) {
+                TimeCountUtil timeCountUtil = new TimeCountUtil(60000L, 1000L, Cus_LoginActivity.this, get_code_button);
+                retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
+                IdentifyingCodeService identifyingCodeService = retrofitManager.getRetrofit().create(IdentifyingCodeService.class);
+
+                identifyingCodeService.getIdentifyingCode(mobile).enqueue(new Callback<IdentifyingCodeResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<IdentifyingCodeResponse> call, @NonNull Response<IdentifyingCodeResponse> response) {
+                        timeCountUtil.start();
+                        IdentifyingCodeResponse identifyingCodeResponse = response.body();
+                        assert identifyingCodeResponse != null;
+                        success = identifyingCodeResponse.getSuccess();
+
+                        Log.d("TAG", "onResponse: " + identifyingCodeResponse);
+                        if (!success) {
+                            String msg = identifyingCodeResponse.getMsg();
+                            runOnUiThread(()->{
+                                Toast.makeText(Cus_LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<IdentifyingCodeResponse> call, @NonNull Throwable t) {
+                        Log.d("TAG", "smsOnFailure: " + t);
+                        runOnUiThread(() ->{
+                            Toast.makeText(Cus_LoginActivity.this, "请检查您的网络情况", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                });
+            } else {
+                Toast.makeText(Cus_LoginActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
             }
         });
 

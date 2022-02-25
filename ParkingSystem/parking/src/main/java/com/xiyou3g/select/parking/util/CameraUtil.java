@@ -17,8 +17,10 @@ import java.io.InputStream;
 
 public class CameraUtil {
 
+    private static File mediaFile = null;
+
     public static Uri getOutputMediaFileUri(Context context) {
-        File mediaFile = null;
+
         String cameraPath;
         try {
             File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
@@ -37,11 +39,10 @@ public class CameraUtil {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {// sdk >= 24  android7.0以上
-            assert mediaFile != null;
-            Uri contentUri = FileProvider.getUriForFile(context,
+            
+            return FileProvider.getUriForFile(context,
                     context.getApplicationContext().getPackageName() + ".provider",//与清单文件中android:authorities的值保持一致
-                    mediaFile);//FileProvider方式或者ContentProvider。也可使用VmPolicy方式
-            return contentUri;
+                    mediaFile);
 
         } else {
             return Uri.fromFile(mediaFile);//或者 Uri.isPaise("file://"+file.toString()
@@ -101,8 +102,10 @@ public class CameraUtil {
                 break;
         }
         ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
-        return bitmap;
+        return BitmapFactory.decodeStream(isBm, null, null);
     }
 
+    public static File getMediaFile() {
+        return mediaFile;
+    }
 }
