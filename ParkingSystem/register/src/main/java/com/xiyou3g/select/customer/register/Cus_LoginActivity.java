@@ -76,7 +76,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                     ToastUtil.getToast(this, "请填写正确的手机号");
                 }
             } else {
-                    ToastUtil.getToast(this, "请勾选协议");
+                ToastUtil.getToast(this, "请勾选协议");
             }
 
         } /*else if (id == R.id.new_register) {

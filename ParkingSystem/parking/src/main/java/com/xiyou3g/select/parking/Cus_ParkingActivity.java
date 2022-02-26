@@ -233,8 +233,8 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
-            } else if("com.android.providers.media.downloads.documents".equals(uri.getAuthority())) {
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.media.downloads.documents".equals(uri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse
                         ("content://downloads/public_downloads"), Long.parseLong(docId));
                 imagePath = getImagePath(contentUri, null);
@@ -276,7 +276,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         displayImage(imagePath);
     }
 
-    private CreateInformation saveInformation () {
+    private CreateInformation saveInformation() {
         EditText editName = findViewById(R.id.parking_edit1);
         EditText editNumber = findViewById(R.id.parking_edit2);
         EditText editPrice = findViewById(R.id.parking_edit3);
@@ -305,15 +305,15 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         return new CreateInformation(name, number, price, brief, selectPhoto);
     }
 
-    private boolean checkCreateInformation (CreateInformation createInformation) {
+    private boolean checkCreateInformation(CreateInformation createInformation) {
         if (STATUS != STALL) {
-            return  !createInformation.getName().equals("") &&
+            return !createInformation.getName().equals("") &&
                     createInformation.getNumber() != -1 &&
                     createInformation.getPrice() != -1 &&
                     !createInformation.getBriefIntroduction().equals("") &&
                     picture.getPaddingStart() != 0;
         } else {
-            return  !createInformation.getName().equals("") &&
+            return !createInformation.getName().equals("") &&
                     createInformation.getPrice() != -1 &&
                     createInformation.getBriefIntroduction().equals("") &&
                     picture.getPaddingStart() != 0;

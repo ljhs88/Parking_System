@@ -128,7 +128,8 @@
         app:layout_constraintStart_toEndOf="@id/parking_text3"
         app:layout_constraintBottom_toBottomOf="@id/parking_text3"
         android:id="@+id/parking_edit3"
-        android:background="@color/white"        android:maxLines="1"
+        android:background="@color/white"
+        android:maxLines="1"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:scrollbars="horizontal"
@@ -206,6 +207,5 @@
         android:text="@string/create"
         android:id="@+id/commit_button"
         />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

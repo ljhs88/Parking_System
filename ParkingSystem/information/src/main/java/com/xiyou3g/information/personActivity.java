@@ -1,67 +1,57 @@
 package com.xiyou3g.information;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.xiyou3g.information.retrofit.Api;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+@Route(path = "/information/personalActivity")
+public class personActivity extends AppCompatActivity{
 
-import okhttp3.FormBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import com.xiyou3g.information.retrofit.Api;
-
-@Route(path = "/information/Cus_InformationActivity")
-public class Cus_InformationActivity extends AppCompatActivity {
+    private Fragment fragment;
 
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cus_information);
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_personal);
 
         //设置状态栏透明
         makeStatusBarTransparent(this);
         //状态栏文字自适应
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-        TextView s = new TextView(this);
-        s.onSaveInstanceState();
+        Intent intent = getIntent();
+        String content = intent.getStringExtra( "select fragment" );
+        switch (content) {
+            case "personal":
+                replaceFragment(new personal_information());
+                break;
+            case "history":
+                replaceFragment(new personal_history());
+                break;
+        }
     }
 
-    /**
-     * 退出后在后台运行
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();//获取FragmentManager
+        FragmentTransaction transaction = manager.beginTransaction();//调用beginTransaction()开启一个事务
+        transaction.replace(R.id.fragment, fragment);//使用replace()方法向容器中添加碎片
+        //transaction.addToBackStack(null);//将碎片放入返回栈中
+        transaction.commit();//提交事务
     }
 
     /**

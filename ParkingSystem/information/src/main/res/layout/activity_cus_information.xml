@@ -6,14 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".Cus_InformationActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cus_information"
-        android:id="@+id/text1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <fragment
+        android:id="@+id/information_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.xiyou3g.information.informationFragment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
