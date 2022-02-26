@@ -34,7 +34,6 @@ android {
 }
 
 dependencies {
-
     implementation 'org.litepal.guolindev:core:3.2.3'
     api rootProject.ext.androidxLibs
     api rootProject.ext.commonLibs
