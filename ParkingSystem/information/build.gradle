@@ -53,6 +53,7 @@ dependencies {
     api rootProject.ext.androidxLibs
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
+    api rootProject.ext.retrofitLibs
     annotationProcessor rootProject.ext.annotationLibs
     api project(":baseapplication")
 

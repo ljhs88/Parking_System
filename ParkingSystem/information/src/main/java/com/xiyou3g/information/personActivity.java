@@ -1,10 +1,12 @@
 package com.xiyou3g.information;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +23,7 @@ public class personActivity extends AppCompatActivity{
 
     private Fragment fragment;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -31,13 +34,15 @@ public class personActivity extends AppCompatActivity{
         //状态栏文字自适应
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-
         Intent intent = getIntent();
         String content = intent.getStringExtra( "select fragment" );
         switch (content) {
             case "personal":
                 replaceFragment(new personal_information());
-            break;
+                break;
+            case "history":
+                replaceFragment(new personal_history());
+                break;
         }
     }
 

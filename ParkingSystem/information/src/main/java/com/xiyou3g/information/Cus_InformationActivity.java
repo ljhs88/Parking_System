@@ -2,11 +2,14 @@ package com.xiyou3g.information;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,13 +18,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.xiyou3g.information.retrofit.Api;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import com.xiyou3g.information.retrofit.Api;
 
 @Route(path = "/information/Cus_InformationActivity")
-public class Cus_InformationActivity extends AppCompatActivity implements View.OnClickListener {
+public class Cus_InformationActivity extends AppCompatActivity {
 
-    private Button personal_button;
-    private ImageView image_head;
-
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,28 +50,18 @@ public class Cus_InformationActivity extends AppCompatActivity implements View.O
 
         TextView s = new TextView(this);
         s.onSaveInstanceState();
-        // 获取控件实例
-        getId();
-        // 设置点击事件
-        setButtonListen();
     }
 
-    private void setButtonListen() {
-        personal_button.setOnClickListener(this);
-    }
-
-    public void getId() {
-        personal_button = findViewById ( R.id.personal_button );
-        image_head = findViewById(R.id.head);
-    }
-
+    /**
+     * 退出后在后台运行
+     */
     @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.personal_button) {
-            Intent intent = new Intent(this, personActivity.class);
-            intent.putExtra("select fragment", "personal");
-            startActivity(intent);
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
         }
+        return super.onKeyDown(keyCode, event);
     }
 
     /**

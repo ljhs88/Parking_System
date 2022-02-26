@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import org.litepal.LitePalApplication;
 
 
-public class BaseApplication extends LitePalApplication {
+public class BaseApplication extends Application {
 
     @Override
     public void onCreate() {

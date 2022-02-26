@@ -1,16 +1,40 @@
 package com.xiyou3g.information.bean;
 
+import android.graphics.Bitmap;
+
 import org.litepal.crud.LitePalSupport;
 
 public class personal_inf extends LitePalSupport {
 
     private int id;
+    private String name;
     private String male;
     private String phone_member;
-    private String car_member;
-    private String car_age;
+    private String birthday;
     private String location;
     private String person_sign;
+    private String head_bitmap;
+
+    @Override
+    public String toString() {
+        return "personal_inf{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", male='" + male + '\'' +
+                ", phone_member='" + phone_member + '\'' +
+                ", location='" + location + '\'' +
+                ", person_sign='" + person_sign + '\'' +
+                ", head_bitmap='" + head_bitmap + '\'' +
+                '}';
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 
     public int getId() {
         return id;
@@ -18,6 +42,14 @@ public class personal_inf extends LitePalSupport {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMale() {
@@ -36,22 +68,6 @@ public class personal_inf extends LitePalSupport {
         this.phone_member = phone_member;
     }
 
-    public String getCar_member() {
-        return car_member;
-    }
-
-    public void setCar_member(String car_member) {
-        this.car_member = car_member;
-    }
-
-    public String getCar_age() {
-        return car_age;
-    }
-
-    public void setCar_age(String car_age) {
-        this.car_age = car_age;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -68,16 +84,11 @@ public class personal_inf extends LitePalSupport {
         this.person_sign = person_sign;
     }
 
-    @Override
-    public String toString() {
-        return "personal_inf{" +
-                "id=" + id +
-                ", male='" + male + '\'' +
-                ", phone_member='" + phone_member + '\'' +
-                ", car_member='" + car_member + '\'' +
-                ", car_age='" + car_age + '\'' +
-                ", location='" + location + '\'' +
-                ", person_sign='" + person_sign + '\'' +
-                '}';
+    public String getHead_bitmap() {
+        return head_bitmap;
+    }
+
+    public void setHead_bitmap(String head_bitmap) {
+        this.head_bitmap = head_bitmap;
     }
 }
