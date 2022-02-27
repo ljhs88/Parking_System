@@ -9,11 +9,38 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import com.alibaba.android.arouter.facade.annotation.Autowired;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.AmapPageType;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Route(path = "/map/MapActivity")
 public class MapActivity extends AppCompatActivity {
+    // 定位纬度
+    private double mLatitude;
+    // 定位经度
+    private double mLongitude;
+    // 目的地纬度
+    @Autowired(name = "latitude")
+    double latitude;
+    // 目的地经度
+    @Autowired(name = "longitude")
+    double longitude;
+    // 停车场名
+    @Autowired(name = "destination")
+    String destination;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +52,36 @@ public class MapActivity extends AppCompatActivity {
         //状态栏文字自适应
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         // 设置碎片
-        replaceFragment(new mapFragment());
-
+        //replaceFragment(new mapFragment());
+        ARouter.getInstance().inject(this);
+        Log.d("123", "saas"+String.valueOf(latitude + longitude));
+        // 直接导航
+        GoToNavigation();
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void GoToNavigation() {
+        // 开始导航
+        //起点 定位点
+        Log.d("123", "起点：" + mLatitude + "," + mLongitude);
+        Log.d("123", "终点：" + latitude + "," + longitude);
+        Poi start = new Poi("我的位置", new LatLng(mLatitude,mLongitude), null);
+        //途经点
+        List<Poi> poiList = new ArrayList();
+        //poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
+        //终点
+        Poi end = new Poi(destination, new LatLng(latitude,longitude), null);
+        // 组件参数配置
+        AmapNaviParams params = new AmapNaviParams(start, poiList, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
+        // 启动组件
+        AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), params, null);
+    }
+
+    /*private void replaceFragment(Fragment fragment) {
         FragmentManager manager = getSupportFragmentManager();//获取FragmentManager
         FragmentTransaction transaction = manager.beginTransaction();//调用beginTransaction()开启一个事务
         transaction.replace(R.id.fragment, fragment);//使用replace()方法向容器中添加碎片
         transaction.commit();//提交事务
-    }
+    }*/
 
     public static void makeStatusBarTransparent(Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
