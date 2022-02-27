@@ -69,10 +69,8 @@ public class personal_history extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.back:
-                getActivity().onBackPressed();
-                break;
+        if (v.getId() == R.id.back) {
+            getActivity().onBackPressed();
         }
     }
 
