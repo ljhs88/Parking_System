@@ -134,23 +134,20 @@ public class informationFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.personal_button:
-                Intent intent = new Intent(getContext(), personActivity.class);
-                intent.putExtra("select fragment", "personal");
-                startActivity(intent);
-                break;
-            case R.id.history:
-                Intent intent1 = new Intent(getContext(), personActivity.class);
-                intent1.putExtra("select fragment", "history");
-                startActivity(intent1);
-                break;
-            case R.id.back:
-                Intent intent2 = new Intent(Intent.ACTION_PICK,null);
-                intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-                //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
-                startActivityForResult(intent2 ,2);
-                break;
+        int id = v.getId();
+        if (id == R.id.personal_button) {
+            Intent intent = new Intent(getContext(), personActivity.class);
+            intent.putExtra("select fragment", "personal");
+            startActivity(intent);
+        } else if (id == R.id.history) {
+            Intent intent1 = new Intent(getContext(), personActivity.class);
+            intent1.putExtra("select fragment", "history");
+            startActivity(intent1);
+        } else if (id == R.id.back) {
+            Intent intent2 = new Intent(Intent.ACTION_PICK, null);
+            intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
+            startActivityForResult(intent2, 2);
         }
     }
 

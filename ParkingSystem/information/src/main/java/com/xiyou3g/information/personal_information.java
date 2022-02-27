@@ -142,16 +142,14 @@ public class personal_information extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.head_change:
-                Intent intent = new Intent(Intent.ACTION_PICK,null);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
-                //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
-                startActivityForResult(intent ,2);
-                break;
-            case R.id.back:
-                getActivity().onBackPressed();
-                break;
+        int id = v.getId();
+        if (id == R.id.head_change) {
+            Intent intent = new Intent(Intent.ACTION_PICK, null);
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
+            startActivityForResult(intent, 2);
+        } else if (id == R.id.back) {
+            getActivity().onBackPressed();
         }
     }
 

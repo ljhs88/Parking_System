@@ -53,6 +53,9 @@ dependencies {
     api rootProject.ext.androidxLibs
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
+    api rootProject.ext.AMapLibs
+    api rootProject.ext.EventBusLibs
+    api rootProject.ext.retrofitLibs
     implementation files('libs\\AMap3DMap_8.1.0_AMapNavi_8.1.0_AMapLocation_5.6.2_20211230.jar')
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
