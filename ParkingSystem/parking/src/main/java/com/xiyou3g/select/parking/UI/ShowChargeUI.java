@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.xiyou3g.select.parking.R;
@@ -38,5 +39,13 @@ public class ShowChargeUI extends ShowUI {
         showText4.setText("  简介:" + information.getBriefIntroduction());
 
         super.showText();
+    }
+
+    @Override
+    public void showToolBar() {
+        Toolbar toolbar = activity.findViewById(R.id.show_toolbar);
+        toolbar.setTitle(information.getName());
+        toolbar.setNavigationOnClickListener(view -> activity.finish());
+        super.showToolBar();
     }
 }

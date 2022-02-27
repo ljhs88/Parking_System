@@ -5,19 +5,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitManager {
 
-    Retrofit retrofit;
-    String baseUrl;
-    RetrofitManager retrofitManager;
+    private static Retrofit retrofit;
+    private static String baseUrl;
+    private static RetrofitManager retrofitManager;
 
     private RetrofitManager(String baseUrl) {
-        this.baseUrl = baseUrl;
+        RetrofitManager.baseUrl = baseUrl;
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
-    public RetrofitManager createRetrofitManager(String baseUrl) {
+    public static RetrofitManager createRetrofitManager(String baseUrl) {
         if (retrofitManager == null) {
             retrofitManager = new RetrofitManager(baseUrl);
         }
@@ -25,13 +25,13 @@ public class RetrofitManager {
     }
 
     public void changeBaseUrl(String baseUrl) {
-        if (baseUrl.equals(this.baseUrl)) {
+        if (baseUrl.equals(RetrofitManager.baseUrl)) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        this.baseUrl = baseUrl;
+        RetrofitManager.baseUrl = baseUrl;
     }
 
     public Retrofit getRetrofit() {

@@ -15,11 +15,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.bean.CreateInformation;
+import com.xiyou3g.select.parking.util.RetrofitManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,11 +35,13 @@ public class ParkingFragment extends Fragment implements AMap.OnMapClickListener
     private MapView mapView;
     private AMap aMap;
     private LatLng thisLatLng;
+    private LatLng nowLatLng;
     private BottomSheetDialog bottomSheetDialog;
     private static int STATUS = 0;
     private static final int CHARGE = 1;
     private static final int PARKING = 2;
     private static final int STALL = 3;
+    private RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
 
     @Nullable
     @Override
@@ -140,9 +144,10 @@ public class ParkingFragment extends Fragment implements AMap.OnMapClickListener
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void receiveInformation(CreateInformation createInformation) {
-        aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).snippet(createInformation.getBriefIntroduction()));
-        
+        if (createInformation.getStatus() == CHARGE) {
+            aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).snippet(createInformation.getBriefIntroduction()).icon(BitmapDescriptorFactory.fromResource(R.drawable.charge)));
+        } else {
+            aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).snippet(createInformation.getBriefIntroduction()).icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_image)));
+        }
     }
-
-
 }
