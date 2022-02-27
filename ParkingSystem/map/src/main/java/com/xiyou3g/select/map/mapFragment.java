@@ -224,8 +224,6 @@ public class mapFragment extends Fragment implements AMap.OnMyLocationChangeList
         //Log.d("123", "经纬度" + mLongitude + "," + mLatitude);
     }
 
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
