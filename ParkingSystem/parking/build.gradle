@@ -56,7 +56,7 @@ dependencies {
     api rootProject.ext.androidxLibs
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
-    api rootProject.ext.AMapLibs
+    implementation rootProject.ext.AMapLibs
     api rootProject.ext.EventBusLibs
     api rootProject.ext.retrofitLibs
     implementation 'androidx.appcompat:appcompat:1.2.0'

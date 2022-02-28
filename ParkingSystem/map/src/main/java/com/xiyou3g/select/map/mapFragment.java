@@ -1,10 +1,6 @@
 package com.xiyou3g.select.map;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapException;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.MapsInitializer;
@@ -29,35 +23,14 @@ import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AMapNavi;
-import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
-import com.amap.api.navi.MyNaviListener;
 import com.amap.api.navi.NaviSetting;
-import com.amap.api.navi.enums.NaviType;
-import com.amap.api.navi.enums.PathPlanningStrategy;
-import com.amap.api.navi.model.AMapCalcRouteResult;
-import com.amap.api.navi.model.AMapLaneInfo;
-import com.amap.api.navi.model.AMapModelCross;
-import com.amap.api.navi.model.AMapNaviCameraInfo;
-import com.amap.api.navi.model.AMapNaviCross;
-import com.amap.api.navi.model.AMapNaviLocation;
-import com.amap.api.navi.model.AMapNaviRouteNotifyData;
-import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
-import com.amap.api.navi.model.AMapServiceAreaInfo;
-import com.amap.api.navi.model.AimLessModeCongestionInfo;
-import com.amap.api.navi.model.AimLessModeStat;
-import com.amap.api.navi.model.NaviInfo;
-import com.amap.api.navi.model.NaviLatLng;
-import com.xiyou3g.select.map.navigationActivity;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 public class mapFragment extends Fragment implements AMap.OnMyLocationChangeListener, View.OnClickListener {
 
@@ -114,32 +87,29 @@ public class mapFragment extends Fragment implements AMap.OnMyLocationChangeList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.navigation_button1:
-                Intent intent = new Intent(getContext(), navigationActivity.class);
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("longitude", longitude);
-                intent.putExtra("mLatitude", mLatitude);
-                intent.putExtra("mLongitude", mLongitude);
-                startActivity(intent);
-                getActivity().finish();
-                break;
-            case R.id.navigation_button2:
-                // 开始导航
-                //起点 定位点
-                Log.d("123", "起点：" + mLatitude + "," + mLongitude);
-                Log.d("123", "终点：" + latitude + "," + longitude);
-                Poi start = new Poi("我的位置", new LatLng(mLatitude,mLongitude), null);
-                //途经点
-                List<Poi> poiList = new ArrayList();
-                //poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
-                //终点
-                Poi end = new Poi("停车点0号", new LatLng(latitude,longitude), null);
-                // 组件参数配置
-                AmapNaviParams params = new AmapNaviParams(start, poiList, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
-                // 启动组件
-                AmapNaviPage.getInstance().showRouteActivity(getActivity().getApplicationContext(), params, null);
-                break;
+        int id = v.getId();
+        if (id == R.id.navigation_button1) {
+            Intent intent = new Intent(getContext(), navigationActivity.class);
+            intent.putExtra("latitude", latitude);
+            intent.putExtra("longitude", longitude);
+            intent.putExtra("mLatitude", mLatitude);
+            intent.putExtra("mLongitude", mLongitude);
+            startActivity(intent);
+            getActivity().finish();
+        } else if (id == R.id.navigation_button2) {// 开始导航
+            //起点 定位点
+            Log.d("123", "起点：" + mLatitude + "," + mLongitude);
+            Log.d("123", "终点：" + latitude + "," + longitude);
+            Poi start = new Poi("我的位置", new LatLng(mLatitude, mLongitude), null);
+            //途经点
+            List<Poi> poiList = new ArrayList();
+            //poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
+            //终点
+            Poi end = new Poi("停车点0号", new LatLng(latitude, longitude), null);
+            // 组件参数配置
+            AmapNaviParams params = new AmapNaviParams(start, poiList, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
+            // 启动组件
+            AmapNaviPage.getInstance().showRouteActivity(getActivity().getApplicationContext(), params, null);
         }
     }
 
