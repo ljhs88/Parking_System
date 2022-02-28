@@ -13,15 +13,19 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
 import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
+import com.amap.api.navi.NaviSetting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +47,18 @@ public class MapActivity extends AppCompatActivity {
     String destination;
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
+        // 导航的合规接口
+        NaviSetting.updatePrivacyShow(this, true, true);
+        NaviSetting.updatePrivacyAgree(this, true);
         //设置状态栏透明
         makeStatusBarTransparent(this);
         //状态栏文字自适应
@@ -54,7 +66,7 @@ public class MapActivity extends AppCompatActivity {
         // 设置碎片
         //replaceFragment(new mapFragment());
         ARouter.getInstance().inject(this);
-        Log.d("123", "saas"+String.valueOf(latitude + longitude));
+        Log.d("123", "经纬度"+String.valueOf(latitude + longitude));
         // 直接导航
         GoToNavigation();
     }
@@ -98,6 +110,4 @@ public class MapActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
-
-
 }

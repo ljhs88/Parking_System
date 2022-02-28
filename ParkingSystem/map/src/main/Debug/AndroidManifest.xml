@@ -42,10 +42,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 导航组件Activity -->
+
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|navigation"
             android:theme="@android:style/Theme.NoTitleBar" /> <!-- 定位组件 -->
+
         <service android:name="com.amap.api.location.APSService" />
 
         <meta-data
