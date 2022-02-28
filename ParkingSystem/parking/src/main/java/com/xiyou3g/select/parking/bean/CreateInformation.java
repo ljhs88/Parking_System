@@ -4,18 +4,28 @@ import android.graphics.Bitmap;
 
 public class CreateInformation {
 
+    private int status;
     private String name;
     private int number;
     private int price;
     private String briefIntroduction;
     private Bitmap bitmap;
 
-    public CreateInformation(String name, int number, int price, String briefIntroduction, Bitmap bitmap) {
+    public CreateInformation(int status, String name, int number, int price, String briefIntroduction, Bitmap bitmap) {
+        this.status = status;
         this.name = name;
         this.number = number;
         this.price = price;
         this.briefIntroduction = briefIntroduction;
         this.bitmap = bitmap;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getName() {

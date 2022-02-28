@@ -3,6 +3,40 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/back_button.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/button_background.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/cancel_button.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/cancel_button2.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/cancel_button_background.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/commit_button2.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/edit_background.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/ic_launcher_background.xml" value="0.262037037037037" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/login_button.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/parking_image.xml" value="0.15572916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/select_photo_background.xml" value="0.262037037037037" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/select_photo_false.xml" value="0.15572916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/select_photo_true.xml" value="0.15572916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/activity_adm_parking.xml" value="0.24947916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/activity_cus_charging.xml" value="0.26268115942028986" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/activity_cus_parking.xml" value="0.2682291666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/activity_cus_stall.xml" value="0.26268115942028986" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/activity_show_information.xml" value="0.1" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/fragment_parking.xml" value="0.125" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_delete.xml" value="0.22" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_marker.xml" value="0.25" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_select_photo.xml" value="0.24592391304347827" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_show_information.xml" value="0.22780797101449277" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/menu/parking_menu.xml" value="0.2682291666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/xml/file_paths.xml" value="0.11927083333333334" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/pay/src/main/res/layout/activity_adm_pay.xml" value="0.24947916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/back.xml" value="0.25555555555555554" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/button_background.xml" value="0.1287037037037037" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/circle_button.xml" value="0.16666666666666666" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/dialog_login.xml" value="0.265625" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/get_code_button.xml" value="0.25555555555555554" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/get_code_button2.xml" value="0.25555555555555554" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/get_code_button_background.xml" value="0.25555555555555554" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/ic_launcher_background.xml" value="0.25555555555555554" />
         <entry key="..\:/AndroidInformation2/ParkingSystem/information/src/main/res/layout/activity_cus_information.xml" value="0.17755825734549138" />
         <entry key="..\:/AndroidProject/ParkingSystem/information/src/main/res/drawable/button_shape.xml" value="0.3425925925925926" />
         <entry key="..\:/AndroidProject/ParkingSystem/information/src/main/res/layout/activity_cus_information.xml" value="0.22" />
@@ -31,12 +65,25 @@
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/drawable/login_button2.xml" value="0.1287037037037037" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/activity_adm_login.xml" value="0.1265625" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/activity_adm_register.xml" value="0.1265625" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/activity_cus_login.xml" value="0.264" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/activity_cus_register.xml" value="0.29055007052186177" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/forget_password_layout.xml" value="0.24947916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/get_code_layout.xml" value="0.24947916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/new_rigister_layout.xml" value="0.24947916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/top_toolbar.xml" value="0.24947916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/xml/network_security_config.xml" value="0.1" />
+
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/activity_cus_login.xml" value="0.23505434782608695" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/register/src/main/res/layout/activity_cus_register.xml" value="0.1265625" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/stall/src/main/res/layout/activity_adm_stall.xml" value="0.24947916666666667" />
         <entry key="..\:/ParkingSystem/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
       </map>
     </option>
+  </component>
+  <component name="EntryPointsManager">
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="org.greenrobot.eventbus.Subscribe" />
+    </list>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

@@ -3,13 +3,16 @@ package com.xiyou3g.select.parking.bean;
 import android.graphics.Bitmap;
 
 public class ShowInformation {
+    private int status;
+
     private String name;
     private int number;
     private int price;
     private String briefIntroduction;
     private Bitmap bitmap;
 
-    public ShowInformation(String name, int number, int price, String briefIntroduction, Bitmap bitmap) {
+    public ShowInformation(int status, String name, int number, int price, String briefIntroduction, Bitmap bitmap) {
+        this.status = status;
         this.name = name;
         this.number = number;
         this.price = price;
@@ -18,11 +21,20 @@ public class ShowInformation {
     }
 
     public ShowInformation(CreateInformation createInformation) {
+        status = createInformation.getStatus();
         name = createInformation.getName();
         number = createInformation.getNumber();
         price = createInformation.getPrice();
         briefIntroduction = createInformation.getBriefIntroduction();
         bitmap = createInformation.getBitmap();
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getName() {

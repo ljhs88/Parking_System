@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="204dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="20dp"
+    android:layout_marginTop="16dp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="12dp"
+            android:src="@drawable/arrows"
+            android:id="@+id/delete_arrows"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delete_arrows"
+            android:text="@string/sure_delete"
+            android:layout_marginStart="24dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:id="@+id/delete_text"
+            />
+
+        <Button
+            android:layout_marginTop="48dp"
+            android:layout_width="144dp"
+            android:layout_height="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delete_text"
+            android:layout_marginStart="36dp"
+            android:id="@+id/sure_button"
+            android:background="@drawable/commit_background"
+            android:text="@string/sure"
+            />
+
+        <Button
+            android:layout_marginTop="48dp"
+            android:layout_width="144dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/delete_text"
+            android:layout_marginEnd="36dp"
+            android:id="@+id/cancel_sure_button"
+            android:text="@string/cancel"
+            android:background="@drawable/cancel_button_background"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

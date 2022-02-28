@@ -42,9 +42,10 @@ ext {
     ]
 
     AMapDeps = [
-            "3DMap"    : 'com.amap.api:3dmap:latest.integration',
-            "Location" : 'com.amap.api:location:latest.integration',
-            "Search"   : 'com.amap.api:search:latest.integration'
+            /*"3DMap"      : 'com.amap.api:3dmap:latest.integration',*/
+            "Location"   : 'com.amap.api:location:latest.integration',
+            "Search"     : 'com.amap.api:search:latest.integration',
+            "navigation" : 'com.amap.api:navi-3dmap:latest.integration'
     ]
 
     EventBusDeps = [

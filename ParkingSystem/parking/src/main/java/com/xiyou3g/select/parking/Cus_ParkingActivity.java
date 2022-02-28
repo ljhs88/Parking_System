@@ -302,7 +302,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         } catch (NumberFormatException e) {
             ToastUtil.getToast(Cus_ParkingActivity.this, "请填写正确的信息");
         }
-        return new CreateInformation(name, number, price, brief, selectPhoto);
+        return new CreateInformation(STATUS, name, number, price, brief, selectPhoto);
     }
 
     private boolean checkCreateInformation(CreateInformation createInformation) {

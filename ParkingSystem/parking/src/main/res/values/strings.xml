@@ -13,5 +13,8 @@
     <string name="text_information">请填写信息</string>
     <string name="navigation_text">导航</string>
     <string name="reserve">预定</string>
+    <string name="delete">删除</string>
+    <string name="sure_delete">你确定要删除吗？（此操作不可撤回）</string>
+    <string name="sure">确定</string>
 
 </resources>
