@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -29,20 +30,31 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.amap.api.maps.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.UI.SetChargeUI;
 import com.xiyou3g.select.parking.UI.SetParkingUI;
 import com.xiyou3g.select.parking.UI.SetStallUI;
 import com.xiyou3g.select.parking.UI.SetUI;
+import com.xiyou3g.select.parking.api.CreateParkingService;
 import com.xiyou3g.select.parking.bean.CreateInformation;
+import com.xiyou3g.select.parking.bean.CreateParkingData;
+import com.xiyou3g.select.parking.bean.CreateParkingResponse;
 import com.xiyou3g.select.parking.util.CameraUtil;
+import com.xiyou3g.select.parking.util.RetrofitManager;
 import com.xiyou3g.select.parking.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Route(path = "/parking/Cus_ParkingActivity")
 public class Cus_ParkingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -57,12 +69,14 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
 
     private ImageView picture;
     public static final int CHOOSE_PHOTO = 2;
+    private LatLng thisLatLng;
+    private RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cus_parking);
-        //get();
+        get();
 
         setSupportActionBar(findViewById(R.id.create_parking));
         setSupportActionBar(findViewById(R.id.create_parking));
@@ -108,7 +122,11 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
         File mediaFile = new File(mediaStorageDir.getPath()
                 + File.separator
                 + "Pictures/temp.jpg");
-        mediaFile.deleteOnExit();
+        try {
+            mediaFile.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Log.d("TAG", "onDestroy: ");
     }
 
@@ -165,6 +183,8 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
     private void get() {
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
+        thisLatLng = new LatLng(intent.getDoubleExtra("latitude", 0), intent.getDoubleExtra("longitude", 0));
+
     }
 
     @Override
@@ -173,6 +193,29 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
             CreateInformation createInformation = saveInformation();
             if (checkCreateInformation(createInformation)) {
                 EventBus.getDefault().postSticky(createInformation);
+                CreateParkingData createParkingData = new CreateParkingData();
+                createParkingData.setName(createInformation.getName());
+                createParkingData.setNum(createInformation.getNumber());
+                createParkingData.setHourPrice(createInformation.getPrice());
+                createParkingData.setLatitude(String.valueOf(thisLatLng.latitude));
+                createParkingData.setLongitude(String.valueOf(thisLatLng.longitude));
+                createParkingData.setDescription(createInformation.getBriefIntroduction());
+                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+                createParkingData.setAdminMobile(sharedPreferences.getString("mobile", ""));
+
+                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), createParkingData.toString());
+                CreateParkingService createParkingService = retrofitManager.getRetrofit().create(CreateParkingService.class);
+                createParkingService.createParking(requestBody).enqueue(new Callback<CreateParkingResponse>() {
+                    @Override
+                    public void onResponse(Call<CreateParkingResponse> call, Response<CreateParkingResponse> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<CreateParkingResponse> call, Throwable t) {
+
+                    }
+                });
             } else {
                 ToastUtil.getToast(Cus_ParkingActivity.this, "请填写正确的信息");
             }

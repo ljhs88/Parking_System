@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -106,6 +105,8 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                         .edit().putString("userId", loginResponse.getData().getId()).apply();
                 getSharedPreferences("data", MODE_PRIVATE)
                         .edit().putString("userToken", loginResponse.getData().getUserToken()).apply();
+                getSharedPreferences("data", MODE_PRIVATE)
+                        .edit().putString("mobile", loginResponse.getData().getMobile()).apply();
 
                 //Log.d("TAG", "onResponse: " + loginResponse);
             }

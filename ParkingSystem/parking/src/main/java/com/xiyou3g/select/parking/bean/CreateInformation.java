@@ -6,7 +6,7 @@ public class CreateInformation {
 
     private int status;
     private String name;
-    private int number;
+    private int number = 1;
     private int price;
     private String briefIntroduction;
     private Bitmap bitmap;

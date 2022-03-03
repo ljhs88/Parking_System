@@ -9,17 +9,24 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,10 +36,27 @@ import java.util.Locale;
 @Route(path = "/app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
+    private Fragment parking_fragment;
+    private Fragment information_fragment;
+    private Fragment[] fragments;
+    private FrameLayout mainFrame;
+    private BottomNavigationView bottomNavigationView;
+    private static final int PARKING = 0;
+    private static final int MY = 1;
+    private static int thisFragment = 0;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            Log.d("TAG", "onCreate: ");
+            actionBar.hide();
+        }
+
         //设置状态栏透明
         makeStatusBarTransparent(this);
         //状态栏文字自适应
@@ -43,9 +67,51 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         ActivityCompat.requestPermissions(MainActivity.this, p, 1);
+        initView();
 
-        findViewById(R.id.text111).setOnClickListener(View -> ARouter.getInstance().build("/map/MapActivity").withDouble("longitude", 116.740368).withDouble("latitude", 40.109056).withString("destination", "帆帆停车场").navigation());
-        Log.d("123", sHA1(this));
+    }
+
+    private void initView() {
+        parking_fragment = (Fragment) ARouter.getInstance().build("/parking/ParkingFragment").navigation();
+        information_fragment = (Fragment) ARouter.getInstance().build("/information/informationFragment").navigation();
+        fragments = new Fragment[]{parking_fragment, information_fragment};
+        mainFrame = findViewById(R.id.frame_layout);
+        getSupportFragmentManager().beginTransaction().replace(R.id.shared_frame, parking_fragment).show(parking_fragment).commit();
+        bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.shared_parking) {
+                    if (thisFragment != PARKING) {
+                        switchFragment(thisFragment, PARKING);
+                        thisFragment = PARKING;
+                        return true;
+                    }
+                } else if (item.getItemId() == R.id.shared_my) {
+                    if (item.getItemId() != MY) {
+                        switchFragment(thisFragment, MY);
+                        thisFragment = MY;
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * 切换fragment
+     * @param thisFragment
+     * @param index
+     */
+    private void switchFragment(int thisFragment, int index) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //隐藏上个Fragment
+        transaction.hide(fragments[thisFragment]);
+        if (!fragments[index].isAdded()) {
+            transaction.add(R.id.shared_frame, fragments[index]);
+        }
+        transaction.show(fragments[index]).commitAllowingStateLoss();
     }
 
 

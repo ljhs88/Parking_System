@@ -6,7 +6,7 @@
     android:theme="@style/ThemeOverlay.ParkingSystem.FullscreenContainer"
     tools:context=".ParkingFragment">
 
-    <com.amap.api.maps.TextureMapView
+    <com.amap.api.maps.MapView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/parking_map"

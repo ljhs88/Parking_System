@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.amap.api.maps.model.LatLng;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.UI.ShowChargeUI;
 import com.xiyou3g.select.parking.UI.ShowParkingUI;
@@ -27,6 +29,7 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     private static final int STALL = 3;
     private ShowInformation showInformation;
     private BottomSheetDialog bottomSheetDialog;
+    private LatLng thisLatLng;
     private RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
 
     @Override
@@ -66,6 +69,7 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     private void getStatus() {
         Intent intent = getIntent();
         STATUS = intent.getIntExtra("STATUS", 0);
+        thisLatLng = new LatLng(intent.getDoubleExtra("latitude",0), intent.getDoubleExtra("longitude", 0));
     }
 
     private void showInformation (ShowUI showUI) {
@@ -87,7 +91,11 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.navigation_button) {
-
+            ARouter.getInstance().build("/map/MapActivity")
+                    .withDouble("latitude", thisLatLng.latitude)
+                    .withDouble("longitude", thisLatLng.longitude)
+                    .withString("destination", showInformation.getName())
+                    .navigation();
         } else if (view.getId() == R.id.reserve_button) {
 
         } else if (view.getId() == R.id.delete_button) {

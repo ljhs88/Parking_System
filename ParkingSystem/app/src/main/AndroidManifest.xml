@@ -24,6 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ParkingSystem">
         <activity
+            android:launchMode="singleTask"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

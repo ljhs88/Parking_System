@@ -21,13 +21,18 @@
         <entry key="..\:/AndroidProject备份/ParkingSystem/map/src/main/res/layout/activity_map.xml" value="0.17755825734549138" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/map/src/main/res/layout/activity_navigation.xml" value="0.25" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/map/src/main/res/layout/map_fragment.xml" value="0.33" />
-        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/app/src/main/res/layout/activity_main.xml" value="0.13958333333333334" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/app/src/main/res/drawable/select_menu_color.xml" value="0.23703703703703705" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/app/src/main/res/menu/bottom_menu.xml" value="0.2682291666666667" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/information/src/main/res/layout/activity_cus_information.xml" value="0.13958333333333334" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/information/src/main/res/layout/information_fragment.xml" value="0.13044579533941236" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/back_button.xml" value="0.28" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/button_background.xml" value="0.28" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/cancel_button.xml" value="0.28" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/cancel_button2.xml" value="0.28" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/cancel_button_background.xml" value="0.28" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/commit_background.xml" value="0.23703703703703705" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/commit_button.xml" value="0.23703703703703705" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/commit_button2.xml" value="0.28" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/edit_background.xml" value="0.28" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/drawable/ic_launcher_background.xml" value="0.262037037037037" />

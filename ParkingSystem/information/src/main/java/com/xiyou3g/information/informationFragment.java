@@ -1,16 +1,8 @@
 package com.xiyou3g.information;
 
-import com.bumptech.glide.Glide;
-import com.xiyou3g.information.Utility.StringAndBitmap;
-import com.xiyou3g.information.bean.informationBean;
-import com.xiyou3g.information.bean.requestInformationBean;
-import static android.app.Activity.RESULT_OK;
-
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -28,26 +20,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.xiyou3g.information.Utility.StringAndBitmap;
+import com.xiyou3g.information.bean.informationBean;
+import com.xiyou3g.information.bean.requestInformationBean;
 import com.xiyou3g.information.retrofit.Api;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import com.xiyou3g.information.retrofit.Api;
 
-import org.w3c.dom.Text;
-
+@Route(path = "/information/informationFragment")
 public class informationFragment extends Fragment implements View.OnClickListener {
 
     private View view;
