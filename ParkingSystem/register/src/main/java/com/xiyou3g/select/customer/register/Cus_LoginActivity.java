@@ -26,6 +26,8 @@ import com.xiyou3g.select.customer.register.util.RetrofitManager;
 import com.xiyou3g.select.customer.register.util.TimeCountUtil;
 import com.xiyou3g.select.customer.register.util.ToastUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -107,7 +109,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                         .edit().putString("userToken", loginResponse.getData().getUserToken()).apply();
                 getSharedPreferences("data", MODE_PRIVATE)
                         .edit().putString("mobile", loginResponse.getData().getMobile()).apply();
-
+                EventBus.getDefault().postSticky(loginResponse);
                 //Log.d("TAG", "onResponse: " + loginResponse);
             }
 
@@ -115,9 +117,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 loginSuccess = false;
                 //Log.e("TAG", "LoginOnFailure: ");
-                runOnUiThread(() -> {
-                    ToastUtil.getToast(Cus_LoginActivity.this, "连接服务器失败");
-                });
+                runOnUiThread(() -> ToastUtil.getToast(Cus_LoginActivity.this, "连接服务器失败"));
 
             }
         });
@@ -146,9 +146,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                         //Log.d("TAG", "onResponse: " + identifyingCodeResponse);
                         if (!success) {
                             String msg = identifyingCodeResponse.getMsg();
-                            runOnUiThread(()->{
-                                Toast.makeText(Cus_LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
-                            });
+                            runOnUiThread(()-> Toast.makeText(Cus_LoginActivity.this, msg, Toast.LENGTH_SHORT).show());
                         }
                     }
 

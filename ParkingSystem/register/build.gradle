@@ -53,6 +53,7 @@ dependencies {
     api rootProject.ext.annotationLibs
     api rootProject.ext.pictureLibs
     api rootProject.ext.retrofitLibs
+    api rootProject.ext.EventBusLibs
     implementation 'androidx.fragment:fragment:1.3.2'
     annotationProcessor rootProject.ext.annotationLibs
     api project(":baseapplication")
