@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:theme="@style/Theme.ParkingSystem"
+        android:screenOrientation="portrait"
         android:requestLegacyExternalStorage="true">
         <activity android:name=".Cus_ParkingActivity" />
         <meta-data

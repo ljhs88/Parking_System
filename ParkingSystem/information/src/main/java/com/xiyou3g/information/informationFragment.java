@@ -195,11 +195,11 @@ public class informationFragment extends Fragment implements View.OnClickListene
             //String head = data.getStringExtra("head");
             Bitmap headBitmap = (Bitmap) data.getParcelableExtra("head");
             if (headBitmap != null)
-            image_head.setImageBitmap(headBitmap);
+                image_head.setImageBitmap(headBitmap);
             if (!"".equals(name))
-            textNickname.setText(name);
+                textNickname.setText(name);
             if (!"".equals(mobile))
-            textPhone.setText(mobile);
+                textPhone.setText(mobile);
         } else if (requestCode == 2) {
             if (data != null) {
                 // 得到图片的路径

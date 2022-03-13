@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/shared_parking"
+        android:icon="@drawable/shared_image"
+        android:title="@string/shared_parking"
+        />
+
+    <item
+        android:id="@+id/shared_my"
+        android:icon="@drawable/my"
+        android:title="@string/my"
+        />
+
+
+</menu>

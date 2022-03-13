@@ -124,6 +124,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                                 loginResponse.getData().getMobile()+","+
                                 loginResponse.getData().getDescription()));           //发送EventBus
                 //EventBus.getDefault().postSticky(loginResponse);
+                EventBus.getDefault().postSticky(loginResponse);
                 //Log.d("TAG", "onResponse: " + loginResponse);
             }
 
