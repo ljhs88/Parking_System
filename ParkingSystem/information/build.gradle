@@ -57,6 +57,7 @@ dependencies {
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
     api rootProject.ext.retrofitLibs
+    implementation 'com.google.android.gms:play-services-basement:17.6.0'
     annotationProcessor rootProject.ext.annotationLibs
     api project(":baseapplication")
 

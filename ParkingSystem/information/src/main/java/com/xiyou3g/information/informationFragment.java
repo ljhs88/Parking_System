@@ -4,15 +4,20 @@ import com.bumptech.glide.Glide;
 import com.xiyou3g.information.Utility.StringAndBitmap;
 import com.xiyou3g.information.bean.informationBean;
 import com.xiyou3g.information.bean.requestInformationBean;
-import static android.app.Activity.RESULT_OK;
-
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
+import com.xiyou3g.information.Utility.HttpImgThread;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,26 +32,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.xiyou3g.information.retrofit.Api;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import com.xiyou3g.information.retrofit.Api;
 
-import org.w3c.dom.Text;
+import com.xiyou3g.information.retrofit.mRetrofit;
 
 public class informationFragment extends Fragment implements View.OnClickListener {
 
@@ -56,30 +60,58 @@ public class informationFragment extends Fragment implements View.OnClickListene
     private ImageView image_head;
     private ImageButton backButton;
     private TextView textNickname;
-    private TextView textId;
+    private TextView textPhone;
 
     private Bitmap backBitmap;
     private Retrofit retrofit;
     private Api api;
 
     private String userid;
+    private Button backToDesk_button;
+    private Button changeAccount;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.information_fragment, container, false);
-        Log.d("123", "onCreateView");
+        Log.d("123", "onCreateView1");
+
+        isGrantExternalRW(getActivity());
+
+        userid = "946762136657330176";
+
         // 获取控件实例
         getViewId();
-        // 设置控件内容
         //获取网络数据
         getContent();
         // 设置点击事件
         personal_button.setOnClickListener(this);
         history_button.setOnClickListener(this);
+        backToDesk_button.setOnClickListener(this);
+        changeAccount.setOnClickListener(this);
         backButton.setOnClickListener(this);
 
         return view;
+    }
+
+
+
+    /**
+     * 获取储存权限
+     * @param activity
+     * @return
+     */
+    public static boolean isGrantExternalRW(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity.checkSelfPermission(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            activity.requestPermissions(new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 1);
+            return false;
+        }
+        return true;
     }
 
     private void getContent() {
@@ -91,7 +123,7 @@ public class informationFragment extends Fragment implements View.OnClickListene
         // 步骤5:创建网络请求接口的实例
         api = retrofit.create(Api.class);
         //步骤6：对发送请求进行封装:
-        requestInformationBean request = new requestInformationBean("946468093863919616","CodePianist",
+        requestInformationBean request = new requestInformationBean(userid,"CodePianist",
                 "1", "2002-03-23T14:18:46.015+00:00", "中国", "陕西省", "西安市",
                 "长安区", "手执烟火谋生活，心怀诗意以谋爱");
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), request.toString());
@@ -104,14 +136,11 @@ public class informationFragment extends Fragment implements View.OnClickListene
                 if (response.body()!=null) {
                     informationBean bean = response.body();
                     textNickname.setText(bean.getData().getNickname());
-                    textId.setText(bean.getData().getId());
-                    Bitmap headBitmap = StringAndBitmap.stringToBitmap(bean.getData().getFace());
-                    image_head.setImageBitmap(headBitmap);
-                    Bitmap backBitmap = StringAndBitmap.stringToBitmap(bean.getData().getBgImg());
-                    backButton.setImageBitmap(backBitmap);
-                    /*Glide.with(getContext()).load("https://img2.baidu.com/it/u=475888581,992476249&fm=" +
-                                    "253&fmt=auto&app=138&f=JPEG?w=256&h=256").into(image_head);
-                    Glide.with(getContext()).load(bean.getData().getBgImg()).into(backButton);*/
+                    textPhone.setText(bean.getData().getMobile());
+                    Log.d("123", "faceImg:"+bean.getData().getFace());
+                    Glide.with(getContext()).load("http"+bean.getData().getFace().substring(5)).into(image_head);
+                    Log.d("123", "bgImg:"+bean.getData().getBgImg());
+                    Glide.with(getContext()).load("http"+bean.getData().getBgImg().substring(5)).into(backButton);
                     Log.d("123", "glide success");
                 }
             }
@@ -124,11 +153,13 @@ public class informationFragment extends Fragment implements View.OnClickListene
     }
 
     public void getViewId() {
+        backToDesk_button = view.findViewById(R.id.backToDesk);
+        changeAccount = view.findViewById(R.id.changeAccount);
         personal_button = view.findViewById ( R.id.personal_button );
-        history_button = view.findViewById(R.id.history);
+        history_button = view.findViewById(R.id.historyTo);
         image_head = view.findViewById(R.id.head);
         backButton = view.findViewById(R.id.back);
-        textId = view.findViewById(R.id.user_account);
+        textPhone = view.findViewById(R.id.user_account);
         textNickname = view.findViewById(R.id.username);
     }
 
@@ -138,8 +169,8 @@ public class informationFragment extends Fragment implements View.OnClickListene
         if (id == R.id.personal_button) {
             Intent intent = new Intent(getContext(), personActivity.class);
             intent.putExtra("select fragment", "personal");
-            startActivity(intent);
-        } else if (id == R.id.history) {
+            startActivityForResult(intent, 1);
+        } else if (id == R.id.historyTo) {
             Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "history");
             startActivity(intent1);
@@ -148,12 +179,28 @@ public class informationFragment extends Fragment implements View.OnClickListene
             intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
             startActivityForResult(intent2, 2);
+        } else if (id == R.id.changeAccount) {
+            getActivity().finish();
+        } else if (id == R.id.backToDesk) {
+            getActivity().finish();
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 2) {
+        Log.d("123", "onActivityResult");
+        if (resultCode == 1) {
+            String name = data.getStringExtra("name");
+            String mobile = data.getStringExtra("mobile");
+            //String head = data.getStringExtra("head");
+            Bitmap headBitmap = (Bitmap) data.getParcelableExtra("head");
+            if (headBitmap != null)
+            image_head.setImageBitmap(headBitmap);
+            if (!"".equals(name))
+            textNickname.setText(name);
+            if (!"".equals(mobile))
+            textPhone.setText(mobile);
+        } else if (requestCode == 2) {
             if (data != null) {
                 // 得到图片的路径
                 Uri uri = data.getData();
@@ -211,24 +258,15 @@ public class informationFragment extends Fragment implements View.OnClickListene
     @Override
     public void onDestroy() {
         super.onDestroy();
-        setBack(userid, "1", StringAndBitmap.bitmapToString(backBitmap));
+        if (backBitmap != null) {
+            Log.d("123", "onDestroy:"+StringAndBitmap.getFile(backBitmap));
+            mRetrofit retrofit = mRetrofit.getInstance();
+            File file = StringAndBitmap.getFile(backBitmap);
+            Log.d("123", "retrofit"+userid);
+            Log.d("123", file.getName() +","+ file.getAbsolutePath());
+            retrofit.setHttpPortrait(file.getAbsolutePath(), userid, "1");
+        }
     }
 
-    private void setBack(String userid, String type, String headString) {
-        retrofit2.Call<informationBean> call = api.postBody(userid, type, headString);
-        //步骤7:发送网络请求(异步)
-        call.enqueue(new Callback<informationBean>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                Log.d("123", "response");
-            }
-
-            @Override
-            public void onFailure(Call<informationBean> call, Throwable t) {
-                Log.d("123", t.toString());
-            }
-        });
-    }
 
 }

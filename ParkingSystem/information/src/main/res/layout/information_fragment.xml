@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1AAA"
@@ -8,7 +9,7 @@
     <ImageButton
         android:id="@+id/back"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="180dp"
         android:scaleType="fitXY"
         android:background="@drawable/information_back"
         app:layout_constraintTop_toTopOf="parent"
@@ -92,40 +93,35 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card3"
         android:layout_width="0dp"
-        android:layout_height="140dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_height="70dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/card3_text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:text="常用功能"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/historyTo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/history_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/text"
+                android:background="#0000"/>
 
             <Button
                 android:id="@+id/history"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="15dp"
-                app:layout_constraintStart_toStartOf="@+id/card3_text1"
-                app:layout_constraintTop_toBottomOf="@+id/card3_text1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:background="@drawable/information_history"
                 />
 
@@ -133,16 +129,61 @@
                 android:id="@+id/history_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:text="订单记录"
-                android:textSize="11dp"
+                android:textSize="20dp"
                 android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="@+id/history"
-                app:layout_constraintStart_toStartOf="@+id/history"
-                app:layout_constraintTop_toBottomOf="@+id/history" />
+                app:layout_constraintStart_toEndOf="@+id/history"
+                app:layout_constraintTop_toTopOf="@+id/history"
+                android:layout_marginStart="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/history"/>
+
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/history"
+                app:layout_constraintBottom_toBottomOf="@+id/history"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:text=">"
+                android:textSize="20dp"
+                android:background="#0000"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/card3"
+        />
+
+    <Button
+        android:id="@+id/backToDesk"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        android:layout_marginBottom="10dp"
+        android:text="退出"
+        android:textSize="20dp"
+        />
+
+    <Button
+        android:id="@+id/changeAccount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/backToDesk"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:text="切换账号"
+        android:textSize="20dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

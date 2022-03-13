@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.xiyou3g.baseapplication.eventbus.EventMessage;
 import com.xiyou3g.select.customer.register.Api.IdentifyingCodeService;
 import com.xiyou3g.select.customer.register.Api.LoginService;
 import com.xiyou3g.select.customer.register.bean.IdentifyingCodeResponse;
@@ -26,6 +26,8 @@ import com.xiyou3g.select.customer.register.util.NumberMatch;
 import com.xiyou3g.select.customer.register.util.RetrofitManager;
 import com.xiyou3g.select.customer.register.util.TimeCountUtil;
 import com.xiyou3g.select.customer.register.util.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -106,7 +108,22 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                         .edit().putString("userId", loginResponse.getData().getId()).apply();
                 getSharedPreferences("data", MODE_PRIVATE)
                         .edit().putString("userToken", loginResponse.getData().getUserToken()).apply();
-
+                getSharedPreferences("data", MODE_PRIVATE)
+                        .edit().putString("mobile", loginResponse.getData().getMobile()).apply();
+                /*LoginUtil.isLogin = true;
+                LoginUtil.password = "admin";*/
+                EventBus.getDefault().post(new EventMessage(
+                        loginResponse.getData().getFace()+","+
+                                loginResponse.getData().getNickname()+","+
+                                loginResponse.getData().getSex()+","+
+                                loginResponse.getData().getBirthday()+","+
+                                loginResponse.getData().getCountry()+
+                                loginResponse.getData().getProvince()+
+                                loginResponse.getData().getCity()+
+                                loginResponse.getData().getDistrict()+","+
+                                loginResponse.getData().getMobile()+","+
+                                loginResponse.getData().getDescription()));           //发送EventBus
+                //EventBus.getDefault().postSticky(loginResponse);
                 //Log.d("TAG", "onResponse: " + loginResponse);
             }
 
@@ -114,9 +131,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
                 loginSuccess = false;
                 //Log.e("TAG", "LoginOnFailure: ");
-                runOnUiThread(() -> {
-                    ToastUtil.getToast(Cus_LoginActivity.this, "连接服务器失败");
-                });
+                runOnUiThread(() -> ToastUtil.getToast(Cus_LoginActivity.this, "连接服务器失败"));
 
             }
         });
@@ -145,9 +160,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                         //Log.d("TAG", "onResponse: " + identifyingCodeResponse);
                         if (!success) {
                             String msg = identifyingCodeResponse.getMsg();
-                            runOnUiThread(()->{
-                                Toast.makeText(Cus_LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
-                            });
+                            runOnUiThread(()-> Toast.makeText(Cus_LoginActivity.this, msg, Toast.LENGTH_SHORT).show());
                         }
                     }
 
