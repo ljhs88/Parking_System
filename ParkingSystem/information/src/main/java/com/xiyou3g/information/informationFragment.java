@@ -1,5 +1,6 @@
 package com.xiyou3g.information;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.xiyou3g.information.Utility.StringAndBitmap;
 import com.xiyou3g.information.bean.informationBean;
@@ -52,6 +53,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.xiyou3g.information.retrofit.mRetrofit;
 
+@Route(path = "/information/informationFragment")
 public class informationFragment extends Fragment implements View.OnClickListener {
 
     private View view;

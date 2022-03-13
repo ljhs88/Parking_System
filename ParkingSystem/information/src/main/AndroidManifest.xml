@@ -17,6 +17,8 @@
     <application>
         <activity
             android:name=".Cus_InformationActivity"/>
+        <activity
+            android:name=".personActivity"/>
     </application>
 
 </manifest>

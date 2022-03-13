@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +24,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 public class personActivity extends AppCompatActivity{
 
     private Fragment fragment;
+    private ConstraintLayout constraintLayout;
 
     @SuppressLint("NewApi")
     @Override

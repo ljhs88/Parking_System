@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         ActivityCompat.requestPermissions(MainActivity.this, p, 1);
-        initView();
 
+        initView();
     }
 
     private void initView() {
