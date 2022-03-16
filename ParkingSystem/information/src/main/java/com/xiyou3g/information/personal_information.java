@@ -90,29 +90,25 @@ public class personal_information extends Fragment implements View.OnClickListen
 
         getEditTextId();
 
-        //getContent();
+        getContent(userid);
 
         head_button.setOnClickListener(this);
         back.setOnClickListener(this);
         return view;
     }
 
-    private void getContent() {
-        //步骤6：对发送请求进行封装:
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),"{\n" +
-                "\t\"id\":\"" + mobile + "\",\n\n" +
-                "\t\"nickname\":\"" + smsCode  + "\",\n\n" +
-                "}");
-        retrofit2.Call<informationBean> call = mRetrofit.getInstance().api.postBodyLogin(requestBody);
+    private void getContent(String userid) {
+        Retrofit retrofit = mRetrofit.getInstance();
+        Api api = mRetrofit.api;
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), userid);
+        retrofit2.Call<informationBean> call = api.post(userid);
         //步骤7:发送网络请求(异步)
         call.enqueue(new Callback<informationBean>() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                Log.d("123", "response1");
                 if (response.body()!=null) {
-                    Log.d("123", response.body().toString());
                     informationBean bean = response.body();
+                    Log.d("123", "GET:"+response.body().toString());
                     edit_name.setText(bean.getData().getNickname());
                     if (bean.getData().getSex() == 1) {
                         edit_male.setText("男");
@@ -123,7 +119,7 @@ public class personal_information extends Fragment implements View.OnClickListen
                     edit_phone.setText(bean.getData().getMobile());
                     edit_location.setText(bean.getData().getDistrict());
                     edit_personality.setText(bean.getData().getDescription());
-                    Glide.with(getContext()).load(bean.getData().getFace()).into(head_image);
+                    Glide.with(getContext()).load("http"+bean.getData().getFace().substring(5)).into(head_image);
                 }
             }
 
@@ -151,7 +147,7 @@ public class personal_information extends Fragment implements View.OnClickListen
             intent.putExtra("mobile", mobile);
             intent.putExtra("head", headBitmap);
             getActivity().setResult(1, intent);
-            Log.d("123", "back");
+            //Log.d("123", "back");
             getActivity().finish();
         }
     }
@@ -228,7 +224,6 @@ public class personal_information extends Fragment implements View.OnClickListen
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("123", "ViewOnDestroy2");
         // 更新头像
         if (headBitmap != null) {
             mRetrofit retrofit = new mRetrofit();
@@ -241,19 +236,19 @@ public class personal_information extends Fragment implements View.OnClickListen
 
     /**
      * 更新信息
-     * @param id
+     * @param userid
      */
-    private void setContent(String id) {
+    private void setContent(String userid) {
         //步骤6：对发送请求进行封装:
         String sex = "0";
         if (String.valueOf(edit_male.getText()).equals("男")) {
             sex = "1";
         }
-        requestInformationBean request = new requestInformationBean(id,String.valueOf(edit_name.getText()),
+        requestInformationBean request = new requestInformationBean(userid,String.valueOf(edit_name.getText()),
                 sex, String.valueOf(edit_birthday.getText()), "中国", "陕西省", "西安市",
                 String.valueOf(edit_location.getText()), String.valueOf(edit_personality.getText()));
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), request.toString());
-        mRetrofit.getInstance().setContent(requestBody);
+        mRetrofit.setContent(requestBody);
     }
 
 }

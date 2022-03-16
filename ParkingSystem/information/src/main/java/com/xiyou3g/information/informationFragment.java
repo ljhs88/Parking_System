@@ -1,6 +1,7 @@
 package com.xiyou3g.information;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.bumptech.glide.Glide;
 import com.xiyou3g.information.Utility.StringAndBitmap;
 import com.xiyou3g.information.bean.informationBean;
@@ -65,8 +66,6 @@ public class informationFragment extends Fragment implements View.OnClickListene
     private TextView textPhone;
 
     private Bitmap backBitmap;
-    private Retrofit retrofit;
-    private Api api;
 
     private String userid;
     private Button backToDesk_button;
@@ -76,7 +75,6 @@ public class informationFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.information_fragment, container, false);
-        Log.d("123", "onCreateView1");
 
         isGrantExternalRW(getActivity());
 
@@ -85,7 +83,7 @@ public class informationFragment extends Fragment implements View.OnClickListene
         // 获取控件实例
         getViewId();
         //获取网络数据
-        getContent();
+        getContent(userid);
         // 设置点击事件
         personal_button.setOnClickListener(this);
         history_button.setOnClickListener(this);
@@ -96,7 +94,39 @@ public class informationFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+    /**
+     * 获取个人信息
+     * @param userid
+     */
+    private void getContent(String userid) {
+        Retrofit retrofit = mRetrofit.getInstance();
+        Api api = mRetrofit.api;
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), userid);
+        retrofit2.Call<informationBean> call = api.post(userid);
+        //步骤7:发送网络请求(异步)
+        call.enqueue(new Callback<informationBean>() {
+            @Override
+            public void onResponse(Call<informationBean> call, Response<informationBean> response) {
+                if (response.body() == null)
+                Log.d("123","GET：null");
+                if (response.body()!=null) {
+                    informationBean bean = response.body();
+                    textNickname.setText(bean.getData().getNickname());
+                    textPhone.setText(bean.getData().getMobile());
+                    //Log.d("123", "faceImg:"+bean.getData().getFace());
+                    Glide.with(getContext()).load("http"+bean.getData().getFace().substring(5)).into(image_head);
+                    //Log.d("123", "bgImg:"+bean.getData().getBgImg());
+                    Glide.with(getContext()).load("http"+bean.getData().getBgImg().substring(5)).into(backButton);
+                    //Log.d("123", "glide success");
+                }
+            }
 
+            @Override
+            public void onFailure(Call<informationBean> call, Throwable t) {
+                Log.d("123", t.toString());
+            }
+        });
+    }
 
     /**
      * 获取储存权限
@@ -114,44 +144,6 @@ public class informationFragment extends Fragment implements View.OnClickListene
             return false;
         }
         return true;
-    }
-
-    private void getContent() {
-        //步骤4:创建Retrofit对象
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://101.201.78.192:8888/") // 设置网络请求baseUrl
-                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析
-                .build();
-        // 步骤5:创建网络请求接口的实例
-        api = retrofit.create(Api.class);
-        //步骤6：对发送请求进行封装:
-        requestInformationBean request = new requestInformationBean(userid,"CodePianist",
-                "1", "2002-03-23T14:18:46.015+00:00", "中国", "陕西省", "西安市",
-                "长安区", "手执烟火谋生活，心怀诗意以谋爱");
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), request.toString());
-        retrofit2.Call<informationBean> call = api.postBody(requestBody);
-        //步骤7:发送网络请求(异步)
-        call.enqueue(new Callback<informationBean>() {
-            @Override
-            public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                Log.d("123", "response");
-                if (response.body()!=null) {
-                    informationBean bean = response.body();
-                    textNickname.setText(bean.getData().getNickname());
-                    textPhone.setText(bean.getData().getMobile());
-                    Log.d("123", "faceImg:"+bean.getData().getFace());
-                    Glide.with(getContext()).load("http"+bean.getData().getFace().substring(5)).into(image_head);
-                    Log.d("123", "bgImg:"+bean.getData().getBgImg());
-                    Glide.with(getContext()).load("http"+bean.getData().getBgImg().substring(5)).into(backButton);
-                    Log.d("123", "glide success");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<informationBean> call, Throwable t) {
-                Log.d("123", t.toString());
-            }
-        });
     }
 
     public void getViewId() {
@@ -183,6 +175,7 @@ public class informationFragment extends Fragment implements View.OnClickListene
             startActivityForResult(intent2, 2);
         } else if (id == R.id.changeAccount) {
             getActivity().finish();
+            ARouter.getInstance().build("/customer/Cus_LoginActivity").navigation();
         } else if (id == R.id.backToDesk) {
             getActivity().finish();
         }
@@ -190,7 +183,7 @@ public class informationFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d("123", "onActivityResult");
+        //Log.d("123", "onActivityResult");
         if (resultCode == 1) {
             String name = data.getStringExtra("name");
             String mobile = data.getStringExtra("mobile");
@@ -261,12 +254,12 @@ public class informationFragment extends Fragment implements View.OnClickListene
     public void onDestroy() {
         super.onDestroy();
         if (backBitmap != null) {
-            Log.d("123", "onDestroy:"+StringAndBitmap.getFile(backBitmap));
-            mRetrofit retrofit = mRetrofit.getInstance();
+            //Log.d("123", "onDestroy:"+StringAndBitmap.getFile(backBitmap));
+            Retrofit retrofit = mRetrofit.getInstance();
             File file = StringAndBitmap.getFile(backBitmap);
-            Log.d("123", "retrofit"+userid);
-            Log.d("123", file.getName() +","+ file.getAbsolutePath());
-            retrofit.setHttpPortrait(file.getAbsolutePath(), userid, "1");
+            //Log.d("123", "retrofit"+userid);
+            //Log.d("123", file.getName() +","+ file.getAbsolutePath());
+            mRetrofit.setHttpPortrait(file.getAbsolutePath(), userid, "1");
         }
     }
 

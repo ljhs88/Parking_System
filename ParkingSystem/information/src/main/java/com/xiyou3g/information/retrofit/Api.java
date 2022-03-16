@@ -27,26 +27,15 @@ public interface Api {
 
     //post请求，如果有参数需要添加 @FormUrlEncoded注解，即和@Field配合使用
     @FormUrlEncoded
-    @POST("userInfo/modifyUserInfo/")
-    Call<ResponseBody> postMap(@FieldMap Map<String, String> map);
+    @POST("userInfo/getUserInfo")
+    Call<informationBean> post(@Field("userId") String userid);
 
     @POST("userInfo/modifyUserInfo/")
     Call<informationBean> postBody(@Body RequestBody body);
-
-    @POST("passport/login")
-    Call<informationBean> postBodyLogin(@Body RequestBody body);
-
-    @FormUrlEncoded
-    @POST("userInfo/modifyImage")
-    Call<ResponseBody> post(@Field("userId") String id, @Field("type") String type, @Field("file") String file);
 
     @Multipart
     @POST("userInfo/modifyImage")
     Call<informationBean> setHttpPortrait(@PartMap Map<String, RequestBody> map,
                                           @Part MultipartBody.Part image);
-
-    @Streaming
-    @GET
-    Call<ResponseBody> getPicture(@Url String url);
 
 }
