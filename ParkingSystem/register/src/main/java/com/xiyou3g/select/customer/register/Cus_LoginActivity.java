@@ -16,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.xiyou3g.baseapplication.eventbus.EventMessage;
 import com.xiyou3g.select.customer.register.Api.IdentifyingCodeService;
 import com.xiyou3g.select.customer.register.Api.LoginService;
 import com.xiyou3g.select.customer.register.bean.IdentifyingCodeResponse;
@@ -104,10 +105,32 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                 assert loginResponse != null;
                 loginSuccess = loginResponse.getSuccess();
                 getSharedPreferences("data", MODE_PRIVATE)
+<<<<<<< HEAD
                         .edit().putString("userId", loginResponse.getData().getId())
                         .putString("userToken", loginResponse.getData().getUserToken())
                         .putString("mobile", loginResponse.getData().getMobile())
                         .apply();
+=======
+                        .edit().putString("userId", loginResponse.getData().getId()).apply();
+                getSharedPreferences("data", MODE_PRIVATE)
+                        .edit().putString("userToken", loginResponse.getData().getUserToken()).apply();
+                getSharedPreferences("data", MODE_PRIVATE)
+                        .edit().putString("mobile", loginResponse.getData().getMobile()).apply();
+                /*LoginUtil.isLogin = true;
+                LoginUtil.password = "admin";*/
+                EventBus.getDefault().post(new EventMessage(
+                        loginResponse.getData().getFace()+","+
+                                loginResponse.getData().getNickname()+","+
+                                loginResponse.getData().getSex()+","+
+                                loginResponse.getData().getBirthday()+","+
+                                loginResponse.getData().getCountry()+
+                                loginResponse.getData().getProvince()+
+                                loginResponse.getData().getCity()+
+                                loginResponse.getData().getDistrict()+","+
+                                loginResponse.getData().getMobile()+","+
+                                loginResponse.getData().getDescription()));           //发送EventBus
+                //EventBus.getDefault().postSticky(loginResponse);
+>>>>>>> 7e1e9c7fede583ec7ee8ec74899478785fa68e60
                 EventBus.getDefault().postSticky(loginResponse);
                 //Log.d("TAG", "onResponse: " + loginResponse);
             }

@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +24,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 public class personActivity extends AppCompatActivity{
 
     private Fragment fragment;
+    private ConstraintLayout constraintLayout;
 
     @SuppressLint("NewApi")
     @Override
@@ -73,4 +76,14 @@ public class personActivity extends AppCompatActivity{
         }
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            //这里写你要在用户按下返回键同时执行的动作
+            moveTaskToBack(false);            //核心代码：屏蔽返回行为
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

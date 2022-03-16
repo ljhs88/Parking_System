@@ -2,7 +2,6 @@ package com.xiyou3g.information.bean;
 
 public class requestInformationBean {
 
-
     private String id;
     private String nickname;
     private String sex;

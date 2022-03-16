@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
         ActivityCompat.requestPermissions(MainActivity.this, p, 1);
-        initView();
 
+        initView();
     }
 
     private void initView() {

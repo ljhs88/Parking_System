@@ -22,7 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
+import com.xiyou3g.information.Utility.StringAndBitmap;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -31,6 +31,7 @@ import com.xiyou3g.information.bean.personal_inf;
 
 import org.litepal.LitePal;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -52,6 +53,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import com.xiyou3g.information.bean.requestInformationBean;
 import com.xiyou3g.information.retrofit.Api;
 import com.xiyou3g.information.bean.informationBean;
+import com.xiyou3g.information.retrofit.mRetrofit;
 
 public class personal_information extends Fragment implements View.OnClickListener {
 
@@ -68,10 +70,10 @@ public class personal_information extends Fragment implements View.OnClickListen
     private EditText edit_phone;
     private EditText edit_location;
     private EditText edit_personality;
-    private Retrofit retrofit;
-    private Api api;
 
     private String userid;
+    private String mobile;
+    private String smsCode;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,41 +84,31 @@ public class personal_information extends Fragment implements View.OnClickListen
         SharedPreferences pref = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
         userid = pref.getString("userid","");
 
-        //步骤4:创建Retrofit对象
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://101.201.78.192:8888/") // 设置网络请求baseUrl
-                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析
-                .build();
-        // 步骤5:创建网络请求接口的实例
-        api = retrofit.create(Api.class);
-        LitePal.getDatabase();
+        userid = "946762136657330176";
+        mobile = "18992020668";
+        smsCode = "376646";
 
         getEditTextId();
 
-        getContent();
-
-        //setEditText();
+        getContent(userid);
 
         head_button.setOnClickListener(this);
         back.setOnClickListener(this);
         return view;
     }
 
-    private void getContent() {
-        //步骤6：对发送请求进行封装:
-        requestInformationBean request = new requestInformationBean("946468093863919616","CodePianist",
-                "1", "2002-03-23T14:18:46.015+00:00", "中国", "陕西省", "西安市",
-                "长安区", "手执烟火谋生活，心怀诗意以谋爱");
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), request.toString());
-        retrofit2.Call<informationBean> call = api.postBody(requestBody);
+    private void getContent(String userid) {
+        Retrofit retrofit = mRetrofit.getInstance();
+        Api api = mRetrofit.api;
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), userid);
+        retrofit2.Call<informationBean> call = api.post(userid);
         //步骤7:发送网络请求(异步)
         call.enqueue(new Callback<informationBean>() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                Log.d("123", "response");
                 if (response.body()!=null) {
                     informationBean bean = response.body();
+                    Log.d("123", "GET:"+response.body().toString());
                     edit_name.setText(bean.getData().getNickname());
                     if (bean.getData().getSex() == 1) {
                         edit_male.setText("男");
@@ -127,9 +119,7 @@ public class personal_information extends Fragment implements View.OnClickListen
                     edit_phone.setText(bean.getData().getMobile());
                     edit_location.setText(bean.getData().getDistrict());
                     edit_personality.setText(bean.getData().getDescription());
-
-                    headBitmap = StringAndBitmap.stringToBitmap(bean.getData().getFace());
-                    head_image.setImageBitmap(headBitmap);
+                    Glide.with(getContext()).load("http"+bean.getData().getFace().substring(5)).into(head_image);
                 }
             }
 
@@ -149,7 +139,16 @@ public class personal_information extends Fragment implements View.OnClickListen
             //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
             startActivityForResult(intent, 2);
         } else if (id == R.id.back) {
-            getActivity().onBackPressed();
+            String name = String.valueOf(edit_name.getText());
+            String mobile = String.valueOf(edit_phone.getText());
+            //String head = StringAndBitmap.bitmapToString(headBitmap);
+            Intent intent = new Intent();
+            intent.putExtra("name", name);
+            intent.putExtra("mobile", mobile);
+            intent.putExtra("head", headBitmap);
+            getActivity().setResult(1, intent);
+            //Log.d("123", "back");
+            getActivity().finish();
         }
     }
 
@@ -170,7 +169,7 @@ public class personal_information extends Fragment implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /*
+    /**
      * 剪切图片
      */
     private void crop(Uri uri) {
@@ -194,8 +193,6 @@ public class personal_information extends Fragment implements View.OnClickListen
     }
 
     /**
-     * @author xixili
-     * created at 2016/2/27 14:32
      * 获取剪切之后的图片
      */
     private void getPic(Intent picdata) {
@@ -224,91 +221,34 @@ public class personal_information extends Fragment implements View.OnClickListen
         back = view.findViewById(R.id.back);
     }
 
-    /*private void setEditText() {
-        List<personal_inf> dbList = LitePal.findAll(personal_inf.class);
-        if (dbList.size() > 0) {
-            edit_name.setText(dbList.get(0).getName());
-            edit_male.setText(dbList.get(0).getMale());
-            edit_phone.setText(dbList.get(0).getPhone_member());
-            edit_birthday.setText(dbList.get(0).getBirthday());
-            edit_location.setText(dbList.get(0).getLocation());
-            edit_personality.setText(dbList.get(0).getPerson_sign());
-            headBitmap = StringAndBitmap.stringToBitmap(dbList.get(0).getHead_bitmap());
-            head_image.setImageBitmap(headBitmap);
-        }
-    }*/
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("123", "onDestroy");
-        /*LitePal.deleteAll(personal_inf.class);
-        personal_inf db = new personal_inf();
-        db.setName(String.valueOf(edit_name.getText()));
-        db.setMale(String.valueOf(edit_male.getText()));
-        db.setBirthday(String.valueOf(edit_birthday.getText()));
-        db.setPhone_member(String.valueOf(edit_phone.getText()));
-        db.setLocation(String.valueOf(edit_location.getText()));
-        db.setPerson_sign(String.valueOf(edit_personality.getText()));
-        String headString = StringAndBitmap.bitmapToString(headBitmap);
-        db.setHead_bitmap(headString);
-        db.save();*/
         // 更新头像
-        setHead(userid, "0", StringAndBitmap.bitmapToString(headBitmap));
+        if (headBitmap != null) {
+            mRetrofit retrofit = new mRetrofit();
+            File file = StringAndBitmap.getFile(headBitmap);
+            retrofit.setHttpPortrait(file.getAbsolutePath(), userid, "0");
+        }
+        // 更新内容
         setContent(userid);
     }
 
     /**
-     * 更新头像
-     * @param userid
-     * @param type
-     * @param headString
-     */
-    private void setHead(String userid, String type, String headString) {
-        retrofit2.Call<informationBean> call = api.postBody(userid, type, headString);
-        //步骤7:发送网络请求(异步)
-        call.enqueue(new Callback<informationBean>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                Log.d("123", "response");
-            }
-
-            @Override
-            public void onFailure(Call<informationBean> call, Throwable t) {
-                Log.d("123", t.toString());
-            }
-        });
-    }
-
-    /**
      * 更新信息
-     * @param id
+     * @param userid
      */
-    private void setContent(String id) {
+    private void setContent(String userid) {
         //步骤6：对发送请求进行封装:
         String sex = "0";
         if (String.valueOf(edit_male.getText()).equals("男")) {
             sex = "1";
         }
-        requestInformationBean request = new requestInformationBean(id,String.valueOf(edit_name.getText()),
+        requestInformationBean request = new requestInformationBean(userid,String.valueOf(edit_name.getText()),
                 sex, String.valueOf(edit_birthday.getText()), "中国", "陕西省", "西安市",
                 String.valueOf(edit_location.getText()), String.valueOf(edit_personality.getText()));
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), request.toString());
-        retrofit2.Call<informationBean> call = api.postBody(requestBody);
-        //步骤7:发送网络请求(异步)
-        call.enqueue(new Callback<informationBean>() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                Log.d("123", "response");
-            }
-
-            @Override
-            public void onFailure(Call<informationBean> call, Throwable t) {
-                Log.d("123", t.toString());
-            }
-        });
+        mRetrofit.setContent(requestBody);
     }
 
 }
