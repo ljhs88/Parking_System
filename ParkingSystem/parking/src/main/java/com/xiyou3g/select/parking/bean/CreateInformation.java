@@ -67,4 +67,16 @@ public class CreateInformation {
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
+
+    @Override
+    public String toString() {
+        return "CreateInformation{" +
+                "status=" + status +
+                ", name='" + name + '\'' +
+                ", number=" + number +
+                ", price=" + price +
+                ", briefIntroduction='" + briefIntroduction + '\'' +
+                ", bitmap=" + bitmap +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.xiyou3g.select.parking;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,14 +19,38 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeAddress;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.xiyou3g.select.parking.bean.CreateInformation;
 import com.xiyou3g.select.parking.util.RetrofitManager;
+import com.xiyou3g.select.parking.util.UpWindow;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Objects;
 
 @Route(path = "/parking/ParkingFragment")
-public class ParkingFragment extends Fragment implements AMap.OnMapLongClickListener, AMap.OnMarkerClickListener, View.OnClickListener, AMap.OnInfoWindowClickListener {
+public class ParkingFragment extends Fragment implements AMap.OnMapLongClickListener,
+        AMap.OnMarkerClickListener,
+        View.OnClickListener,
+        AMap.OnInfoWindowClickListener,
+        AMap.OnMapClickListener,
+        AMap.OnMyLocationChangeListener,
+        GeocodeSearch.OnGeocodeSearchListener {
+
     private View mapLayout;
     private MapView mapView;
     private AMap aMap;
@@ -36,16 +61,20 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
     private static final int PARKING = 2;
     private static final int STALL = 3;
     private RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
+    private UpWindow upWindow;
+    private Boolean isShow = false;
+    private int change = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mapLayout = inflater.inflate(R.layout.fragment_parking, container, false);
+
         Log.e("TAG", "onCreateView: ");
         AMapLocationClient.updatePrivacyShow(getContext(), true, true);
         AMapLocationClient.updatePrivacyAgree(getContext(), true);
         AMapLocationClient.setApiKey("8b3f86bb7f0a09c36d1d1a0edf8e87ba");
-        //EventBus.getDefault().register(getContext());
+
 
         mapView = mapLayout.findViewById(R.id.parking_map);
 
@@ -65,14 +94,25 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
         aMap.showIndoorMap(true);
         aMap.addOnMapLongClickListener(this);
         aMap.addOnMarkerClickListener(this);
+        aMap.setOnMapClickListener(this);
+        aMap.setOnMyLocationChangeListener(this);
         return mapLayout;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
-        //EventBus.getDefault().unregister(getContext());
+        Log.d("TAG", "onDestroy: " + "fragment");
+
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -101,7 +141,7 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
 
     private void showBottomSheetDialog() {
         if (bottomSheetDialog == null) {
-            bottomSheetDialog = new BottomSheetDialog(getContext(), R.style.BottomSheetDialog);
+            bottomSheetDialog = new BottomSheetDialog(Objects.requireNonNull(getContext()), R.style.BottomSheetDialog);
         }
         bottomSheetDialog.setCancelable(true);
         bottomSheetDialog.setContentView(R.layout.layout_bottomsheetdialog_marker);
@@ -152,17 +192,63 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
         startActivity(intent);
     }
 
-/*    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void receiveInformation(CreateInformation createInformation) {
+        Log.d("TAG", "receiveInformation: ");
         if (createInformation.getStatus() == CHARGE) {
             aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).snippet(createInformation.getBriefIntroduction()).icon(BitmapDescriptorFactory.fromResource(R.drawable.charge)));
         } else {
+            Log.d("TAG", "receiveInformation: ");
             aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).snippet(createInformation.getBriefIntroduction()).icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_image)));
         }
-    }*/
+    }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
 
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        Log.d("TAG", "onMapClick: " + isShow);
+        if (isShow) {
+            upWindow.hint();
+            isShow = true;
+        } else {
+            upWindow.show();
+            isShow = false;
+
+        }
+    }
+
+    @Override
+    public void onMyLocationChange(Location location) {
+        if (change == 0) {
+            GeocodeSearch geocoderSearch = null;
+            try {
+                geocoderSearch = new GeocodeSearch(getContext());
+                geocoderSearch.setOnGeocodeSearchListener(this);
+                RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(location.getLatitude(), location.getLongitude()), 200, GeocodeSearch.AMAP);
+                geocoderSearch.getFromLocationAsyn(query);
+                Log.d("TAG", "onMyLocationChange: ");
+            } catch (AMapException e) {
+                e.printStackTrace();
+            }
+            change++;
+        }
+    }
+
+    @Override
+    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+        RegeocodeAddress regeocodeAddress = regeocodeResult.getRegeocodeAddress();
+        String city = regeocodeAddress.getCity();
+        Log.d("TAG", "onRegeocodeSearched: " + city);
+        upWindow = new UpWindow(getActivity(), R.layout.search_view, R.style.SearchAnim, R.layout.layout_bottomsheetdialog_recycler, city);
+    }
+
+    @Override
+    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+        Log.d("TAG", "onGeocodeSearched: ");
     }
 }
