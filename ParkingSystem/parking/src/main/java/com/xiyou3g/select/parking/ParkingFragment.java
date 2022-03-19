@@ -197,12 +197,10 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
         Log.d("TAG", "receiveInformation: ");
         if (createInformation.getStatus() == CHARGE) {
             aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).
-                    snippet(createInformation.getBriefIntroduction()).
                     icon(BitmapDescriptorFactory.fromResource(R.drawable.charge)));
         } else {
             Log.d("TAG", "receiveInformation: ");
             aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).
-                    snippet(createInformation.getBriefIntroduction()).
                     icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_image)));
         }
     }
