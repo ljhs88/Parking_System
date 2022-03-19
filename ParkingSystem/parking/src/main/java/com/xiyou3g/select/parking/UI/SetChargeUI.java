@@ -1,7 +1,7 @@
 package com.xiyou3g.select.parking.UI;
 
 import android.app.Activity;
-import android.text.InputType;
+import android.text.InputFilter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,10 +21,16 @@ public class SetChargeUI extends SetUI {
         TextView textView2 = activity.findViewById(R.id.parking_text2);
         TextView textView3 = activity.findViewById(R.id.parking_text3);
         TextView textView4 = activity.findViewById(R.id.parking_text4);
-        textView1.setText("姓名");
-        textView2.setText("充电桩数量(个)");
-        textView3.setText("充电桩价格(元/时)");
-        textView4.setText("简介");
+        TextView textView5 = activity.findViewById(R.id.parking_text5);
+        TextView textView6 = activity.findViewById(R.id.parking_text6);
+        TextView textView7 = activity.findViewById(R.id.parking_text7);
+        textView1.setText("拥有者");
+        textView2.setText("拥有者电话");
+        textView3.setText("车位信息");
+        textView4.setText("车位价格(元/时)");
+        textView5.setText("管理员");
+        textView6.setText("管理员电话");
+        textView7.setText("超时收费");
     }
 
     @Override
@@ -33,12 +39,19 @@ public class SetChargeUI extends SetUI {
         EditText editText2 = activity.findViewById(R.id.parking_edit2);
         EditText editText3 = activity.findViewById(R.id.parking_edit3);
         EditText editText4 = activity.findViewById(R.id.parking_edit4);
-        editText1.setHint("姓名");
-        editText2.setHint("数量");
-        editText2.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText3.setHint("价格");
-        editText2.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText4.setHint("简介");
-        editText4.setMaxLines(3);
+        EditText editText5 = activity.findViewById(R.id.parking_edit5);
+        EditText editText6 = activity.findViewById(R.id.parking_edit6);
+        EditText editText7 = activity.findViewById(R.id.parking_edit7);
+        editText1.setHint("拥有者");
+        editText2.setHint("拥有者电话");
+        editText2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+        editText3.setHint("车位信息");
+        editText4.setHint("车位价格(元/时)");
+        editText4.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+        editText5.setHint("管理员");
+        editText6.setHint("管理员电话");
+        editText6.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+        editText7.setHint("超时收费");
+        editText7.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
     }
 }

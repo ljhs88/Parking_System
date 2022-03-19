@@ -64,8 +64,11 @@
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/fragment_parking.xml" value="0.125" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_delete.xml" value="0.22" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_marker.xml" value="0.25" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_recycler.xml" value="0.1" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_select_photo.xml" value="0.24592391304347827" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/layout_show_information.xml" value="0.22780797101449277" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/recycler_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/layout/search_view.xml" value="0.3619791666666667" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/menu/parking_menu.xml" value="0.2682291666666667" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/parking/src/main/res/xml/file_paths.xml" value="0.11927083333333334" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/pay/src/main/res/layout/activity_adm_pay.xml" value="0.24947916666666667" />

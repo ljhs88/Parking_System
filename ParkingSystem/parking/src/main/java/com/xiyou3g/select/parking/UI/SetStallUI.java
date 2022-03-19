@@ -1,7 +1,7 @@
 package com.xiyou3g.select.parking.UI;
 
 import android.app.Activity;
-import android.text.InputType;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,12 +22,19 @@ public class SetStallUI extends SetUI {
         TextView textView2 = activity.findViewById(R.id.parking_text2);
         TextView textView3 = activity.findViewById(R.id.parking_text3);
         TextView textView4 = activity.findViewById(R.id.parking_text4);
-        View view = activity.findViewById(R.id.parking_view4);
+        TextView textView5 = activity.findViewById(R.id.parking_text5);
+        TextView textView6 = activity.findViewById(R.id.parking_text6);
+        TextView textView7 = activity.findViewById(R.id.parking_text7);
+        View view = activity.findViewById(R.id.parking_view7);
+        textView1.setText("拥有者");
+        textView2.setText("拥有者电话");
+        textView3.setText("车位信息");
+        textView4.setText("车位价格(元/时)");
+        textView5.setText("管理员");
+        textView6.setText("管理员电话");
+        textView7.setVisibility(View.GONE);
         view.setVisibility(View.GONE);
-        textView1.setText("姓名");
-        textView2.setText("车位价格(元/小时)");
-        textView3.setText("简介");
-        textView4.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -36,13 +43,19 @@ public class SetStallUI extends SetUI {
         EditText editText2 = activity.findViewById(R.id.parking_edit2);
         EditText editText3 = activity.findViewById(R.id.parking_edit3);
         EditText editText4 = activity.findViewById(R.id.parking_edit4);
-        editText1.setHint("姓名");
-        editText2.setHint("价格");
-        editText2.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText3.setHint("简介");
-        editText3.setMaxLines(3);
-        editText4.setVisibility(View.GONE);
-
+        EditText editText5 = activity.findViewById(R.id.parking_edit5);
+        EditText editText6 = activity.findViewById(R.id.parking_edit6);
+        EditText editText7 = activity.findViewById(R.id.parking_edit7);
+        editText1.setHint("拥有者");
+        editText2.setHint("拥有者电话");
+        editText2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+        editText3.setHint("车位信息");
+        editText4.setHint("车位价格(元/时)");
+        editText4.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+        editText5.setHint("管理员");
+        editText6.setHint("管理员电话");
+        editText6.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
+        editText7.setVisibility(View.GONE);
     }
 
 

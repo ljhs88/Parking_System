@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,24 +32,31 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.amap.api.maps.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.gson.Gson;
 import com.xiyou3g.select.parking.UI.SetChargeUI;
 import com.xiyou3g.select.parking.UI.SetParkingUI;
 import com.xiyou3g.select.parking.UI.SetStallUI;
 import com.xiyou3g.select.parking.UI.SetUI;
-import com.xiyou3g.select.parking.api.CreateParkingService;
+import com.xiyou3g.select.parking.api.CreateStallService;
 import com.xiyou3g.select.parking.bean.CreateInformation;
-import com.xiyou3g.select.parking.bean.CreateParkingData;
-import com.xiyou3g.select.parking.bean.CreateParkingResponse;
+import com.xiyou3g.select.parking.bean.CreateStallData;
+import com.xiyou3g.select.parking.bean.CreateStallResponse;
+import com.xiyou3g.select.parking.bean.PhotoResponse;
 import com.xiyou3g.select.parking.util.CameraUtil;
 import com.xiyou3g.select.parking.util.RetrofitManager;
 import com.xiyou3g.select.parking.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -193,29 +199,74 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
             CreateInformation createInformation = saveInformation();
             if (checkCreateInformation(createInformation)) {
                 EventBus.getDefault().postSticky(createInformation);
-                CreateParkingData createParkingData = new CreateParkingData();
-                createParkingData.setName(createInformation.getName());
-                createParkingData.setNum(createInformation.getNumber());
-                createParkingData.setHourPrice(createInformation.getPrice());
-                createParkingData.setLatitude(String.valueOf(thisLatLng.latitude));
-                createParkingData.setLongitude(String.valueOf(thisLatLng.longitude));
-                createParkingData.setDescription(createInformation.getBriefIntroduction());
-                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
-                createParkingData.setAdminMobile(sharedPreferences.getString("mobile", ""));
+                if (STATUS == STALL) {
 
-                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), createParkingData.toString());
-                CreateParkingService createParkingService = retrofitManager.getRetrofit().create(CreateParkingService.class);
-                createParkingService.createParking(requestBody).enqueue(new Callback<CreateParkingResponse>() {
-                    @Override
-                    public void onResponse(Call<CreateParkingResponse> call, Response<CreateParkingResponse> response) {
+                    CreateStallData createStallData = new CreateStallData();
+                    /*SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+                    String userId = sharedPreferences.getString("userId", "");
+                    String mobile = sharedPreferences.getString("mobile", "");
+                    String userToken = sharedPreferences.getString("userToken", "");
+*/
+                    String userId = "946762136657330176";
+                    String mobile = "18391072615";
+                    createStallData.setUserId(userId);
+                    createStallData.setAdminMobile(mobile);
+                    createStallData.setOwnerMobile(mobile);
+                    createStallData.setAddress(createInformation.getBriefIntroduction());
+                    createStallData.setHourPrice(createInformation.getPrice());
+                    createStallData.setLatitude(String.valueOf(thisLatLng.latitude));
+                    createStallData.setLongitude(String.valueOf(thisLatLng.longitude));
 
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),new Gson().toJson(createStallData));
+
+                    CreateStallService createStallService = retrofitManager.getRetrofit().create(CreateStallService.class);
+                    createStallService.createStall(requestBody).enqueue(new Callback<CreateStallResponse>() {
+                        @Override
+                        public void onResponse(@NonNull Call<CreateStallResponse> call, @NonNull Response<CreateStallResponse> response) {
+
+                            Log.d("TAG", "onResponse: " + response.body());
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<CreateStallResponse> call, @NonNull Throwable t) {
+                            Log.e("TAG", "onFailure: " + t);
+                        }
+                    });
+                    File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+                    File file = new File(mediaStorageDir.getPath()
+                            + File.separator
+                            + "Pictures/temp.jpg");
+                    Bitmap bitmap = createInformation.getBitmap();
+                    try {
+                        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                        bos.flush();
+                        bos.close();
+
+
+                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), file);
+                        MultipartBody.Part body = MultipartBody.Part.create(requestFile);
+                        Map<String, RequestBody> map = new HashMap<>();
+                        map.put("spId", RequestBody.create(MediaType.parse("multipart/form-data"), userId));
+                        map.put("type", RequestBody.create(MediaType.parse("multipart/form-data"), "0"));
+                        createStallService.upLoadPhoto(map, body).enqueue(new Callback<PhotoResponse>() {
+                            @Override
+                            public void onResponse(@NonNull Call<PhotoResponse> call, @NonNull Response<PhotoResponse> response) {
+                                Log.d("TAG", "onResponse: " + response.body());
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<PhotoResponse> call, @NonNull Throwable t) {
+                                Log.e("TAG", "onFailure: " + t.toString());
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-
-                    @Override
-                    public void onFailure(Call<CreateParkingResponse> call, Throwable t) {
-
-                    }
-                });
+                }
             } else {
                 ToastUtil.getToast(Cus_ParkingActivity.this, "请填写正确的信息");
             }
@@ -356,10 +407,10 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
                     !createInformation.getBriefIntroduction().equals("") &&
                     picture.getPaddingStart() != 0;
         } else {
-            return !createInformation.getName().equals("") &&
-                    createInformation.getPrice() != -1 &&
-                    createInformation.getBriefIntroduction().equals("") &&
-                    picture.getPaddingStart() != 0;
+            return (!createInformation.getName().equals("")) &&
+                    (createInformation.getPrice() != -1) &&
+                    (!createInformation.getBriefIntroduction().equals("")) &&
+                    (picture.getPaddingTop() == 0);
         }
     }
 

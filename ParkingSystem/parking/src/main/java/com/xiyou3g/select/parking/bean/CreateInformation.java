@@ -6,17 +6,23 @@ public class CreateInformation {
 
     private int status;
     private String name;
-    private int number = 1;
+    private String ownerMobile;
+    private String ownerNum;
     private int price;
-    private String briefIntroduction;
+    private String adminName;
+    private String adminMobile;
+    private int finePrice;
     private Bitmap bitmap;
 
-    public CreateInformation(int status, String name, int number, int price, String briefIntroduction, Bitmap bitmap) {
+    public CreateInformation(int status, String name, String ownerMobile, String ownerNum, int price, String adminName, String adminMobile, int finePrice, Bitmap bitmap) {
         this.status = status;
         this.name = name;
-        this.number = number;
+        this.ownerMobile = ownerMobile;
+        this.ownerNum = ownerNum;
         this.price = price;
-        this.briefIntroduction = briefIntroduction;
+        this.adminName = adminName;
+        this.adminMobile = adminMobile;
+        this.finePrice = finePrice;
         this.bitmap = bitmap;
     }
 
@@ -36,12 +42,20 @@ public class CreateInformation {
         this.name = name;
     }
 
-    public int getNumber() {
-        return number;
+    public String getOwnerMobile() {
+        return ownerMobile;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setOwnerMobile(String ownerMobile) {
+        this.ownerMobile = ownerMobile;
+    }
+
+    public String getOwnerNum() {
+        return ownerNum;
+    }
+
+    public void setOwnerNum(String ownerNum) {
+        this.ownerNum = ownerNum;
     }
 
     public int getPrice() {
@@ -52,12 +66,28 @@ public class CreateInformation {
         this.price = price;
     }
 
-    public String getBriefIntroduction() {
-        return briefIntroduction;
+    public String getAdminName() {
+        return adminName;
     }
 
-    public void setBriefIntroduction(String briefIntroduction) {
-        this.briefIntroduction = briefIntroduction;
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public String getAdminMobile() {
+        return adminMobile;
+    }
+
+    public void setAdminMobile(String adminMobile) {
+        this.adminMobile = adminMobile;
+    }
+
+    public int getFinePrice() {
+        return finePrice;
+    }
+
+    public void setFinePrice(int finePrice) {
+        this.finePrice = finePrice;
     }
 
     public Bitmap getBitmap() {
@@ -66,5 +96,20 @@ public class CreateInformation {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateInformation{" +
+                "status=" + status +
+                ", name='" + name + '\'' +
+                ", ownerMobile='" + ownerMobile + '\'' +
+                ", ownerNum='" + ownerNum + '\'' +
+                ", price=" + price +
+                ", adminName='" + adminName + '\'' +
+                ", adminMobile='" + adminMobile + '\'' +
+                ", finePrice=" + finePrice +
+                ", bitmap=" + bitmap +
+                '}';
     }
 }

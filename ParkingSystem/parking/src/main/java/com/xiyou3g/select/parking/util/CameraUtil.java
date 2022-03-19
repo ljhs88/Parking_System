@@ -41,11 +41,11 @@ public class CameraUtil {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {// sdk >= 24  android7.0以上
             
             return FileProvider.getUriForFile(context,
-                    context.getApplicationContext().getPackageName() + ".provider",//与清单文件中android:authorities的值保持一致
+                    "com.xiyou3g.select.parking.provider",//与清单文件中android:authorities的值保持一致
                     mediaFile);
 
         } else {
-            return Uri.fromFile(mediaFile);//或者 Uri.isPaise("file://"+file.toString()
+            return Uri.fromFile(mediaFile);
 
         }
     }
