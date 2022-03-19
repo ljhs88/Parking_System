@@ -53,13 +53,20 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.xiyou3g.information.retrofit.mRetrofit;
+import com.xiyou3g.information.Utility.PhotoChoice;
 
 @Route(path = "/information/informationFragment")
 public class informationFragment extends Fragment implements View.OnClickListener {
 
     private View view;
+
+    private final int BACKGROUND_PHOTO = 2;
+    private final int BACKGROUND_CROP = 3;
+
     private Button personal_button;
     private Button history_button;
+    private Button history_button2;
+    private Button id_cardButton;
     private ImageView image_head;
     private ImageButton backButton;
     private TextView textNickname;
@@ -90,6 +97,8 @@ public class informationFragment extends Fragment implements View.OnClickListene
         backToDesk_button.setOnClickListener(this);
         changeAccount.setOnClickListener(this);
         backButton.setOnClickListener(this);
+        history_button2.setOnClickListener(this);
+        id_cardButton.setOnClickListener(this);
 
         return view;
     }
@@ -147,12 +156,14 @@ public class informationFragment extends Fragment implements View.OnClickListene
     }
 
     public void getViewId() {
+        history_button2 = view.findViewById(R.id.historyTo2);
+        id_cardButton = view.findViewById(R.id.Id_cardTo);
         backToDesk_button = view.findViewById(R.id.backToDesk);
         changeAccount = view.findViewById(R.id.changeAccount);
         personal_button = view.findViewById ( R.id.personal_button );
         history_button = view.findViewById(R.id.historyTo);
         image_head = view.findViewById(R.id.head);
-        backButton = view.findViewById(R.id.back);
+        backButton = view.findViewById(R.id.background);
         textPhone = view.findViewById(R.id.user_account);
         textNickname = view.findViewById(R.id.username);
     }
@@ -168,11 +179,19 @@ public class informationFragment extends Fragment implements View.OnClickListene
             Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "history");
             startActivity(intent1);
-        } else if (id == R.id.back) {
+        } else if (id == R.id.historyTo2) {
+            Intent intent1 = new Intent(getContext(), personActivity.class);
+            intent1.putExtra("select fragment", "history2");
+            startActivity(intent1);
+        } else if (id == R.id.Id_cardTo) {
+            Intent intent1 = new Intent(getContext(), personActivity.class);
+            intent1.putExtra("select fragment", "IdCard");
+            startActivity(intent1);
+        } else if (id == R.id.background) {
             Intent intent2 = new Intent(Intent.ACTION_PICK, null);
             intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
-            startActivityForResult(intent2, 2);
+            startActivityForResult(intent2, BACKGROUND_PHOTO);
         } else if (id == R.id.changeAccount) {
             getActivity().finish();
             ARouter.getInstance().build("/customer/Cus_LoginActivity").navigation();
@@ -195,59 +214,21 @@ public class informationFragment extends Fragment implements View.OnClickListene
                 textNickname.setText(name);
             if (!"".equals(mobile))
                 textPhone.setText(mobile);
-        } else if (requestCode == 2) {
+        } else if (requestCode == BACKGROUND_PHOTO) {
             if (data != null) {
                 // 得到图片的路径
                 Uri uri = data.getData();
-                crop(uri);
+                Intent intent = PhotoChoice.crop(uri, "background");
+                startActivityForResult(intent, BACKGROUND_CROP);
             }
-        } else if (requestCode == 3) {
+        } else if (requestCode == BACKGROUND_CROP) {
             // 从剪切图片返回的数据
             if (data != null) {
-                getPic(data);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /*
-     * 剪切图片
-     */
-    private void crop(Uri uri) {
-        // 裁剪图片
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        // 裁剪框的比例，1：1
-        intent.putExtra("aspectX", 2);
-        intent.putExtra("aspectY", 1);
-        // 裁剪后输出图片的尺寸大小
-        // 这里吐槽下：X Y的值在返回的是data的时候，不同的手机能够承受的上限是不一样的，
-        // 举个例子：之前写到405：VIVO X6没有任何问题，而在小米note4上就抛了SecurityException！
-        intent.putExtra("outputX", 250);
-        intent.putExtra("outputY", 250);
-        //intent.putExtra("outputFormat", "PNG");// 图片格式
-        //intent.putExtra("noFaceDetection", true);// 取消人脸识别
-        intent.putExtra("return-data", true);
-        // 开启一个带有返回值的Activity
-        startActivityForResult(intent, 3);
-    }
-
-    /**
-     * @author xixili
-     * created at 2016/2/27 14:32
-     * 获取剪切之后的图片
-     */
-    private void getPic(Intent picdata) {
-        Bundle extras = picdata.getExtras();
-        if (extras != null) {
-            backBitmap = extras.getParcelable("data");//转换为Bitmap类型
-
-            if(backBitmap!=null){
-                //aCache.put("ShakeBgFromUser",photo);    //保存在缓存里，ACache是我用的一个缓存框架
+                backBitmap = PhotoChoice.getPic(data);
                 backButton.setImageBitmap(backBitmap);//展示
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -255,7 +236,6 @@ public class informationFragment extends Fragment implements View.OnClickListene
         super.onDestroy();
         if (backBitmap != null) {
             //Log.d("123", "onDestroy:"+StringAndBitmap.getFile(backBitmap));
-            Retrofit retrofit = mRetrofit.getInstance();
             File file = StringAndBitmap.getFile(backBitmap);
             //Log.d("123", "retrofit"+userid);
             //Log.d("123", file.getName() +","+ file.getAbsolutePath());

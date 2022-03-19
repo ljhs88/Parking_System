@@ -1,4 +1,4 @@
-package com.xiyou3g.information;
+package com.xiyou3g.information.personal;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.xiyou3g.information.R;
 import com.xiyou3g.information.Utility.StringAndBitmap;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -54,6 +56,7 @@ import com.xiyou3g.information.bean.requestInformationBean;
 import com.xiyou3g.information.retrofit.Api;
 import com.xiyou3g.information.bean.informationBean;
 import com.xiyou3g.information.retrofit.mRetrofit;
+import com.xiyou3g.information.Utility.PhotoChoice;
 
 public class personal_information extends Fragment implements View.OnClickListener {
 
@@ -63,6 +66,8 @@ public class personal_information extends Fragment implements View.OnClickListen
     private ImageView head_image;
     private Button head_button;
     private Bitmap headBitmap;
+
+    private Button infUpload;
 
     private EditText edit_name;
     private EditText edit_male;
@@ -92,15 +97,13 @@ public class personal_information extends Fragment implements View.OnClickListen
 
         getContent(userid);
 
-        head_button.setOnClickListener(this);
-        back.setOnClickListener(this);
         return view;
     }
 
     private void getContent(String userid) {
         Retrofit retrofit = mRetrofit.getInstance();
         Api api = mRetrofit.api;
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), userid);
+        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), userid);
         retrofit2.Call<informationBean> call = api.post(userid);
         //步骤7:发送网络请求(异步)
         call.enqueue(new Callback<informationBean>() {
@@ -139,17 +142,31 @@ public class personal_information extends Fragment implements View.OnClickListen
             //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
             startActivityForResult(intent, 2);
         } else if (id == R.id.back) {
-            String name = String.valueOf(edit_name.getText());
-            String mobile = String.valueOf(edit_phone.getText());
-            //String head = StringAndBitmap.bitmapToString(headBitmap);
-            Intent intent = new Intent();
-            intent.putExtra("name", name);
-            intent.putExtra("mobile", mobile);
-            intent.putExtra("head", headBitmap);
-            getActivity().setResult(1, intent);
-            //Log.d("123", "back");
-            getActivity().finish();
+            getActivity().onBackPressed();
+        } else if (id == R.id.infUpload) {
+            setInf();
         }
+    }
+
+    private void setInf() {
+        // 更新头像
+        if (headBitmap != null) {
+            mRetrofit retrofit = new mRetrofit();
+            File file = StringAndBitmap.getFile(headBitmap);
+            retrofit.setHttpPortrait(file.getAbsolutePath(), userid, "0");
+        }
+        // 更新内容
+        setContent(userid);
+
+        String name = String.valueOf(edit_name.getText());
+        String mobile = String.valueOf(edit_phone.getText());
+        //String head = StringAndBitmap.bitmapToString(headBitmap);
+        Intent intent = new Intent();
+        intent.putExtra("name", name);
+        intent.putExtra("mobile", mobile);
+        intent.putExtra("head", headBitmap);
+        getActivity().setResult(1, intent);
+        getActivity().onBackPressed();
     }
 
     @Override
@@ -158,52 +175,17 @@ public class personal_information extends Fragment implements View.OnClickListen
             if (data != null) {
                 // 得到图片的路径
                 Uri uri = data.getData();
-                crop(uri);
+                Intent intent = PhotoChoice.crop(uri, "head");
+                startActivityForResult(intent, 3);
             }
         } else if (requestCode == 3) {
             // 从剪切图片返回的数据
             if (data != null) {
-                getPic(data);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /**
-     * 剪切图片
-     */
-    private void crop(Uri uri) {
-        // 裁剪图片
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", "true");
-        // 裁剪框的比例，1：1
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // 裁剪后输出图片的尺寸大小
-        // 这里吐槽下：X Y的值在返回的是data的时候，不同的手机能够承受的上限是不一样的，
-        // 举个例子：之前写到405：VIVO X6没有任何问题，而在小米note4上就抛了SecurityException！
-        intent.putExtra("outputX", 250);
-        intent.putExtra("outputY", 250);
-        //intent.putExtra("outputFormat", "PNG");// 图片格式
-        //intent.putExtra("noFaceDetection", true);// 取消人脸识别
-        intent.putExtra("return-data", true);
-        // 开启一个带有返回值的Activity
-        startActivityForResult(intent, 3);
-    }
-
-    /**
-     * 获取剪切之后的图片
-     */
-    private void getPic(Intent picdata) {
-        Bundle extras = picdata.getExtras();
-        if (extras != null) {
-            headBitmap = extras.getParcelable("data");//转换为Bitmap类型
-            if(headBitmap!=null){
-                Log.d("123", "展示头像");
+                headBitmap = PhotoChoice.getPic(data);
                 head_image.setImageBitmap(headBitmap);//展示
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -219,20 +201,12 @@ public class personal_information extends Fragment implements View.OnClickListen
         head_image = view.findViewById(R.id.head_photo);
         head_button = view.findViewById(R.id.head_change);
         back = view.findViewById(R.id.back);
+        infUpload = view.findViewById(R.id.infUpload);
+        head_button.setOnClickListener(this);
+        back.setOnClickListener(this);
+        infUpload.setOnClickListener(this);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // 更新头像
-        if (headBitmap != null) {
-            mRetrofit retrofit = new mRetrofit();
-            File file = StringAndBitmap.getFile(headBitmap);
-            retrofit.setHttpPortrait(file.getAbsolutePath(), userid, "0");
-        }
-        // 更新内容
-        setContent(userid);
-    }
 
     /**
      * 更新信息

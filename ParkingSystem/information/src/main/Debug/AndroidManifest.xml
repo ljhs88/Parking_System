@@ -29,6 +29,8 @@
         <activity
             android:name=".personActivity"
             android:exported="false" />
+        <activity android:name=".identityActivity"
+            android:exported="false"/>
         <activity
             android:name=".Cus_InformationActivity"
             android:exported="true">
