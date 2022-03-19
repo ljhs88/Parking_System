@@ -20,14 +20,7 @@ public class ShowInformation {
         this.bitmap = bitmap;
     }
 
-    public ShowInformation(CreateInformation createInformation) {
-        status = createInformation.getStatus();
-        name = createInformation.getName();
-        number = createInformation.getNumber();
-        price = createInformation.getPrice();
-        briefIntroduction = createInformation.getBriefIntroduction();
-        bitmap = createInformation.getBitmap();
-    }
+
 
     public int getStatus() {
         return status;

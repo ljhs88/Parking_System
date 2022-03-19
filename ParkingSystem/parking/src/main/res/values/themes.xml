@@ -7,6 +7,11 @@
         <item name="android:statusBarColor">@color/white</item>
     </style>
 
+    <style name="Theme.ParkingSystem1" parent="Theme.Design.Light.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
     <style name="ThemeOverlay.ParkingSystem.FullscreenContainer" parent="">
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>

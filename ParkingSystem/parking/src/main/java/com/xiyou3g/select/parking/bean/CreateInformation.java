@@ -8,13 +8,15 @@ public class CreateInformation {
     private String name;
     private String ownerMobile;
     private String ownerNum;
-    private int price;
+    private int price = -1;
     private String adminName;
     private String adminMobile;
-    private int finePrice;
+    private int finePrice = -1;
+    private String address;
+
     private Bitmap bitmap;
 
-    public CreateInformation(int status, String name, String ownerMobile, String ownerNum, int price, String adminName, String adminMobile, int finePrice, Bitmap bitmap) {
+    public CreateInformation(int status, String name, String ownerMobile, String ownerNum, int price, String adminName, String adminMobile, int finePrice, String address, Bitmap bitmap) {
         this.status = status;
         this.name = name;
         this.ownerMobile = ownerMobile;
@@ -23,6 +25,7 @@ public class CreateInformation {
         this.adminName = adminName;
         this.adminMobile = adminMobile;
         this.finePrice = finePrice;
+        this.address = address;
         this.bitmap = bitmap;
     }
 
@@ -97,6 +100,16 @@ public class CreateInformation {
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
 
     @Override
     public String toString() {

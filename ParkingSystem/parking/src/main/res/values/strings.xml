@@ -16,5 +16,13 @@
     <string name="delete">删除</string>
     <string name="sure_delete">你确定要删除吗？（此操作不可撤回）</string>
     <string name="sure">确定</string>
+    <string name="ownerName">拥有者</string>
+    <string name="ownerMobile">拥有者电话</string>
+    <string name="address">地址</string>
+    <string name="stallInformation">车位信息</string>
+    <string name="stallPrice">车位价格(元/时)</string>
+    <string name="adminName">管理员姓名</string>
+    <string name="adminMobile">管理员电话</string>
+    <string name="finePrice">超时罚款</string>
 
 </resources>

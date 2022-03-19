@@ -5,7 +5,7 @@ public class PhotoResponse {
     private int status;
     private String msg;
     private boolean success;
-    private String data;
+    private Data data;
 
     public int getStatus() {
         return status;
@@ -31,11 +31,11 @@ public class PhotoResponse {
         this.success = success;
     }
 
-    public String getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Data data) {
         this.data = data;
     }
 
