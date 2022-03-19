@@ -1,39 +1,38 @@
 package com.xiyou3g.information;
 
-import android.annotation.SuppressLint;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.alibaba.android.arouter.facade.annotation.Route;
+import com.xiyou3g.information.R;
+import com.xiyou3g.information.identity.cardPhotoFragment;
+import com.xiyou3g.information.identity.infBaseFragment;
+import com.xiyou3g.information.identity.infChangeFragment;
 import com.xiyou3g.information.personal.personal_history;
 import com.xiyou3g.information.personal.personal_history2;
 import com.xiyou3g.information.personal.personal_idCard;
 import com.xiyou3g.information.personal.personal_information;
 
-@Route(path = "/information/personalActivity")
-public class personActivity extends AppCompatActivity{
+public class identityActivity extends AppCompatActivity {
 
-    private Fragment fragment;
-    private ConstraintLayout constraintLayout;
 
-    @SuppressLint("NewApi")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_personal);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_identity);
 
         //设置状态栏透明
         makeStatusBarTransparent(this);
@@ -41,23 +40,24 @@ public class personActivity extends AppCompatActivity{
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         selectFragment();
+
     }
 
     private void selectFragment() {
         Intent intent = getIntent();
         String content = intent.getStringExtra( "select fragment" );
+        Log.d("123", "typeActivity:" + content);
         switch (content) {
-            case "personal":
-                replaceFragment(new personal_information());
+            case "infBase":
+            case "infChange":
+                infBaseFragment infBaseFragment = new infBaseFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("type", content);
+                infBaseFragment.setArguments(bundle);
+                replaceFragment(infBaseFragment);
                 break;
-            case "history":
-                replaceFragment(new personal_history());
-                break;
-            case "history2":
-                replaceFragment(new personal_history2());
-                break;
-            case "IdCard":
-                replaceFragment(new personal_idCard());
+            case "cardPhoto":
+                replaceFragment(new cardPhotoFragment());
                 break;
         }
     }
@@ -99,4 +99,7 @@ public class personActivity extends AppCompatActivity{
         }
         return super.onKeyDown(keyCode, event);
     }*/
+
+
 }
+

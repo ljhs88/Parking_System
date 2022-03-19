@@ -1,4 +1,4 @@
-package com.xiyou3g.information;
+package com.xiyou3g.information.personal;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.xiyou3g.information.R;
 import com.xiyou3g.information.bean.history_list;
 
 import org.w3c.dom.Text;

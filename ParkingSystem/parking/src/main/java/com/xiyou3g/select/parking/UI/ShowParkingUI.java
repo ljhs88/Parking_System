@@ -29,14 +29,7 @@ public class ShowParkingUI extends ShowUI {
     @SuppressLint("SetTextI18n")
     @Override
     public void showText() {
-        TextView showText1 = activity.findViewById(R.id.show_text1);
-        TextView showText2 = activity.findViewById(R.id.show_text2);
-        TextView showText3 = activity.findViewById(R.id.show_text3);
-        TextView showText4 = activity.findViewById(R.id.show_text4);
-        showText1.setText(information.getName());
-        showText2.setText("一共有" + information.getNumber() + "停车位");
-        showText3.setText("停车位一个小时" + information.getPrice() + "元");
-        showText4.setText("  简介:" + information.getBriefIntroduction());
+        
 
         super.showText();
     }

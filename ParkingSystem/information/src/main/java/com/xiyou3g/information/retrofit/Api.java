@@ -16,12 +16,14 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 import com.xiyou3g.information.bean.informationBean;
+import com.xiyou3g.information.bean.requestInfBaseBean;
 
 public interface Api {
 
@@ -35,7 +37,28 @@ public interface Api {
 
     @Multipart
     @POST("userInfo/modifyImage")
-    Call<informationBean> setHttpPortrait(@PartMap Map<String, RequestBody> map,
+    Call<informationBean> setHeadAndBg(@PartMap Map<String, RequestBody> map,
                                           @Part MultipartBody.Part image);
+
+    /*----------------*/
+
+    @Multipart
+    @POST("userInfo/modifyIdent")
+    Call<ResponseBody> setCard(@PartMap Map<String, RequestBody> map,
+                               @Part MultipartBody.Part image);
+
+    @POST("userInfo/modifyAu")
+    Call<ResponseBody> identityUpDataPost(@Body RequestBody body);
+
+    @FormUrlEncoded
+    @POST("userInfo/deleteAu?")
+    Call<ResponseBody> identityCancel(@Field("userId") String userid);
+
+    @POST("userInfo/verifyAu?")
+    Call<ResponseBody> identityPost(@Query("userId") String userid, @Body RequestBody body);
+
+    @FormUrlEncoded
+    @POST("userInfo/isverify")
+    Call<requestInfBaseBean> IsOrNoIdentity(@Field("userId") String userid);
 
 }

@@ -2,16 +2,19 @@ package com.xiyou3g.information.retrofit;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.xiyou3g.information.bean.informationBean;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class mRetrofit {
 
+    public static boolean ok = false;
     public static Retrofit retrofit;
     public static Api api;
 
@@ -51,7 +55,7 @@ public class mRetrofit {
         Map<String, RequestBody> map = new HashMap<>();
         map.put("userId", RequestBody.create(MediaType.parse("multipart/form-data"), userid));
         map.put("type", RequestBody.create(MediaType.parse("multipart/form-data"), type));
-        Call<informationBean> call = api.setHttpPortrait(map, imageBodyPart);
+        Call<informationBean> call = api.setHeadAndBg(map, imageBodyPart);
         call.enqueue(new Callback<informationBean>() {
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
@@ -88,5 +92,101 @@ public class mRetrofit {
             }
         });
     }
+
+    /*-----------------------------------------------------------------------------*/
+
+    public static void setCardPhoto(String strPath, String userid, Integer type) {
+        Log.d("123", "setCard");
+        File file = new File(strPath);
+        MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("file", file.getName(),
+                RequestBody.create(MediaType.parse("multipart/form-data"), file));
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("userId", RequestBody.create(MediaType.parse("multipart/form-data"), userid));
+        map.put("type", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(type)));
+        /*RequestBody useridBody = RequestBody.create(MediaType.parse("multipart/form-data"), userid);
+        RequestBody typeBody = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(type));*/
+        Call<ResponseBody> call = api.setCard(map, imageBodyPart);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.d("123", type+":"+response.body().string());
+                } catch (Exception e) {
+                    Log.d("123", "onResponse:" +e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //请求异常
+                Log.d("123", "onFailure" + t.toString());
+            }
+        });
+    }
+
+    public static void setIdentity(String userid, RequestBody requestBody) {
+        Call<ResponseBody> call = api.identityPost(userid, requestBody);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body()!=null){
+                    try {
+                        ok = true;
+                        Log.d("123", response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("123", "onFailure:"+t.toString());
+            }
+        });
+    }
+
+    public static void cancelIdentity(String userid) {
+        Call<ResponseBody> call = api.identityCancel(userid);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body()!=null) {
+                    try {
+                        Log.d("123", "cancel:"+response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("123", t.toString());
+            }
+        });
+    }
+
+    public static void setUpDataIdentity(RequestBody body) {
+        Call<ResponseBody> call = api.identityUpDataPost(body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body()!=null){
+                    try {
+                        Log.d("123", response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("123", t.toString());
+            }
+        });
+    }
+
 
 }
