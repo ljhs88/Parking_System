@@ -29,6 +29,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -180,9 +181,10 @@ public class informationFragment extends Fragment implements View.OnClickListene
             intent1.putExtra("select fragment", "history");
             startActivity(intent1);
         } else if (id == R.id.historyTo2) {
-            Intent intent1 = new Intent(getContext(), personActivity.class);
+            /*Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "history2");
-            startActivity(intent1);
+            startActivity(intent1);*/
+            Toast.makeText(getActivity(), "开发中,尽请期待!", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.Id_cardTo) {
             Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "IdCard");
