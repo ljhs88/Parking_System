@@ -16,18 +16,17 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.maps.model.LatLng;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.UI.ShowChargeUI;
-import com.xiyou3g.select.parking.UI.ShowParkingUI;
 import com.xiyou3g.select.parking.UI.ShowStallUI;
 import com.xiyou3g.select.parking.UI.ShowUI;
+import com.xiyou3g.select.parking.api.ChargeAndStallService;
 import com.xiyou3g.select.parking.bean.ShowInformation;
+import com.xiyou3g.select.parking.bean.chargebean;
+import com.xiyou3g.select.parking.bean.stallbean;
 import com.xiyou3g.select.parking.util.RetrofitManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import com.xiyou3g.select.parking.bean.chargebean;
-import com.xiyou3g.select.parking.bean.stallbean;
-import com.xiyou3g.select.parking.api.ChargeAndStallService;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

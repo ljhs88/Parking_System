@@ -5,9 +5,9 @@ public class CreateStallData {
 
         private String id;
         private String userId;
-        private String auditState;
-        private String ispublish;
-        private String status;
+        private int auditState;
+        private int ispublish;
+        private int status;
         private String ownerName;
         private String ownerMobile;
         private String province;
@@ -37,28 +37,31 @@ public class CreateStallData {
             return userId;
         }
 
-        public void setAuditState(String auditState) {
-            this.auditState = auditState;
-        }
-        public String getAuditState() {
-            return auditState;
-        }
+    public int getAuditState() {
+        return auditState;
+    }
 
-        public void setIspublish(String ispublish) {
-            this.ispublish = ispublish;
-        }
-        public String getIspublish() {
-            return ispublish;
-        }
+    public void setAuditState(int auditState) {
+        this.auditState = auditState;
+    }
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
-        public String getStatus() {
-            return status;
-        }
+    public int getIspublish() {
+        return ispublish;
+    }
 
-        public void setOwnerName(String ownerName) {
+    public void setIspublish(int ispublish) {
+        this.ispublish = ispublish;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public void setOwnerName(String ownerName) {
             this.ownerName = ownerName;
         }
         public String getOwnerName() {
