@@ -72,26 +72,23 @@ public class personal_information extends Fragment implements View.OnClickListen
     private EditText edit_name;
     private EditText edit_male;
     private EditText edit_birthday;
-    private EditText edit_phone;
     private EditText edit_location;
     private EditText edit_personality;
 
     private String userid;
     private String mobile;
     private String smsCode;
+    private String token;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Log.d("123", "OnCreateView");
         view = inflater.inflate(R.layout.fragment_personnal_information, container, false);
 
-        // 获取userid
-        SharedPreferences pref = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
-        userid = pref.getString("userid","");
-
-        userid = "946762136657330176";
-        mobile = "18992020668";
-        smsCode = "376646";
+        SharedPreferences pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        userid = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
 
         getEditTextId();
 
@@ -119,7 +116,6 @@ public class personal_information extends Fragment implements View.OnClickListen
                         edit_male.setText("女");
                     }
                     edit_birthday.setText(bean.getData().getBirthday());
-                    edit_phone.setText(bean.getData().getMobile());
                     edit_location.setText(bean.getData().getDistrict());
                     edit_personality.setText(bean.getData().getDescription());
                     Glide.with(getContext()).load("http"+bean.getData().getFace().substring(5)).into(head_image);
@@ -159,7 +155,6 @@ public class personal_information extends Fragment implements View.OnClickListen
         setContent(userid);
 
         String name = String.valueOf(edit_name.getText());
-        String mobile = String.valueOf(edit_phone.getText());
         //String head = StringAndBitmap.bitmapToString(headBitmap);
         Intent intent = new Intent();
         intent.putExtra("name", name);
@@ -194,7 +189,6 @@ public class personal_information extends Fragment implements View.OnClickListen
     private void getEditTextId() {
         edit_name = view.findViewById(R.id.name);
         edit_male = view.findViewById(R.id.male);
-        edit_phone = view.findViewById(R.id.phone_num);
         edit_birthday = view.findViewById(R.id.birthday);
         edit_location = view.findViewById(R.id.location);
         edit_personality = view.findViewById(R.id.personality);

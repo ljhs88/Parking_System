@@ -9,7 +9,9 @@ import com.xiyou3g.information.bean.requestInformationBean;
 import com.xiyou3g.information.Utility.HttpImgThread;
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -76,6 +78,8 @@ public class informationFragment extends Fragment implements View.OnClickListene
     private Bitmap backBitmap;
 
     private String userid;
+    private String token;
+    private String mobile;
     private Button backToDesk_button;
     private Button changeAccount;
 
@@ -86,7 +90,11 @@ public class informationFragment extends Fragment implements View.OnClickListene
 
         isGrantExternalRW(getActivity());
 
-        userid = "946762136657330176";
+        SharedPreferences pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        userid = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
+        //userid = "946762136657330176";
 
         // 获取控件实例
         getViewId();
@@ -177,9 +185,10 @@ public class informationFragment extends Fragment implements View.OnClickListene
             intent.putExtra("select fragment", "personal");
             startActivityForResult(intent, 1);
         } else if (id == R.id.historyTo) {
-            Intent intent1 = new Intent(getContext(), personActivity.class);
+            /*Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "history");
-            startActivity(intent1);
+            startActivity(intent1);*/
+            Toast.makeText(getActivity(), "开发中,尽请期待!", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.historyTo2) {
             /*Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "history2");

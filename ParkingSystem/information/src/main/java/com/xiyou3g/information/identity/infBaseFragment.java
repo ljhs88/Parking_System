@@ -1,6 +1,8 @@
 package com.xiyou3g.information.identity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +29,8 @@ public class infBaseFragment extends Fragment implements View.OnClickListener {
     private View view;
 
     private String userid;
+    private String token;
+    private String mobile;
 
     private TextView title;
     private EditText edit_name;
@@ -51,7 +55,11 @@ public class infBaseFragment extends Fragment implements View.OnClickListener {
         /**
          * 获取userid
          */
-        userid = "946762136657330176";
+        SharedPreferences pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        userid = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
+        //userid = "946762136657330176";
 
         getViewId();
 

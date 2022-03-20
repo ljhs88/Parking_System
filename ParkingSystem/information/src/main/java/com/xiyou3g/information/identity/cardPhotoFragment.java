@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -46,6 +48,8 @@ public class cardPhotoFragment extends Fragment implements View.OnClickListener 
     private View view;
 
     private String userid;
+    private String token;
+    private String mobile;
 
     private final int PHOTO = 1;
     private final int CROP = 2;
@@ -74,7 +78,11 @@ public class cardPhotoFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_identity_cardphoto, container, false);
 
-        userid = "946762136657330176";
+        SharedPreferences pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        userid = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
+        //userid = "946762136657330176";
 
         getViewId();
 

@@ -196,4 +196,5 @@ public class Data {
                 ", adminMobile='" + adminMobile + '\'' +
                 '}';
     }
+
 }

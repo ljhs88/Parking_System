@@ -1,11 +1,14 @@
 package com.xiyou3g.select.parking;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,10 +29,12 @@ import com.xiyou3g.select.parking.bean.chargebean;
 import com.xiyou3g.select.parking.bean.stallbean;
 import com.xiyou3g.select.parking.api.ChargeAndStallService;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import com.xiyou3g.select.parking.bean.resbean;
 
 public class ShowInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,6 +51,17 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     private chargebean chargebean = null;
     private stallbean stallbean = null;
 
+    private String userId;
+    private String token;
+    private String mobile;
+    private String posId;
+    private Button navigation_button;
+    private int NAVIGATION_BUTTON_STATUS = 0;
+    private final int NAVIGATION_CREATE = 0;
+    private final int NAVIGATION_CANCEL = 0;
+    private Button reserve_button;
+    private Button delete_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +73,18 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
             decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
-        //getStatus();
+        buttonClick();
+        getStatus();
         show();
         /**
          * 获取这两个id
          */
-        scId = "946762136657330176";
-        spId = "946762136657330176";
+        SharedPreferences pref = getSharedPreferences("data", Context.MODE_PRIVATE);
+        userId = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
+        //userid = "946762136657330176";
+
     }
 
     /**
@@ -73,7 +94,8 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     private void getCharge(Activity activity) {
         Retrofit retrofit = retrofitManager.getRetrofit();
         ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
-        Call<chargebean> call = api.postCharge(scId);
+        Call<chargebean> call = api.postCharge(String.valueOf(thisLatLng.longitude),
+                String.valueOf(thisLatLng.latitude));
         call.enqueue(new Callback<com.xiyou3g.select.parking.bean.chargebean>() {
             @Override
             public void onResponse(Call<chargebean> call, Response<chargebean> response) {
@@ -95,7 +117,8 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     private void getStall(Activity activity) {
         Retrofit retrofit = retrofitManager.getRetrofit();
         ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
-        Call<stallbean> call = api.postStall(spId);
+        Call<stallbean> call = api.postStall(String.valueOf(thisLatLng.longitude),
+                String.valueOf(thisLatLng.latitude));
         call.enqueue(new Callback<stallbean>() {
             @Override
             public void onResponse(Call<stallbean> call, Response<stallbean> response) {
@@ -103,6 +126,8 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
                 if (stallbean != null) {
                     Log.d("123", stallbean.getData().toString());
                     showInformation(new ShowStallUI(activity, stallbean));
+                } else {
+                    Toast.makeText(ShowInformationActivity.this, "获取停车位信息失败!请重新获取!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -124,9 +149,9 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     }
 
     private void buttonClick() {
-        Button navigation_button = findViewById(R.id.navigation_button);
-        Button reserve_button = findViewById(R.id.reserve_button);
-        Button delete_button = findViewById(R.id.delete_button);
+        navigation_button = findViewById(R.id.navigation_button);
+        reserve_button = findViewById(R.id.reserve_button);
+        delete_button = findViewById(R.id.delete_button);
         navigation_button.setOnClickListener(this);
         reserve_button.setOnClickListener(this);
         delete_button.setOnClickListener(this);
@@ -162,13 +187,13 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
             double latitude;
             double longitude;
             if (stallbean != null) {
-                name = stallbean.getData().getOwnerNum();
-                latitude = Double.parseDouble(stallbean.getData().getLatitude());
-                longitude = Double.parseDouble(stallbean.getData().getLongitude());
+                name = stallbean.getData().get(0).getOwnerNum();
+                latitude = Double.parseDouble(stallbean.getData().get(0).getLatitude());
+                longitude = Double.parseDouble(stallbean.getData().get(0).getLongitude());
             } else {
-                name = chargebean.getData().getOwnerNum();
-                latitude = Double.parseDouble(chargebean.getData().getLatitude());
-                longitude = Double.parseDouble(chargebean.getData().getLongitude());
+                name = chargebean.getData().get(0).getOwnerNum();
+                latitude = Double.parseDouble(chargebean.getData().get(0).getLatitude());
+                longitude = Double.parseDouble(chargebean.getData().get(0).getLongitude());
             }
             /*ARouter.getInstance().build("/map/MapActivity")
                     .withDouble("latitude", thisLatLng.latitude)
@@ -181,7 +206,13 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
                     .withString("destination", name)
                     .navigation();
         } else if (view.getId() == R.id.reserve_button) {
-
+            if (NAVIGATION_BUTTON_STATUS == NAVIGATION_CREATE) {
+                createRes();
+                NAVIGATION_BUTTON_STATUS = NAVIGATION_CANCEL;
+            } else if (NAVIGATION_BUTTON_STATUS == NAVIGATION_CANCEL) {
+                cancelRes();
+                NAVIGATION_BUTTON_STATUS = NAVIGATION_CREATE;
+            }
         } else if (view.getId() == R.id.delete_button) {
             bottomSheetDialog = new BottomSheetDialog(this);
             bottomSheetDialog.setContentView(R.layout.layout_bottomsheetdialog_delete);
@@ -191,10 +222,54 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
             cancel_sure_button.setOnClickListener(this);
             bottomSheetDialog.show();
         } else if (view.getId() == R.id.sure_button) {
-
             bottomSheetDialog.cancel();
         } else if (view.getId() == R.id.cancel_sure_button) {
             bottomSheetDialog.cancel();
         }
+    }
+
+    private void createRes() {
+        Retrofit retrofit = retrofitManager.getRetrofit();
+        ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
+        posId = stallbean.getData().get(0).getId();
+        api.postCreate(userId, posId).enqueue(new Callback<resbean>() {
+            @Override
+            public void onResponse(Call<resbean> call, Response<resbean> response) {
+                resbean resbean = response.body();
+                if (resbean != null && resbean.isSuccess() == true) {
+                    reserve_button.setText(R.string.reservecancel);
+                    Toast.makeText(ShowInformationActivity.this, "预约成功!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ShowInformationActivity.this, "预约失败!请重新预约!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resbean> call, Throwable t) {
+                Toast.makeText(ShowInformationActivity.this, "预约失败!请重新预约!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void cancelRes() {
+        Retrofit retrofit = retrofitManager.getRetrofit();
+        retrofit.create(ChargeAndStallService.class).
+                postCancel(posId).enqueue(new Callback<resbean>() {
+            @Override
+            public void onResponse(Call<resbean> call, Response<resbean> response) {
+                resbean resbean = response.body();
+                if (resbean != null && resbean.isSuccess() == true) {
+                    reserve_button.setText(R.string.reserve);
+                    Toast.makeText(ShowInformationActivity.this, "取消预约成功!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ShowInformationActivity.this, "取消失败!请重新取消!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<resbean> call, Throwable t) {
+                Toast.makeText(ShowInformationActivity.this, "取消失败!请重新取消!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

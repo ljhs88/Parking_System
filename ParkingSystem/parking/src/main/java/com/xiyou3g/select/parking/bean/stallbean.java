@@ -1,45 +1,31 @@
 package com.xiyou3g.select.parking.bean;
 
+import java.util.List;
+
 public class stallbean {
 
-    private String status;
+    private int status;
     private String msg;
-    private String success;
-    private chargebean.data data;
+    private boolean success;
+    private List<Data> data;
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getSuccess() {
+    public boolean isSuccess() {
         return success;
     }
 
-    public void setSuccess(String success) {
-        this.success = success;
-    }
-
-    public chargebean.data getData() {
+    public List<Data> getData() {
         return data;
     }
 
-    public void setData(chargebean.data data) {
-        this.data = data;
-    }
-
-    public class data {
+    public class Data {
         private String id;
         private String userId;
         private int auditState;
@@ -55,7 +41,7 @@ public class stallbean {
         private String longitude;
         private String latitude;
         private String ownerNum;
-        private int price;
+        private double hourPrice;
         private String image1;
         private String image2;
         private String image3;
@@ -122,8 +108,8 @@ public class stallbean {
             return ownerNum;
         }
 
-        public int getPrice() {
-            return price;
+        public double getHourPrice() {
+            return hourPrice;
         }
 
         public String getImage1() {
@@ -144,33 +130,6 @@ public class stallbean {
 
         public String getAdminMobile() {
             return adminMobile;
-        }
-
-        @Override
-        public String toString() {
-            return "data{" +
-                    "id='" + id + '\'' +
-                    ", userId='" + userId + '\'' +
-                    ", auditState=" + auditState +
-                    ", ispublish=" + ispublish +
-                    ", status=" + status +
-                    ", ownerName='" + ownerName + '\'' +
-                    ", ownerMobile='" + ownerMobile + '\'' +
-                    ", ownerImage='" + ownerImage + '\'' +
-                    ", province='" + province + '\'' +
-                    ", city='" + city + '\'' +
-                    ", district='" + district + '\'' +
-                    ", address='" + address + '\'' +
-                    ", longitude='" + longitude + '\'' +
-                    ", latitude='" + latitude + '\'' +
-                    ", ownerNum='" + ownerNum + '\'' +
-                    ", price=" + price +
-                    ", image1='" + image1 + '\'' +
-                    ", image2='" + image2 + '\'' +
-                    ", image3='" + image3 + '\'' +
-                    ", adminName='" + adminName + '\'' +
-                    ", adminMobile='" + adminMobile + '\'' +
-                    '}';
         }
     }
 

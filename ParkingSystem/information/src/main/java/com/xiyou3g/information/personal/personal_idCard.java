@@ -1,6 +1,8 @@
 package com.xiyou3g.information.personal;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,17 +42,22 @@ public class personal_idCard extends Fragment implements View.OnClickListener {
     private Button backgroundButton;
 
     private String userid;
+    private String token;
+    private String mobile;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_personal_idcard, container, false);
 
+        SharedPreferences pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        userid = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
+
         getViewId();
 
         setButtonClick();
-
-        userid = "946762136657330176";
 
         judgeIdentity();
 
