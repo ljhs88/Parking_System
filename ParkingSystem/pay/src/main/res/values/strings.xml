@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pay</string>
+    <string name="pay_bill">支付账单</string>
 </resources>

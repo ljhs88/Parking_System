@@ -4,4 +4,5 @@
     <string name="my">我的</string>
     <string name="shared_stall">共享停车位</string>
     <string name="shared_charge">共享充电桩</string>
+    <string name="order">订单</string>
 </resources>

@@ -2,6 +2,7 @@ package com.xiyou3g.select.parking;
 
 import android.content.Intent;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -32,7 +34,12 @@ import com.amap.api.services.geocoder.RegeocodeAddress;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.xiyou3g.select.parking.api.GetNearbyService;
 import com.xiyou3g.select.parking.bean.CreateInformation;
+import com.xiyou3g.select.parking.bean.chargebean;
+import com.xiyou3g.select.parking.bean.stallbean;
+import com.xiyou3g.select.parking.getbean.Data;
+import com.xiyou3g.select.parking.getbean.GetChargeOrStallResponse;
 import com.xiyou3g.select.parking.util.RetrofitManager;
 import com.xiyou3g.select.parking.util.UpWindow;
 
@@ -40,7 +47,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Route(path = "/parking/ParkingFragment")
 public class ParkingFragment extends Fragment implements AMap.OnMapLongClickListener,
@@ -60,10 +74,12 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
     private static final int CHARGE = 1;
     private static final int PARKING = 2;
     private static final int STALL = 3;
-    private RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
+    private final RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
     private UpWindow upWindow;
     private Boolean isShow = false;
     private int change = 0;
+    private Map<LatLng, String> stallLatLngList = new HashMap<>();
+    private Map<LatLng, String> chargeLatLngList = new HashMap<>();
 
     @Nullable
     @Override
@@ -189,6 +205,8 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
     private void start(String title) {
         Intent intent = new Intent(getContext(), Cus_ParkingActivity.class);
         intent.putExtra("title", title);
+        intent.putExtra("latitude", thisLatLng.latitude);
+        intent.putExtra("longitude", thisLatLng.longitude);
         startActivity(intent);
     }
 
@@ -196,18 +214,23 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
     public void receiveInformation(CreateInformation createInformation) {
         Log.d("TAG", "receiveInformation: ");
         if (createInformation.getStatus() == CHARGE) {
-            aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).
+            aMap.addMarker(new MarkerOptions().title(createInformation.getOwnerNum()).position(thisLatLng).
                     icon(BitmapDescriptorFactory.fromResource(R.drawable.charge)));
         } else {
             Log.d("TAG", "receiveInformation: ");
-            aMap.addMarker(new MarkerOptions().title(createInformation.getName()).position(thisLatLng).
+            aMap.addMarker(new MarkerOptions().title(createInformation.getOwnerNum()).position(thisLatLng).
                     icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_image)));
         }
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
+        LatLng latLng = marker.getPosition();
+        Intent intent = new Intent(getContext(), ShowInformationActivity.class);
+        intent.putExtra("STATUS", STATUS);
+        intent.putExtra("latitude", latLng.latitude);
+        intent.putExtra("longitude", latLng.longitude);
+        startActivity(intent);
     }
 
     @Override
@@ -237,6 +260,9 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
                 e.printStackTrace();
             }
             change++;
+            GetNearbyService getNearbyService = retrofitManager.getRetrofit().create(GetNearbyService.class);
+            getCharge(String.valueOf(location.getLongitude()), String.valueOf(location.getLatitude()), getNearbyService);
+            getStall(String.valueOf(location.getLongitude()), String.valueOf(location.getLatitude()), getNearbyService);
         }
     }
 
@@ -253,4 +279,82 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
         Log.d("TAG", "onGeocodeSearched: ");
     }
+
+    private void getStall(String longitude, String latitude, GetNearbyService getNearbyService) {
+        getNearbyService.getStall(longitude, latitude).enqueue(new Callback<GetChargeOrStallResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetChargeOrStallResponse> call, @NonNull Response<GetChargeOrStallResponse> response) {
+                GetChargeOrStallResponse getChargeOrStallResponse = response.body();
+                assert getChargeOrStallResponse != null;
+                List<Data> list = getChargeOrStallResponse.getData();
+                for (Data data : list) {
+                    String id = data.getContent().getName();
+                    getNearbyService.postStall(id).enqueue(new Callback<stallbean>() {
+                        @Override
+                        public void onResponse(@NonNull Call<stallbean> call, @NonNull Response<stallbean> response) {
+                            stallbean responseStall = response.body();
+                            assert responseStall != null;
+                            stallLatLngList.put(new LatLng(Double.parseDouble(responseStall.getData().getLatitude()), Double.parseDouble(responseStall.getData().getLongitude())), responseStall.getData().getOwnerNum());
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<stallbean> call, @NonNull Throwable t) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetChargeOrStallResponse> call, @NonNull Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void getCharge(String longitude, String latitude, GetNearbyService getNearbyService) {
+        getNearbyService.getCharge(longitude, latitude).enqueue(new Callback<GetChargeOrStallResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<GetChargeOrStallResponse> call, @NonNull Response<GetChargeOrStallResponse> response) {
+                GetChargeOrStallResponse getChargeOrStallResponse = response.body();
+                assert getChargeOrStallResponse != null;
+                List<Data> list = getChargeOrStallResponse.getData();
+                for (Data data : list) {
+                    String id = data.getContent().getName();
+                    getNearbyService.postCharge(id).enqueue(new Callback<chargebean>() {
+                        @Override
+                        public void onResponse(@NonNull Call<chargebean> call, @NonNull Response<chargebean> response) {
+                            chargebean responseCharge = response.body();
+                            assert responseCharge != null;
+                            chargeLatLngList.put(new LatLng(Double.parseDouble(responseCharge.getData().getLatitude()), Double.parseDouble(responseCharge.getData().getLongitude())), responseCharge.getData().getOwnerNum());
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<chargebean> call, @NonNull Throwable t) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<GetChargeOrStallResponse> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void loadChargeAndStall () {
+        stallLatLngList.forEach((latLng, title)->{
+            aMap.addMarker(new MarkerOptions().title(title).position(latLng).
+                    icon(BitmapDescriptorFactory.fromResource(R.drawable.charge)));
+        });
+        chargeLatLngList.forEach((latLng, title)->{
+            aMap.addMarker(new MarkerOptions().title(title).position(latLng).
+                    icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_image)));
+        });
+    }
+
 }
