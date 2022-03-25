@@ -2,9 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/shared_parking"
+        android:id="@+id/home_parking"
         android:icon="@drawable/shared_image"
         android:title="@string/shared_parking"
+        />
+
+    <item
+        android:id="@+id/list_parking"
+        android:icon="@drawable/shared_image"
+        android:title="@string/order"
         />
 
     <item

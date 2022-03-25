@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Cus_PayActivity">
+    >
 
 
     <androidx.appcompat.widget.Toolbar
@@ -12,13 +12,13 @@
         android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/pay_toolbar"
+        android:id="@+id/list_toolbar"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pay_bill"
+            android:text="@string/order"
             android:layout_gravity="center"
             android:textSize="24sp"
             android:textColor="@color/black"
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pay_toolbar"
-        android:id="@+id/pay_tab"
+        app:layout_constraintTop_toBottomOf="@id/list_toolbar"
+        android:id="@+id/list_tab"
         />
 
     <androidx.viewpager2.widget.ViewPager2
@@ -40,7 +40,7 @@
         android:layout_marginTop="72dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
-        android:id="@+id/pay_viewpager"
+        android:id="@+id/list_viewpager"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
