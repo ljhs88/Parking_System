@@ -1,6 +1,7 @@
 package com.xiyou3G.parkingsystem.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class ListFragment extends Fragment {
     private List<String> tabList;
     private List<Fragment> fragmentList;
     private View view;
+    private String TAG = "TAG";
 
     @Nullable
     @Override
@@ -37,8 +39,9 @@ public class ListFragment extends Fragment {
     }
 
     private void initView() {
-        tabLayout = view.findViewById(com.xiyou3g.select.pay.R.id.pay_tab);
-        viewPager = view.findViewById(com.xiyou3g.select.pay.R.id.pay_viewpager);
+        Log.d(TAG, "initView: ");
+        tabLayout = view.findViewById(R.id.list_tab);
+        viewPager = view.findViewById(R.id.list_viewpager);
 
         tabList = new ArrayList<>();
         tabList.addAll(Arrays.asList(tabString));
@@ -51,6 +54,6 @@ public class ListFragment extends Fragment {
 
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getActivity(), fragmentList);
         viewPager.setAdapter(fragmentAdapter);
-        new TabLayoutMediator(tabLayout, viewPager, true, (tab, position) -> tab.setText(tabList.get(position)));
+        new TabLayoutMediator(tabLayout, viewPager, true, (tab, position) -> tab.setText(tabList.get(position))).attach();
     }
 }

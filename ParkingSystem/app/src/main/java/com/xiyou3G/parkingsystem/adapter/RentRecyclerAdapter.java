@@ -1,5 +1,6 @@
 package com.xiyou3G.parkingsystem.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,16 @@ public class RentRecyclerAdapter extends RecyclerView.Adapter<RentRecyclerAdapte
     private View view;
 
     public RentRecyclerAdapter(List<RentItem> list) {
+        Log.d("TAG", "RentRecyclerAdapter: " + list.size());
         this.list = list;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_rent, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_rent, parent, false);
+        this.view = view;
+        Log.d("TAG", "onCreateViewHolder: ");
         return new ViewHolder(view);
     }
 
@@ -41,10 +45,12 @@ public class RentRecyclerAdapter extends RecyclerView.Adapter<RentRecyclerAdapte
             holder.status.setText("已完成");
         }
         String orderId = rentItem.getOrderId();
+        Log.d("TAG", "onBindViewHolder: " + rentItem.getPrice());
     }
 
     @Override
     public int getItemCount() {
+        Log.d("TAG", "getItemCount: " + list.size());
         return list.size();
     }
 

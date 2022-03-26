@@ -43,4 +43,13 @@ public class CloseOrderResponse {
         return data;
     }
 
+    @Override
+    public String toString() {
+        return "CloseOrderResponse{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", success=" + success +
+                ", data=" + data +
+                '}';
+    }
 }

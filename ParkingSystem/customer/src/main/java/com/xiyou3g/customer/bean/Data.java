@@ -180,4 +180,30 @@ public class Data {
         return iscancel;
     }
 
+    @Override
+    public String toString() {
+        return "Data{" +
+                "id='" + id + '\'' +
+                ", proId='" + proId + '\'' +
+                ", posId='" + posId + '\'' +
+                ", address='" + address + '\'' +
+                ", posType=" + posType +
+                ", posPrice=" + posPrice +
+                ", userId='" + userId + '\'' +
+                ", car='" + car + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", orderTime='" + orderTime + '\'' +
+                ", eleNum=" + eleNum +
+                ", orderPrice=" + orderPrice +
+                ", subPrice=" + subPrice +
+                ", finePrice=" + finePrice +
+                ", payPrice=" + payPrice +
+                ", payType='" + payType + '\'' +
+                ", payId='" + payId + '\'' +
+                ", payTime='" + payTime + '\'' +
+                ", ispay=" + ispay +
+                ", iscancel=" + iscancel +
+                '}';
+    }
 }

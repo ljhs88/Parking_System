@@ -11,7 +11,7 @@ public class Data {
     private int posType;
     private double posPrice;
     private String userId;
-    private Date car;
+    private String car;
     private Date startTime;
     private Date endTime;
     private String orderTime;
@@ -74,10 +74,10 @@ public class Data {
         return userId;
     }
 
-    public void setCar(Date car) {
+    public void setCar(String car) {
         this.car = car;
     }
-    public Date getCar() {
+    public String getCar() {
         return car;
     }
 
@@ -172,4 +172,30 @@ public class Data {
         return iscancel;
     }
 
+    @Override
+    public String toString() {
+        return "Data{" +
+                "id='" + id + '\'' +
+                ", proId='" + proId + '\'' +
+                ", posId='" + posId + '\'' +
+                ", address='" + address + '\'' +
+                ", posType=" + posType +
+                ", posPrice=" + posPrice +
+                ", userId='" + userId + '\'' +
+                ", car=" + car +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", orderTime='" + orderTime + '\'' +
+                ", eleNum=" + eleNum +
+                ", orderPrice=" + orderPrice +
+                ", subPrice=" + subPrice +
+                ", finePrice=" + finePrice +
+                ", payPrice=" + payPrice +
+                ", payType='" + payType + '\'' +
+                ", payId='" + payId + '\'' +
+                ", payTime='" + payTime + '\'' +
+                ", ispay=" + ispay +
+                ", iscancel=" + iscancel +
+                '}';
+    }
 }

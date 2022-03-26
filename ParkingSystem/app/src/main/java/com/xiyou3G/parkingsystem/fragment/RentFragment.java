@@ -1,8 +1,8 @@
 package com.xiyou3G.parkingsystem.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,21 +37,24 @@ public class RentFragment extends Fragment {
     private List<RentItem> rentItems;
     private RentRecyclerAdapter recyclerAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String TAG = "TAG";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.layout_order_fragment, container, false);
+        view = inflater.inflate(R.layout.layout_rent_fragment, container, false);
         initView();
         request();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     private void request() {
+        Log.d(TAG, "request: " + "rent");
         RentService rentService = retrofitManager.getRetrofit().create(RentService.class);
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
-        rentService.getAllRent(userId).enqueue(new Callback<RentResponse>() {
+        /*SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");*/
+        rentService.getAllRent("946762136657330176").enqueue(new Callback<RentResponse>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<RentResponse> call, @NonNull Response<RentResponse> response) {
                 if (rentItems == null) {
@@ -60,6 +63,7 @@ public class RentFragment extends Fragment {
                 rentItems.clear();
                 assert response.body() != null;
                 List<Data> list = response.body().getData();
+                Log.d(TAG, "onResponse: " + list);
                 for (Data data : list) {
                     rentItems.add(new RentItem(data.getPayPrice(),
                             data.getStartTime().toString(),
@@ -71,9 +75,12 @@ public class RentFragment extends Fragment {
                     recyclerAdapter = new RentRecyclerAdapter(rentItems);
                 }
                 requireActivity().runOnUiThread(() -> {
+                    Log.d(TAG, "onResponse: " + "ui");
                     if (recyclerView.getAdapter() == null) {
                         recyclerView.setAdapter(recyclerAdapter);
+                        Log.d(TAG, "onResponse: " + "setAdapter");
                     } else {
+
                         recyclerAdapter.notifyDataSetChanged();
                     }
                     swipeRefreshLayout.setRefreshing(false);
@@ -82,16 +89,16 @@ public class RentFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<RentResponse> call, @NonNull Throwable t) {
-
+                Log.d(TAG, "onFailure: " + t);
             }
         });
 
     }
 
     private void initView() {
-        swipeRefreshLayout = view.findViewById(R.id.id_reFresh);
+        swipeRefreshLayout = view.findViewById(R.id.rent_id_reFresh);
         swipeRefreshLayout.setOnRefreshListener(this::request);
-        recyclerView = view.findViewById(R.id.order_recycler_view);
+        recyclerView = view.findViewById(R.id.rent_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

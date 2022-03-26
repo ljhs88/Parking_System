@@ -77,4 +77,18 @@ public class Data {
          return iscancel;
     }
 
+    @Override
+    public String toString() {
+        return "Data{" +
+                "id='" + id + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", proId='" + proId + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", payPrice=" + payPrice +
+                ", ispay=" + ispay +
+                ", iscancel=" + iscancel +
+                '}';
+    }
 }

@@ -1,5 +1,7 @@
 package com.xiyou3G.parkingsystem.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import com.xiyou3G.parkingsystem.R;
 import com.xiyou3G.parkingsystem.api.OrderService;
 import com.xiyou3G.parkingsystem.bean.OrderItem;
 import com.xiyou3G.parkingsystem.bean.OrderResponse;
+import com.xiyou3g.customer.CustomerActivity;
 import com.xiyou3g.select.parking.util.RetrofitManager;
 
 import java.util.List;
@@ -25,9 +28,11 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
 
     private List<OrderItem> list;
     private View view;
+    private Activity activity;
 
-    public OrderRecyclerAdapter(List<OrderItem> list) {
+    public OrderRecyclerAdapter(List<OrderItem> list, Activity activity) {
         this.list = list;
+        this.activity = activity;
     }
 
     @NonNull
@@ -61,7 +66,9 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
             orderService.getOrder(orderItem.getOrdersId()).enqueue(new Callback<OrderResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<OrderResponse> call, @NonNull Response<OrderResponse> response) {
-
+                    Intent intent = new Intent(activity, CustomerActivity.class);
+                    intent.putExtra("orderId", orderItem.getOrdersId());
+                    activity.startActivity(intent);
                 }
 
                 @Override

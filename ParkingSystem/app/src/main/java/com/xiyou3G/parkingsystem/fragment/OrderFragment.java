@@ -1,9 +1,8 @@
 package com.xiyou3G.parkingsystem.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +37,16 @@ public class OrderFragment extends Fragment {
     private List<OrderItem> orderItems;
     private OrderRecyclerAdapter recyclerAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private String TAG = "TAG";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.layout_order_fragment, container, false);
+        Log.d(TAG, "onCreateView: ");
         initView();
         request();
+        
         return view;
     }
 
@@ -53,15 +55,15 @@ public class OrderFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(this::request);
         recyclerView = view.findViewById(R.id.order_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        Log.d(TAG, "initView: ");
     }
 
     private void request() {
-
+        Log.d(TAG, "request: ");
         OrderService orderService = retrofitManager.getRetrofit().create(OrderService.class);
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");
-        orderService.getAllOrder(userId).enqueue(new Callback<AllOrderResponse>() {
+        /*SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");*/
+        orderService.getAllOrder("946468093863919616").enqueue(new Callback<AllOrderResponse>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<AllOrderResponse> call, @NonNull Response<AllOrderResponse> response) {
@@ -71,20 +73,23 @@ public class OrderFragment extends Fragment {
                 orderItems.clear();
                 assert response.body() != null;
                 List<Data> list = response.body().getData();
+
                 for (Data data : list) {
+
                     orderItems.add(new OrderItem(data.getAddress(),
                             data.getStartTime().toString(),
                             data.getEndTime().toString(),
                             data.getPayPrice(),
                             data.getIscancel(),
-                            data.getPosId(),
+                            data.getId(),
                             data.getPosType()));
                 }
                 if (recyclerAdapter == null) {
-                    recyclerAdapter = new OrderRecyclerAdapter(orderItems);
+                    recyclerAdapter = new OrderRecyclerAdapter(orderItems, getActivity());
                 }
                 requireActivity().runOnUiThread(() -> {
                     if (recyclerView.getAdapter() == null) {
+                        Log.d(TAG, "onResponse: " + "adapter");
                         recyclerView.setAdapter(recyclerAdapter);
                     } else {
                         recyclerAdapter.notifyDataSetChanged();
@@ -95,7 +100,7 @@ public class OrderFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<AllOrderResponse> call, @NonNull Throwable t) {
-
+                Log.d(TAG, "onFailure: " + t);
             }
         });
     }

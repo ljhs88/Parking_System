@@ -13,6 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/list_toolbar"
+        android:background="@color/white"
         >
 
         <TextView
@@ -28,16 +29,19 @@
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/list_toolbar"
         android:id="@+id/list_tab"
+        android:background="@color/white"
+        app:tabIndicatorColor="#a0d8ef"
         />
 
     <androidx.viewpager2.widget.ViewPager2
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="84dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
         android:id="@+id/list_viewpager"

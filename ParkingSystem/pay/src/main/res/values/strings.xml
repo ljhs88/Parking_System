@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Pay</string>
     <string name="pay_bill">支付账单</string>
+    <string name="wallet">钱包</string>
+    <string name="Alipay">支付宝</string>
+    <string name="WeChatPay">微信</string>
 </resources>

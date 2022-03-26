@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //设置状态栏透明
-        makeStatusBarTransparent(this);
+
         //状态栏文字自适应
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         String[] p;
