@@ -186,15 +186,9 @@ public class informationFragment extends Fragment implements View.OnClickListene
             intent.putExtra("select fragment", "personal");
             startActivityForResult(intent, 1);
         } else if (id == R.id.historyTo) {
-            /*Intent intent1 = new Intent(getContext(), personActivity.class);
-            intent1.putExtra("select fragment", "history");
-            startActivity(intent1);*/
-            ToastUtil.getToast(getContext(), "开发中,尽请期待!");
+            ARouter.getInstance().build("/pay/Cus_PayActivity").navigation();
         } else if (id == R.id.historyTo2) {
-            /*Intent intent1 = new Intent(getContext(), personActivity.class);
-            intent1.putExtra("select fragment", "history2");
-            startActivity(intent1);*/
-            ToastUtil.getToast(getContext(), "开发中,尽请期待!");
+            ARouter.getInstance().build("/pay/Cus_PayActivity").navigation();
         } else if (id == R.id.Id_cardTo) {
             Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "IdCard");
