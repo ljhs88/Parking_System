@@ -24,6 +24,8 @@ import retrofit2.http.Url;
 
 import com.xiyou3g.information.bean.informationBean;
 import com.xiyou3g.information.bean.requestInfBaseBean;
+import com.xiyou3g.information.bean.getWalletBean;
+import com.xiyou3g.information.bean.reChargeBean;
 
 public interface Api {
 
@@ -60,5 +62,15 @@ public interface Api {
     @FormUrlEncoded
     @POST("userInfo/isverify")
     Call<requestInfBaseBean> IsOrNoIdentity(@Field("userId") String userid);
+
+    /*----------------------------*/
+    @FormUrlEncoded
+    @POST("wallet/getWallet")
+    Call<getWalletBean> getWalletInf(@Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST("wallet/createRecharge")
+    Call<reChargeBean> reCharge(@FieldMap Map<String, String> map);
+
 
 }

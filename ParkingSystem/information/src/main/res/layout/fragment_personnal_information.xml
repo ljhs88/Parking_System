@@ -101,6 +101,8 @@
             android:background="#0aaa"
             android:maxLines="1"
             android:maxLength="15"
+            android:gravity="right"
+            android:inputType="textAutoComplete"
             />
 
         <View
@@ -125,7 +127,7 @@
         <EditText
             android:id="@+id/male"
             android:layout_width="wrap_content"
-            android:minWidth="50dp"
+            android:minWidth="100dp"
             android:layout_height="0dp"
             app:layout_constraintTop_toTopOf="@+id/male1"
             app:layout_constraintEnd_toEndOf="@id/name"
@@ -135,6 +137,9 @@
             android:background="#0aaa"
             android:maxLines="1"
             android:maxLength="1"
+            android:inputType="text|textAutoComplete"
+            android:gravity="right"
+            android:hint="示例：男"
             />
 
         <View
@@ -170,7 +175,10 @@
             app:layout_constraintEnd_toEndOf="@id/name"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toTopOf="@+id/birthday1"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:inputType="numberDecimal"
+            android:hint="示例：2001.04.25"
+            android:gravity="right"/>
 
         <View
             android:id="@+id/view5"
@@ -205,6 +213,7 @@
             android:background="#0aaa"
             android:maxLines="2"
             android:maxLength="20"
+            android:gravity="right"
             />
 
         <View

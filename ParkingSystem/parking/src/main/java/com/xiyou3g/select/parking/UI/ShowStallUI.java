@@ -2,6 +2,7 @@ package com.xiyou3g.select.parking.UI;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

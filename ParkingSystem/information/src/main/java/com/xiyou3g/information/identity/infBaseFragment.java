@@ -23,6 +23,7 @@ import com.xiyou3g.information.bean.requestInfBaseBean;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import com.xiyou3g.information.Utility.ToastUtil;
 
 public class infBaseFragment extends Fragment implements View.OnClickListener {
 
@@ -59,7 +60,6 @@ public class infBaseFragment extends Fragment implements View.OnClickListener {
         userid = pref.getString("userId", "");
         token = pref.getString("userToken", "");
         mobile = pref.getString("mobile", "");
-        //userid = "946762136657330176";
 
         getViewId();
 
@@ -90,24 +90,22 @@ public class infBaseFragment extends Fragment implements View.OnClickListener {
                         String.valueOf(edit_IdCard.getText()), null, null, String.valueOf(edit_carNum.getText()),
                         null, null);
                 RequestBody body = RequestBody.create(MediaType.parse("application/json"), data.toString());
-                mRetrofit.setIdentity(userid ,body);
-                Toast.makeText(getActivity(), "实名认证信息上传成功！", Toast.LENGTH_SHORT).show();
+                mRetrofit.setIdentity(getActivity(), userid ,body);
+                ToastUtil.getToast(getContext(), "实名认证信息上传成功！");
                 Intent intent = new Intent();
                 intent.putExtra("type", "infBase");
                 getActivity().setResult(1, intent);
                 getActivity().onBackPressed();
-                Log.d("123", "实名认证");
             } else if ("infChange".equals(type)) {
                 requestInfBaseBean.data data = new requestInfBaseBean.data(userid, String.valueOf(edit_name.getText()),
                         String.valueOf(edit_IdCard.getText()), null, null, String.valueOf(edit_carNum.getText()),
                         null, null);
                 RequestBody body = RequestBody.create(MediaType.parse("application/json"), data.toString());
-                mRetrofit.setUpDataIdentity(body);
-                Toast.makeText(getActivity(), "实名信息修改成功！", Toast.LENGTH_SHORT).show();
-                Log.d("123", "认证修改");
+                mRetrofit.setUpDataIdentity(getActivity(), body);
+                ToastUtil.getToast(getContext(), "实名信息修改成功！");
             }
         } else {
-            Toast.makeText(getActivity(), "请继续完善信息!", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(getContext(), "请继续完善信息！");
         }
     }
 

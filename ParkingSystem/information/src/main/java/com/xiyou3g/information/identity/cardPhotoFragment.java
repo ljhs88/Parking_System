@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.xiyou3g.information.Utility.PhotoChoice;
+import com.xiyou3g.information.Utility.ToastUtil;
 
 public class cardPhotoFragment extends Fragment implements View.OnClickListener {
 
@@ -71,6 +72,8 @@ public class cardPhotoFragment extends Fragment implements View.OnClickListener 
     private Bitmap flowerBitmap = null;
     private Uri imageUri;
     private File tempFile;
+
+    private boolean isPhotoUpload = false;
 
     @Nullable
     @Override
@@ -152,31 +155,30 @@ public class cardPhotoFragment extends Fragment implements View.OnClickListener 
 
     private void setPhoto() {
         if (personBitmap != null && flowerBitmap != null) {
-            mRetrofit.setCardPhoto(StringAndBitmap.getFile(personBitmap).getAbsolutePath(),
+            isPhotoUpload = true;
+            File file1 = StringAndBitmap.getFile(personBitmap);
+            mRetrofit.setCardPhoto(getActivity(), file1.getAbsolutePath(),
                     userid, 1);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-            mRetrofit.setCardPhoto(StringAndBitmap.getFile(flowerBitmap).getAbsolutePath(),
-                    userid, 2);
             Intent intent = new Intent();
             intent.putExtra("type", "cardPhoto");
             getActivity().setResult(2, intent);
-            Toast.makeText(getActivity(), "身份证上传成功!", Toast.LENGTH_SHORT).show();
-            //getActivity().onBackPressed();
+            getActivity().onBackPressed();
         } else if (personBitmap == null) {
-            Toast.makeText(getContext(), "请上传身份证正面!", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(getContext(), "请上传身份证正面!");
         } else if (flowerBitmap == null) {
-            Toast.makeText(getContext(), "请上传身份证国徽面!", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(getContext(),"请上传身份证国徽面!");
         } else if (personBitmap == null && flowerBitmap == null) {
-            Toast.makeText(getContext(), "请先上传身份证!", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(getContext(), "请先上传身份证!");
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (isPhotoUpload) {
+            File file2 = StringAndBitmap.getFile(flowerBitmap);
+            mRetrofit.setCardPhoto(getActivity(), file2.getAbsolutePath(),
+                    userid, 2);
         }
     }
 

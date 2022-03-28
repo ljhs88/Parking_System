@@ -57,6 +57,7 @@ import com.xiyou3g.information.retrofit.Api;
 import com.xiyou3g.information.bean.informationBean;
 import com.xiyou3g.information.retrofit.mRetrofit;
 import com.xiyou3g.information.Utility.PhotoChoice;
+import com.xiyou3g.information.Utility.ToastUtil;
 
 public class personal_information extends Fragment implements View.OnClickListener {
 
@@ -89,6 +90,8 @@ public class personal_information extends Fragment implements View.OnClickListen
         userid = pref.getString("userId", "");
         token = pref.getString("userToken", "");
         mobile = pref.getString("mobile", "");
+
+        //userid = "946762136657330176";
 
         getEditTextId();
 
@@ -149,7 +152,7 @@ public class personal_information extends Fragment implements View.OnClickListen
         if (headBitmap != null) {
             mRetrofit retrofit = new mRetrofit();
             File file = StringAndBitmap.getFile(headBitmap);
-            retrofit.setHttpPortrait(file.getAbsolutePath(), userid, "0");
+            retrofit.setHttpPortrait(getActivity(), file.getAbsolutePath(), userid, "0");
         }
         // 更新内容
         setContent(userid);
@@ -216,7 +219,7 @@ public class personal_information extends Fragment implements View.OnClickListen
                 sex, String.valueOf(edit_birthday.getText()), "中国", "陕西省", "西安市",
                 String.valueOf(edit_location.getText()), String.valueOf(edit_personality.getText()));
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), request.toString());
-        mRetrofit.setContent(requestBody);
+        mRetrofit.setContent(getActivity(), requestBody);
     }
 
 }

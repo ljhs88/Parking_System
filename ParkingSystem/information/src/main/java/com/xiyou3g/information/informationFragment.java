@@ -9,7 +9,9 @@ import com.xiyou3g.information.bean.requestInformationBean;
 import com.xiyou3g.information.Utility.HttpImgThread;
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -57,6 +59,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.xiyou3g.information.retrofit.mRetrofit;
 import com.xiyou3g.information.Utility.PhotoChoice;
+import com.xiyou3g.information.Utility.ToastUtil;
 
 @Route(path = "/information/informationFragment")
 public class informationFragment extends Fragment implements View.OnClickListener {
@@ -70,6 +73,8 @@ public class informationFragment extends Fragment implements View.OnClickListene
     private Button history_button;
     private Button history_button2;
     private Button id_cardButton;
+    private Button walletButton;
+    private Button settingButton;
     private ImageView image_head;
     private ImageButton backButton;
     private TextView textNickname;
@@ -80,8 +85,6 @@ public class informationFragment extends Fragment implements View.OnClickListene
     private String userid;
     private String token;
     private String mobile;
-    private Button backToDesk_button;
-    private Button changeAccount;
 
     @Nullable
     @Override
@@ -94,20 +97,13 @@ public class informationFragment extends Fragment implements View.OnClickListene
         userid = pref.getString("userId", "");
         token = pref.getString("userToken", "");
         mobile = pref.getString("mobile", "");
+
         //userid = "946762136657330176";
 
         // 获取控件实例
         getViewId();
         //获取网络数据
         getContent(userid);
-        // 设置点击事件
-        personal_button.setOnClickListener(this);
-        history_button.setOnClickListener(this);
-        backToDesk_button.setOnClickListener(this);
-        changeAccount.setOnClickListener(this);
-        backButton.setOnClickListener(this);
-        history_button2.setOnClickListener(this);
-        id_cardButton.setOnClickListener(this);
 
         return view;
     }
@@ -125,8 +121,6 @@ public class informationFragment extends Fragment implements View.OnClickListene
         call.enqueue(new Callback<informationBean>() {
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                if (response.body() == null)
-                Log.d("123","GET：null");
                 if (response.body()!=null) {
                     informationBean bean = response.body();
                     textNickname.setText(bean.getData().getNickname());
@@ -165,16 +159,23 @@ public class informationFragment extends Fragment implements View.OnClickListene
     }
 
     public void getViewId() {
+        settingButton = view.findViewById(R.id.setting_To);
+        walletButton = view.findViewById(R.id.wallet_To);
         history_button2 = view.findViewById(R.id.historyTo2);
         id_cardButton = view.findViewById(R.id.Id_cardTo);
-        backToDesk_button = view.findViewById(R.id.backToDesk);
-        changeAccount = view.findViewById(R.id.changeAccount);
         personal_button = view.findViewById ( R.id.personal_button );
         history_button = view.findViewById(R.id.historyTo);
         image_head = view.findViewById(R.id.head);
         backButton = view.findViewById(R.id.background);
         textPhone = view.findViewById(R.id.user_account);
         textNickname = view.findViewById(R.id.username);
+        personal_button.setOnClickListener(this);
+        history_button.setOnClickListener(this);
+        backButton.setOnClickListener(this);
+        history_button2.setOnClickListener(this);
+        id_cardButton.setOnClickListener(this);
+        walletButton.setOnClickListener(this);
+        settingButton.setOnClickListener(this);
     }
 
     @Override
@@ -188,26 +189,29 @@ public class informationFragment extends Fragment implements View.OnClickListene
             /*Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "history");
             startActivity(intent1);*/
-            Toast.makeText(getActivity(), "开发中,尽请期待!", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(getContext(), "开发中,尽请期待!");
         } else if (id == R.id.historyTo2) {
             /*Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "history2");
             startActivity(intent1);*/
-            Toast.makeText(getActivity(), "开发中,尽请期待!", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(getContext(), "开发中,尽请期待!");
         } else if (id == R.id.Id_cardTo) {
             Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "IdCard");
+            startActivity(intent1);
+        } else if (id == R.id.wallet_To) {
+            Intent intent1 = new Intent(getContext(), personActivity.class);
+            intent1.putExtra("select fragment", "wallet");
+            startActivity(intent1);
+        } else if (id == R.id.setting_To) {
+            Intent intent1 = new Intent(getContext(), personActivity.class);
+            intent1.putExtra("select fragment", "setting");
             startActivity(intent1);
         } else if (id == R.id.background) {
             Intent intent2 = new Intent(Intent.ACTION_PICK, null);
             intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
             startActivityForResult(intent2, BACKGROUND_PHOTO);
-        } else if (id == R.id.changeAccount) {
-            getActivity().finish();
-            ARouter.getInstance().build("/customer/Cus_LoginActivity").navigation();
-        } else if (id == R.id.backToDesk) {
-            getActivity().finish();
         }
     }
 
@@ -250,7 +254,7 @@ public class informationFragment extends Fragment implements View.OnClickListene
             File file = StringAndBitmap.getFile(backBitmap);
             //Log.d("123", "retrofit"+userid);
             //Log.d("123", file.getName() +","+ file.getAbsolutePath());
-            mRetrofit.setHttpPortrait(file.getAbsolutePath(), userid, "1");
+            mRetrofit.setHttpPortrait(getActivity(),file.getAbsolutePath(), userid, "1");
         }
     }
 

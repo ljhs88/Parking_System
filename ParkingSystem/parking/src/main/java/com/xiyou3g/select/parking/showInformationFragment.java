@@ -25,7 +25,7 @@ import com.xiyou3g.select.parking.UI.ShowUI;
 import com.xiyou3g.select.parking.api.ChargeAndStallService;
 import com.xiyou3g.select.parking.bean.ShowInformation;
 import com.xiyou3g.select.parking.bean.chargebean;
-import com.xiyou3g.select.parking.bean.resbean;
+import com.xiyou3g.select.parking.bean.orderbean;
 import com.xiyou3g.select.parking.bean.stallbean;
 import com.xiyou3g.select.parking.util.RetrofitManager;
 
@@ -212,12 +212,12 @@ public class showInformationFragment extends Fragment implements View.OnClickLis
         Retrofit retrofit = retrofitManager.getRetrofit();
         ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
         posId = stallbean.getData().get(0).getId();
-        api.postCreate(userId, posId).enqueue(new Callback<resbean>() {
+        api.postCreate(userId, posId).enqueue(new Callback<orderbean>() {
             @Override
-            public void onResponse(Call<resbean> call, Response<resbean> response) {
-                resbean resbean = response.body();
+            public void onResponse(Call<orderbean> call, Response<orderbean> response) {
+                orderbean resbean = response.body();
                 if (resbean != null && resbean.isSuccess() == true) {
-                    reserve_button.setText(R.string.reservecancel);
+                    //reserve_button.setText(R.string.reservecancel);
                     Toast.makeText(getActivity(), "预约成功!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "预约失败!请重新预约!", Toast.LENGTH_SHORT).show();
@@ -225,31 +225,10 @@ public class showInformationFragment extends Fragment implements View.OnClickLis
             }
 
             @Override
-            public void onFailure(Call<resbean> call, Throwable t) {
+            public void onFailure(Call<orderbean> call, Throwable t) {
 
             }
         });
     }
 
-    private void cancelRes() {
-        Retrofit retrofit = retrofitManager.getRetrofit();
-        retrofit.create(ChargeAndStallService.class).
-                postCancel(posId).enqueue(new Callback<resbean>() {
-            @Override
-            public void onResponse(Call<resbean> call, Response<resbean> response) {
-                resbean resbean = response.body();
-                if (resbean != null && resbean.isSuccess() == true) {
-                    reserve_button.setText(R.string.reserve);
-                    Toast.makeText(getActivity(), "取消预约成功!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "取消失败!请重新取消!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<resbean> call, Throwable t) {
-
-            }
-        });
-    }
 }

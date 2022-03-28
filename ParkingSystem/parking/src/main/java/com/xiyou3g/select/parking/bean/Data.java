@@ -182,8 +182,6 @@ public class Data {
         return adminMobile;
     }
 
-<<<<<<< HEAD
-=======
     public void setIsfine(int isfine) {
         this.isfine = isfine;
     }
@@ -198,5 +196,4 @@ public class Data {
         return finePrice;
     }
 
->>>>>>> 5277e0d3468cc74ba78ad8401eb9b62f3e232283
 }

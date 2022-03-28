@@ -2,14 +2,17 @@ package com.xiyou3g.information;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -22,6 +25,8 @@ import com.xiyou3g.information.personal.personal_history;
 import com.xiyou3g.information.personal.personal_history2;
 import com.xiyou3g.information.personal.personal_idCard;
 import com.xiyou3g.information.personal.personal_information;
+import com.xiyou3g.information.personal.personal_setting;
+import com.xiyou3g.information.personal.personal_wallet;
 
 @Route(path = "/information/personalActivity")
 public class personActivity extends AppCompatActivity{
@@ -43,6 +48,25 @@ public class personActivity extends AppCompatActivity{
         selectFragment();
     }
 
+    /**
+     * 点击空白输入键盘自动关闭
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (personActivity.this.getCurrentFocus() != null) {
+                if (personActivity.this.getCurrentFocus().getWindowToken() != null) {
+                    imm.hideSoftInputFromWindow(personActivity.this.getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
     private void selectFragment() {
         Intent intent = getIntent();
         String content = intent.getStringExtra( "select fragment" );
@@ -58,6 +82,12 @@ public class personActivity extends AppCompatActivity{
                 break;
             case "IdCard":
                 replaceFragment(new personal_idCard());
+                break;
+            case "wallet":
+                replaceFragment(new personal_wallet());
+                break;
+            case "setting":
+                replaceFragment(new personal_setting());
                 break;
         }
     }

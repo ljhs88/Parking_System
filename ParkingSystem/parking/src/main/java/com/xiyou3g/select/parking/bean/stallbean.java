@@ -131,6 +131,42 @@ public class stallbean {
         public String getAdminMobile() {
             return adminMobile;
         }
+
+        @Override
+        public String toString() {
+            return "Data{" +
+                    "id='" + id + '\'' +
+                    ", userId='" + userId + '\'' +
+                    ", auditState=" + auditState +
+                    ", ispublish=" + ispublish +
+                    ", status=" + status +
+                    ", ownerName='" + ownerName + '\'' +
+                    ", ownerMobile='" + ownerMobile + '\'' +
+                    ", ownerImage='" + ownerImage + '\'' +
+                    ", province='" + province + '\'' +
+                    ", city='" + city + '\'' +
+                    ", district='" + district + '\'' +
+                    ", address='" + address + '\'' +
+                    ", longitude='" + longitude + '\'' +
+                    ", latitude='" + latitude + '\'' +
+                    ", ownerNum='" + ownerNum + '\'' +
+                    ", hourPrice=" + hourPrice +
+                    ", image1='" + image1 + '\'' +
+                    ", image2='" + image2 + '\'' +
+                    ", image3='" + image3 + '\'' +
+                    ", adminName='" + adminName + '\'' +
+                    ", adminMobile='" + adminMobile + '\'' +
+                    '}';
+        }
     }
 
+    @Override
+    public String toString() {
+        return "stallbean{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", success=" + success +
+                ", data=" + data +
+                '}';
+    }
 }

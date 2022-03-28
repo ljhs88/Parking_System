@@ -1,19 +1,25 @@
 package com.xiyou3g.select.parking;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Text;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.UI.ShowChargeUI;
 import com.xiyou3g.select.parking.UI.ShowStallUI;
@@ -28,21 +34,19 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import com.xiyou3g.select.parking.bean.resbean;
+import com.xiyou3g.select.parking.bean.orderbean;
+import com.xiyou3g.select.parking.util.ToastUtil;
+import com.xiyou3g.select.parking.util.toolBar;
 
 public class ShowInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static int STATUS = 3;
+    private static int STATUS = 2;
     private static final int CHARGE = 1;
-    private static final int PARKING = 2;
-    private static final int STALL = 3;
-    private String scId;
-    private String spId;
+    private static final int STALL = 2;
     private ShowInformation showInformation;
     private BottomSheetDialog bottomSheetDialog;
     private LatLng thisLatLng;
@@ -58,8 +62,8 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     private int NAVIGATION_BUTTON_STATUS = 0;
     private final int NAVIGATION_CREATE = 0;
     private final int NAVIGATION_CANCEL = 0;
-    private Button reserve_button;
-    private Button delete_button;
+
+    private TextView StallAndChargeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,18 +76,30 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
             decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
-        buttonClick();
-        getStatus();
-        show();
-        /**
-         * 获取这两个id
-         */
+        // 设置充电桩和停车位
+        StallAndChargeText = findViewById(R.id.text7);
+
         SharedPreferences pref = getSharedPreferences("data", Context.MODE_PRIVATE);
         userId = pref.getString("userId", "");
         token = pref.getString("userToken", "");
         mobile = pref.getString("mobile", "");
-        //userid = "946762136657330176";
 
+        //thisLatLng = new LatLng(34.15512142931449, 108.90559129372537);
+        //userId = "946762136657330176";
+
+        buttonClick();
+        getStatus();
+        show();
+
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void setToolBar(String name) {
+        Toolbar toolbar = findViewById(R.id.show_toolbar);
+        toolbar.setTitle(name);
+        toolbar.setTitleTextColor(R.color.black);
+        toolbar.setTitleMarginStart(toolBar.getAndroidScreenProperty(this));
+        setSupportActionBar(toolbar);
     }
 
     /**
@@ -98,21 +114,27 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
         call.enqueue(new Callback<com.xiyou3g.select.parking.bean.chargebean>() {
             @Override
             public void onResponse(Call<chargebean> call, Response<chargebean> response) {
+                StallAndChargeText.setText("充电桩信息");
                 chargebean = response.body();
                 Log.d("123", "response");
-                if (chargebean != null) {
+                if (chargebean != null && chargebean.getSuccess()) {
                     Log.d("123", response.body().toString());
+                    setToolBar(chargebean.getData().get(0).getOwnerNum());
                     showInformation(new ShowChargeUI(activity, chargebean));
                 }
             }
 
             @Override
             public void onFailure(Call<chargebean> call, Throwable t) {
-                Log.d("123", t.toString());
+                ToastUtil.getToast(ShowInformationActivity.this, "获取充电桩信息失败！请重新尝试！");
             }
         });
     }
 
+    /**
+     * 获取停车场信息
+     * @param activity
+     */
     private void getStall(Activity activity) {
         Retrofit retrofit = retrofitManager.getRetrofit();
         ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
@@ -121,18 +143,21 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
         call.enqueue(new Callback<stallbean>() {
             @Override
             public void onResponse(Call<stallbean> call, Response<stallbean> response) {
+                StallAndChargeText.setText("停车位信息");
                 stallbean = response.body();
-                if (stallbean != null) {
-                    Log.d("123", stallbean.getData().toString());
+                if (stallbean != null && stallbean.isSuccess()) {
+                    Log.d("123", stallbean.toString());
+                    setToolBar(stallbean.getData().get(0).getOwnerNum());
                     showInformation(new ShowStallUI(activity, stallbean));
                 } else {
-                    Toast.makeText(ShowInformationActivity.this, "获取停车位信息失败!请重新获取!", Toast.LENGTH_SHORT).show();
+                    ToastUtil.getToast(ShowInformationActivity.this, "获取停车位信息失败！请重新尝试！");
                 }
             }
 
             @Override
             public void onFailure(Call<stallbean> call, Throwable t) {
-                Log.d("123", "onFailure:"+t.toString());
+                Log.d("123", t.toString());
+                ToastUtil.getToast(ShowInformationActivity.this, "获取停车位信息失败！请重新尝试！");
             }
         });
     }
@@ -140,8 +165,6 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     private void show() {
         if (STATUS == CHARGE) {
             getCharge(this);
-        } else if (STATUS == PARKING) {
-            //showInformation(new ShowParkingUI(this, ));
         } else if (STATUS == STALL) {
             getStall(this);
         }
@@ -149,11 +172,7 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
 
     private void buttonClick() {
         navigation_button = findViewById(R.id.navigation_button);
-        reserve_button = findViewById(R.id.reserve_button);
-        delete_button = findViewById(R.id.delete_button);
         navigation_button.setOnClickListener(this);
-        reserve_button.setOnClickListener(this);
-        delete_button.setOnClickListener(this);
     }
 
     private void getStatus() {
@@ -182,6 +201,8 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.navigation_button) {
+            // 创建订单
+            createRes();
             String name;
             double latitude;
             double longitude;
@@ -194,24 +215,11 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
                 latitude = Double.parseDouble(chargebean.getData().get(0).getLatitude());
                 longitude = Double.parseDouble(chargebean.getData().get(0).getLongitude());
             }
-            /*ARouter.getInstance().build("/map/MapActivity")
-                    .withDouble("latitude", thisLatLng.latitude)
-                    .withDouble("longitude", thisLatLng.longitude)
-                    .withString("destination", showInformation.getName())
-                    .navigation();*/
             ARouter.getInstance().build("/map/MapActivity")
                     .withDouble("latitude", latitude)
                     .withDouble("longitude", longitude)
                     .withString("destination", name)
                     .navigation();
-        } else if (view.getId() == R.id.reserve_button) {
-            if (NAVIGATION_BUTTON_STATUS == NAVIGATION_CREATE) {
-                createRes();
-                NAVIGATION_BUTTON_STATUS = NAVIGATION_CANCEL;
-            } else if (NAVIGATION_BUTTON_STATUS == NAVIGATION_CANCEL) {
-                cancelRes();
-                NAVIGATION_BUTTON_STATUS = NAVIGATION_CREATE;
-            }
         } else if (view.getId() == R.id.delete_button) {
             bottomSheetDialog = new BottomSheetDialog(this);
             bottomSheetDialog.setContentView(R.layout.layout_bottomsheetdialog_delete);
@@ -227,48 +235,38 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
         }
     }
 
+    /**
+     * 创建订单
+     */
     private void createRes() {
         Retrofit retrofit = retrofitManager.getRetrofit();
         ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
-        posId = stallbean.getData().get(0).getId();
-        api.postCreate(userId, posId).enqueue(new Callback<resbean>() {
+        if (STATUS == CHARGE) {
+            posId = chargebean.getData().get(0).getId();
+        } else if (STATUS == STALL) {
+            posId = stallbean.getData().get(0).getId();
+        }
+        Log.d("123", posId+","+userId);
+        api.postCreate(posId, userId).enqueue(new Callback<orderbean>() {
             @Override
-            public void onResponse(Call<resbean> call, Response<resbean> response) {
-                resbean resbean = response.body();
-                if (resbean != null && resbean.isSuccess() == true) {
-                    reserve_button.setText(R.string.reservecancel);
-                    Toast.makeText(ShowInformationActivity.this, "预约成功!", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<orderbean> call, Response<orderbean> response) {
+                orderbean bean = response.body();
+                Log.d("123", response.toString());
+                if (bean != null && bean.isSuccess()) {
+                    Log.d("123", bean.toString());
+                    /**
+                     * 导航按钮逻辑
+                     */
                 } else {
-                    Toast.makeText(ShowInformationActivity.this, "预约失败!请重新预约!", Toast.LENGTH_SHORT).show();
+                    ToastUtil.getToast(ShowInformationActivity.this, "导航失败!请重新尝试!");
                 }
             }
 
             @Override
-            public void onFailure(Call<resbean> call, Throwable t) {
-                Toast.makeText(ShowInformationActivity.this, "预约失败!请重新预约!", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<orderbean> call, Throwable t) {
+                ToastUtil.getToast(ShowInformationActivity.this, "导航失败!请重新尝试!");
             }
         });
     }
 
-    private void cancelRes() {
-        Retrofit retrofit = retrofitManager.getRetrofit();
-        retrofit.create(ChargeAndStallService.class).
-                postCancel(posId).enqueue(new Callback<resbean>() {
-            @Override
-            public void onResponse(Call<resbean> call, Response<resbean> response) {
-                resbean resbean = response.body();
-                if (resbean != null && resbean.isSuccess() == true) {
-                    reserve_button.setText(R.string.reserve);
-                    Toast.makeText(ShowInformationActivity.this, "取消预约成功!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ShowInformationActivity.this, "取消失败!请重新取消!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<resbean> call, Throwable t) {
-                Toast.makeText(ShowInformationActivity.this, "取消失败!请重新取消!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

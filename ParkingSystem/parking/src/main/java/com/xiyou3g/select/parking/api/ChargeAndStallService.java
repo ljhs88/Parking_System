@@ -1,13 +1,12 @@
 package com.xiyou3g.select.parking.api;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import com.xiyou3g.select.parking.bean.chargebean;
 import com.xiyou3g.select.parking.bean.stallbean;
-import com.xiyou3g.select.parking.bean.resbean;
+import com.xiyou3g.select.parking.bean.orderbean;
 
 public interface ChargeAndStallService {
 
@@ -21,11 +20,7 @@ public interface ChargeAndStallService {
 
     /*-----------------------------*/
     @FormUrlEncoded
-    @POST("reserver/createRes")
-    Call<resbean> postCreate(@Field("userId") String userid, @Field("posId") String posId);
-
-    @FormUrlEncoded
-    @POST("reserver/cancelRes")
-    Call<resbean> postCancel(@Field("Id") String podId);
+    @POST("orders/createOrders")
+    Call<orderbean> postCreate(@Field("posId") String posid, @Field("userId") String userId);
 
 }

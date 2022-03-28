@@ -184,5 +184,15 @@ public class chargebean {
                         '}';
             }
         }
+
+    @Override
+    public String toString() {
+        return "chargebean{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", success=" + success +
+                ", data=" + data +
+                '}';
+    }
 }
 
