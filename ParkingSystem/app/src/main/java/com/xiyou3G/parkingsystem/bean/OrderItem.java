@@ -2,17 +2,19 @@ package com.xiyou3G.parkingsystem.bean;
 
 import androidx.annotation.NonNull;
 
+import java.util.Date;
+
 public class OrderItem {
 
     private String address;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
     private Double price;
     private int status;
     private String ordersId;
     private int type;
 
-    public OrderItem(String address, String startTime, String endTime, Double price, int status, String ordersId, int type) {
+    public OrderItem(String address, Date startTime, Date endTime, Double price, int status, String ordersId, int type) {
         this.address = address;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -30,19 +32,19 @@ public class OrderItem {
         this.address = address;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

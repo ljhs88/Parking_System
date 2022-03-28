@@ -45,7 +45,7 @@ public class RentFragment extends Fragment {
         view = inflater.inflate(R.layout.layout_rent_fragment, container, false);
         initView();
         request();
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 
     private void request() {
@@ -66,8 +66,8 @@ public class RentFragment extends Fragment {
                 Log.d(TAG, "onResponse: " + list);
                 for (Data data : list) {
                     rentItems.add(new RentItem(data.getPayPrice(),
-                            data.getStartTime().toString(),
-                            data.getEndTime().toString(),
+                            data.getStartTime(),
+                            data.getEndTime(),
                             data.getIscancel(),
                             data.getId()));
                 }
@@ -78,7 +78,9 @@ public class RentFragment extends Fragment {
                     Log.d(TAG, "onResponse: " + "ui");
                     if (recyclerView.getAdapter() == null) {
                         recyclerView.setAdapter(recyclerAdapter);
-                        Log.d(TAG, "onResponse: " + "setAdapter");
+
+                        Log.d(TAG, "onResponse: " + "setAdapter" + recyclerAdapter);
+                        Log.d(TAG, "onResponse: " + "setAdapter" + recyclerView.getAdapter());
                     } else {
 
                         recyclerAdapter.notifyDataSetChanged();
@@ -97,6 +99,7 @@ public class RentFragment extends Fragment {
 
     private void initView() {
         swipeRefreshLayout = view.findViewById(R.id.rent_id_reFresh);
+        Log.d(TAG, "initView: swipe" + swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this::request);
         recyclerView = view.findViewById(R.id.rent_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

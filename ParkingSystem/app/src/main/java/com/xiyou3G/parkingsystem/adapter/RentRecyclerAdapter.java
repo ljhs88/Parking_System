@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xiyou3G.parkingsystem.R;
 import com.xiyou3G.parkingsystem.bean.RentItem;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class RentRecyclerAdapter extends RecyclerView.Adapter<RentRecyclerAdapter.ViewHolder> {
 
@@ -29,6 +31,7 @@ public class RentRecyclerAdapter extends RecyclerView.Adapter<RentRecyclerAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_rent, parent, false);
         this.view = view;
+
         Log.d("TAG", "onCreateViewHolder: ");
         return new ViewHolder(view);
     }
@@ -37,8 +40,8 @@ public class RentRecyclerAdapter extends RecyclerView.Adapter<RentRecyclerAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RentItem rentItem = list.get(position);
         holder.price.setText(String.valueOf(rentItem.getPrice()));
-        holder.startTime.setText(rentItem.getStartTime());
-        holder.endTime.setText(rentItem.getEndTime());
+        holder.startTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(rentItem.getStartTime()));
+        holder.endTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(rentItem.getEndTime()));
         if (rentItem.getStatus() == 0) {
             holder.status.setText("未完成");
         } else {
@@ -63,6 +66,7 @@ public class RentRecyclerAdapter extends RecyclerView.Adapter<RentRecyclerAdapte
 
         public ViewHolder(@NonNull View view) {
             super(view);
+            Log.d("TAG", "ViewHolder: ");
             price = view.findViewById(R.id.rent_price_text);
             startTime = view.findViewById(R.id.rent_startTime_text);
             endTime = view.findViewById(R.id.rent_endTime_text);

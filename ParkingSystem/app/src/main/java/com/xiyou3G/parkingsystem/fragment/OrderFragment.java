@@ -52,6 +52,7 @@ public class OrderFragment extends Fragment {
 
     private void initView() {
         swipeRefreshLayout = view.findViewById(R.id.id_reFresh);
+        Log.d(TAG, "initView: swipe" + swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this::request);
         recyclerView = view.findViewById(R.id.order_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -77,8 +78,8 @@ public class OrderFragment extends Fragment {
                 for (Data data : list) {
 
                     orderItems.add(new OrderItem(data.getAddress(),
-                            data.getStartTime().toString(),
-                            data.getEndTime().toString(),
+                            data.getStartTime(),
+                            data.getEndTime(),
                             data.getPayPrice(),
                             data.getIscancel(),
                             data.getId(),

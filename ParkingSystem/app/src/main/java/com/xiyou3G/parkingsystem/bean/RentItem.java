@@ -2,15 +2,17 @@ package com.xiyou3G.parkingsystem.bean;
 
 import androidx.annotation.NonNull;
 
+import java.util.Date;
+
 public class RentItem {
 
     private double price;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
     private int status;
     private String orderId;
 
-    public RentItem(double price, String startTime, String endTime, int status, String orderId) {
+    public RentItem(double price, Date startTime, Date endTime, int status, String orderId) {
         this.price = price;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -26,19 +28,19 @@ public class RentItem {
         this.price = price;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

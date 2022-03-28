@@ -17,7 +17,9 @@ import com.xiyou3G.parkingsystem.bean.OrderResponse;
 import com.xiyou3g.customer.CustomerActivity;
 import com.xiyou3g.select.parking.util.RetrofitManager;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,8 +49,9 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderItem orderItem = list.get(position);
         holder.address.setText(orderItem.getAddress());
-        holder.startTime.setText(orderItem.getStartTime());
-        holder.endTime.setText(orderItem.getEndTime());
+
+        holder.startTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(orderItem.getStartTime()));
+        holder.endTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(orderItem.getEndTime()));
         holder.price.setText(String.valueOf(orderItem.getPrice()));
         if (orderItem.getStatus() == 0) {
             holder.status.setText("未完成");

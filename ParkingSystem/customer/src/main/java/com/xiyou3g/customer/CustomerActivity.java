@@ -20,7 +20,9 @@ import com.xiyou3g.select.parking.util.RetrofitManager;
 import com.xiyou3g.select.parking.util.ToastUtil;
 import com.xiyou3g.select.pay.bean.PayResultResponse;
 
+import java.text.DateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -77,8 +79,8 @@ public class CustomerActivity extends AppCompatActivity {
                         finePrice.setText(String.valueOf(data.getFinePrice()));
                     }
                     car.setText(data.getCar());
-                    start.setText(data.getStartTime().toString());
-                    end.setText(data.getEndTime().toString());
+                    start.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(data.getStartTime()));
+                    end.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(data.getStartTime()));
                     eleNum.setText(String.valueOf(data.getEleNum()));
                     orderPrice.setText(String.valueOf(data.getOrderPrice()));
                     subPrice.setText(String.valueOf(data.getSubPrice()));
@@ -159,6 +161,13 @@ public class CustomerActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
+
+        //状态栏字体颜色变为黑色
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            View decorView = getWindow().getDecorView();
+            int systemUiVisibility = decorView.getSystemUiVisibility();
+            decorView.setSystemUiVisibility(systemUiVisibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
         address = findViewById(R.id.complete_address_text2);
         type = findViewById(R.id.complete_type_text2);

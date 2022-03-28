@@ -1,14 +1,5 @@
-/**
- * Copyright 2022 bejson.com
- */
 package com.xiyou3g.customer.bean;
 
-/**
- * Auto-generated: 2022-03-25 20:54:49
- *
- * @author bejson.com (i@bejson.com)
- * @website http://www.bejson.com/java2pojo/
- */
 public class CloseOrderResponse {
 
     private int status;

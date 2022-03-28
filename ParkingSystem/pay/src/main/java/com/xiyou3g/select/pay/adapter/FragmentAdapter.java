@@ -1,5 +1,7 @@
 package com.xiyou3g.select.pay.adapter;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -25,6 +27,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
+        Log.d("TAG", "getItemCount: " + list.size());
         return list.size();
     }
 }
