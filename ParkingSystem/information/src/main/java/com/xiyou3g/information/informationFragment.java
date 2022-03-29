@@ -102,8 +102,8 @@ public class informationFragment extends Fragment implements View.OnClickListene
         call.enqueue(new Callback<informationBean>() {
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                if (response.body()!=null) {
-                    informationBean bean = response.body();
+                informationBean bean = response.body();
+                if (bean != null && bean.isSuccess()) {
                     textNickname.setText(bean.getData().getNickname());
                     textPhone.setText(bean.getData().getMobile());
                     //Log.d("123", "faceImg:"+bean.getData().getFace());
