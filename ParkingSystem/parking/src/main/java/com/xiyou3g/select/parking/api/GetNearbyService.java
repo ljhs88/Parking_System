@@ -1,7 +1,7 @@
 package com.xiyou3g.select.parking.api;
 
-import com.xiyou3g.select.parking.bean.chargebean;
-import com.xiyou3g.select.parking.bean.stallbean;
+import com.xiyou3g.select.parking.bean.CreateChargeResponse;
+import com.xiyou3g.select.parking.bean.CreateStallResponse;
 import com.xiyou3g.select.parking.getbean.GetChargeOrStallResponse;
 
 import retrofit2.Call;
@@ -21,10 +21,10 @@ public interface GetNearbyService {
 
     @FormUrlEncoded
     @POST("sharedCharging/getSC/")
-    Call<chargebean> postCharge(@Field("scId") String scId);
+    Call<CreateChargeResponse> postCharge(@Field("scId") String scId);
 
     @FormUrlEncoded
     @POST("sharedParking/getSP")
-    Call<stallbean> postStall(@Field("spId") String spId);
+    Call<CreateStallResponse> postStall(@Field("spId") String spId);
 
 }

@@ -1,25 +1,15 @@
 package com.xiyou3g.information;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.bumptech.glide.Glide;
-import com.xiyou3g.information.Utility.StringAndBitmap;
-import com.xiyou3g.information.bean.informationBean;
-import com.xiyou3g.information.bean.requestInformationBean;
-import com.xiyou3g.information.Utility.HttpImgThread;
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,21 +19,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
+import com.xiyou3g.information.Utility.PhotoChoice;
+import com.xiyou3g.information.Utility.StringAndBitmap;
+import com.xiyou3g.information.bean.informationBean;
 import com.xiyou3g.information.retrofit.Api;
+import com.xiyou3g.information.retrofit.mRetrofit;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -51,10 +41,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import com.xiyou3g.information.retrofit.mRetrofit;
-import com.xiyou3g.information.Utility.PhotoChoice;
 
 @Route(path = "/information/informationFragment")
 public class informationFragment extends Fragment implements View.OnClickListener {
@@ -68,6 +54,8 @@ public class informationFragment extends Fragment implements View.OnClickListene
     private Button history_button;
     private Button history_button2;
     private Button id_cardButton;
+    private Button walletButton;
+    private Button settingButton;
     private ImageView image_head;
     private ImageButton backButton;
     private TextView textNickname;
@@ -76,8 +64,8 @@ public class informationFragment extends Fragment implements View.OnClickListene
     private Bitmap backBitmap;
 
     private String userid;
-    private Button backToDesk_button;
-    private Button changeAccount;
+    private String token;
+    private String mobile;
 
     @Nullable
     @Override
@@ -86,20 +74,17 @@ public class informationFragment extends Fragment implements View.OnClickListene
 
         isGrantExternalRW(getActivity());
 
-        userid = "946762136657330176";
+        SharedPreferences pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        userid = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
+
+        //userid = "946762136657330176";
 
         // 获取控件实例
         getViewId();
         //获取网络数据
         getContent(userid);
-        // 设置点击事件
-        personal_button.setOnClickListener(this);
-        history_button.setOnClickListener(this);
-        backToDesk_button.setOnClickListener(this);
-        changeAccount.setOnClickListener(this);
-        backButton.setOnClickListener(this);
-        history_button2.setOnClickListener(this);
-        id_cardButton.setOnClickListener(this);
 
         return view;
     }
@@ -117,8 +102,6 @@ public class informationFragment extends Fragment implements View.OnClickListene
         call.enqueue(new Callback<informationBean>() {
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                if (response.body() == null)
-                Log.d("123","GET：null");
                 if (response.body()!=null) {
                     informationBean bean = response.body();
                     textNickname.setText(bean.getData().getNickname());
@@ -157,16 +140,23 @@ public class informationFragment extends Fragment implements View.OnClickListene
     }
 
     public void getViewId() {
+        settingButton = view.findViewById(R.id.setting_To);
+        walletButton = view.findViewById(R.id.wallet_To);
         history_button2 = view.findViewById(R.id.historyTo2);
         id_cardButton = view.findViewById(R.id.Id_cardTo);
-        backToDesk_button = view.findViewById(R.id.backToDesk);
-        changeAccount = view.findViewById(R.id.changeAccount);
         personal_button = view.findViewById ( R.id.personal_button );
         history_button = view.findViewById(R.id.historyTo);
         image_head = view.findViewById(R.id.head);
         backButton = view.findViewById(R.id.background);
         textPhone = view.findViewById(R.id.user_account);
         textNickname = view.findViewById(R.id.username);
+        personal_button.setOnClickListener(this);
+        history_button.setOnClickListener(this);
+        backButton.setOnClickListener(this);
+        history_button2.setOnClickListener(this);
+        id_cardButton.setOnClickListener(this);
+        walletButton.setOnClickListener(this);
+        settingButton.setOnClickListener(this);
     }
 
     @Override
@@ -177,28 +167,26 @@ public class informationFragment extends Fragment implements View.OnClickListene
             intent.putExtra("select fragment", "personal");
             startActivityForResult(intent, 1);
         } else if (id == R.id.historyTo) {
-            Intent intent1 = new Intent(getContext(), personActivity.class);
-            intent1.putExtra("select fragment", "history");
-            startActivity(intent1);
+            ARouter.getInstance().build("/pay/Cus_PayActivity").navigation();
         } else if (id == R.id.historyTo2) {
-            /*Intent intent1 = new Intent(getContext(), personActivity.class);
-            intent1.putExtra("select fragment", "history2");
-            startActivity(intent1);*/
-            Toast.makeText(getActivity(), "开发中,尽请期待!", Toast.LENGTH_SHORT).show();
+            ARouter.getInstance().build("/pay/Cus_PayActivity").navigation();
         } else if (id == R.id.Id_cardTo) {
             Intent intent1 = new Intent(getContext(), personActivity.class);
             intent1.putExtra("select fragment", "IdCard");
+            startActivity(intent1);
+        } else if (id == R.id.wallet_To) {
+            Intent intent1 = new Intent(getContext(), personActivity.class);
+            intent1.putExtra("select fragment", "wallet");
+            startActivity(intent1);
+        } else if (id == R.id.setting_To) {
+            Intent intent1 = new Intent(getContext(), personActivity.class);
+            intent1.putExtra("select fragment", "setting");
             startActivity(intent1);
         } else if (id == R.id.background) {
             Intent intent2 = new Intent(Intent.ACTION_PICK, null);
             intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
             //intent 待启动的Intent 100（requestCode）请求码，返回时用来区分是那次请求
             startActivityForResult(intent2, BACKGROUND_PHOTO);
-        } else if (id == R.id.changeAccount) {
-            getActivity().finish();
-            ARouter.getInstance().build("/customer/Cus_LoginActivity").navigation();
-        } else if (id == R.id.backToDesk) {
-            getActivity().finish();
         }
     }
 
@@ -241,7 +229,7 @@ public class informationFragment extends Fragment implements View.OnClickListene
             File file = StringAndBitmap.getFile(backBitmap);
             //Log.d("123", "retrofit"+userid);
             //Log.d("123", file.getName() +","+ file.getAbsolutePath());
-            mRetrofit.setHttpPortrait(file.getAbsolutePath(), userid, "1");
+            mRetrofit.setHttpPortrait(getActivity(),file.getAbsolutePath(), userid, "1");
         }
     }
 

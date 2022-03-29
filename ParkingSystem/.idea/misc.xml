@@ -15,30 +15,36 @@
         <entry key="..\:/AndroidProject备份/ParkingSystem/app/src/main/res/layout/activity_main.xml" value="0.14628623188405798" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/app/src/main/res/menu/bottom_menu.xml" value="0.21041666666666667" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/drawable/button_shape.xml" value="0.1845" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/drawable/re_charge_shape.xml" value="0.183" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/drawable/shape_btn_press_white.xml" value="0.1845" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/drawable/shape_dialog.xml" value="0.1845" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/drawable/tranlate_dialog_in.xml" value="0.1845" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/activity_cus_information.xml" value="0.21" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/activity_identity.xml" value="0.3651041666666667" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/activity_personal.xml" value="0.190625" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/activity_re_charge.xml" value="0.33" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/bottom_choice.xml" value="0.3651041666666667" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_identity_cardphoto.xml" value="0.25" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_identity_infbase.xml" value="0.25" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_identity_infchange.xml" value="0.3651041666666667" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_personal_history.xml" value="0.190625" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_personal_history2.xml" value="0.3651041666666667" />
-        <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_personal_idcard.xml" value="0.33" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_personal_idcard.xml" value="0.25" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_personal_setting.xml" value="0.33" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_personal_wallet.xml" value="0.3651041666666667" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/fragment_personnal_information.xml" value="0.33" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/history_item.xml" value="0.190625" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/information/src/main/res/layout/information_fragment.xml" value="0.25" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/map/src/main/res/layout/activity_map.xml" value="0.17755825734549138" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/map/src/main/res/layout/activity_navigation.xml" value="0.25" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/map/src/main/res/layout/map_fragment.xml" value="0.33" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/drawable/back_button.xml" value="0.183" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/layout/activity_cus_parking.xml" value="0.17755825734549138" />
-        <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/layout/activity_show_information.xml" value="0.33" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/layout/activity_show_information.xml" value="0.25" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/layout/fragment_parking.xml" value="0.3651041666666667" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/layout/fragment_show_information.xml" value="0.33" />
         <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/layout/layout_bottomsheetdialog_delete.xml" value="0.3651041666666667" />
+        <entry key="..\:/AndroidProject备份/ParkingSystem/parking/src/main/res/layout/recycler_item.xml" value="0.3651041666666667" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/app/src/main/res/drawable/select_menu_color.xml" value="0.23703703703703705" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/app/src/main/res/layout/activity_main.xml" value="0.18" />
         <entry key="..\:/ParkingSystem/Parking_System/ParkingSystem/app/src/main/res/layout/activity_show_shared.xml" value="0.3619791666666667" />

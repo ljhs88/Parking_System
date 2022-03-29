@@ -58,11 +58,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         android:layout_marginEnd="20dp"
         android:textStyle="normal"
-        android:gravity="center|right"
+        android:gravity="center_vertical|right"
         android:textSize="15dp"
         android:background="#0aaa"
         android:maxLines="1"
         android:maxLength="5"
+        android:inputType="text|textAutoComplete"
         />
 
     <View
@@ -93,11 +94,13 @@
         app:layout_constraintEnd_toEndOf="@id/name"
         app:layout_constraintBottom_toBottomOf="@+id/view3"
         android:textStyle="normal"
-        android:gravity="center|right"
+        android:gravity="center_vertical|right"
         android:textSize="15dp"
         android:background="#0aaa"
         android:maxLines="2"
         android:maxLength="20"
+        android:inputType="number|textAutoComplete"
+
         />
 
     <View
@@ -128,11 +131,15 @@
         app:layout_constraintEnd_toEndOf="@id/name"
         app:layout_constraintBottom_toBottomOf="@+id/view4"
         android:textStyle="normal"
-        android:gravity="center|right"
+        android:gravity="center_vertical|right"
         android:textSize="15dp"
         android:background="#0aaa"
         android:maxLines="1"
         android:maxLength="11"
+        android:inputType="textAutoComplete"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWSYZ0123456789·京津沪渝吉辽
+        晋冀青鲁豫苏皖浙闽赣湘鄂粤琼甘陕黔滇川黑蒙新藏宁桂港澳"
+        android:hint="陕E·2222"
         />
 
     <View

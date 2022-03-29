@@ -2,6 +2,7 @@ package com.xiyou3g.select.parking.UI;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class ShowStallUI extends ShowUI {
 
     @Override
     public void showImage() {
-        Glide.with(activity).load(information.getData().getOwnerImage())
+        Glide.with(activity).load(information.getData().get(0).getOwnerImage())
                 .into((ImageView) activity.findViewById(R.id.show_photo));
         super.showImage();
     }
@@ -47,14 +48,14 @@ public class ShowStallUI extends ShowUI {
         TextView stallName = activity.findViewById(R.id.text7);
         stallName.setText("停车位信息");
 
-        adminName.setText(information.getData().getAdminName());
-        adminMobile.setText(information.getData().getAdminMobile());
-        ownerName.setText(information.getData().getOwnerName());
-        ownerMobile.setText(information.getData().getOwnerMobile());
-        ownerNum.setText(information.getData().getOwnerNum());
-        hourPrice.setText(information.getData().getPrice());
-        province.setText(information.getData().getProvince());
-        location.setText(information.getData().getAddress());
+        adminName.setText(information.getData().get(0).getAdminName());
+        adminMobile.setText(information.getData().get(0).getAdminMobile());
+        ownerName.setText(information.getData().get(0).getOwnerName());
+        ownerMobile.setText(information.getData().get(0).getOwnerMobile());
+        ownerNum.setText(information.getData().get(0).getOwnerNum());
+        hourPrice.setText(String.valueOf(information.getData().get(0).getHourPrice()));
+        province.setText(information.getData().get(0).getProvince());
+        location.setText(information.getData().get(0).getAddress());
 
         super.showText();
     }
@@ -62,7 +63,7 @@ public class ShowStallUI extends ShowUI {
     @Override
     public void showToolBar() {
         Toolbar toolbar = activity.findViewById(R.id.show_toolbar);
-        toolbar.setTitle(information.getData().getOwnerNum());
+        toolbar.setTitle(information.getData().get(0).getOwnerNum());
         toolbar.setNavigationOnClickListener(view -> activity.finish());
         super.showToolBar();
     }

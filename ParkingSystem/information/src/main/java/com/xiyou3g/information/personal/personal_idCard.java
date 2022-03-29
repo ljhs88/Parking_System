@@ -1,6 +1,10 @@
 package com.xiyou3g.information.personal;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +28,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.xiyou3g.information.Utility.ToastUtil;
 
 public class personal_idCard extends Fragment implements View.OnClickListener {
 
@@ -40,17 +45,24 @@ public class personal_idCard extends Fragment implements View.OnClickListener {
     private Button backgroundButton;
 
     private String userid;
+    private String token;
+    private String mobile;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_personal_idcard, container, false);
 
+        SharedPreferences pref = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        userid = pref.getString("userId", "");
+        token = pref.getString("userToken", "");
+        mobile = pref.getString("mobile", "");
+
+        //userid = "946762136657330176";
+
         getViewId();
 
         setButtonClick();
-
-        userid = "946762136657330176";
 
         judgeIdentity();
 
@@ -69,14 +81,14 @@ public class personal_idCard extends Fragment implements View.OnClickListener {
                     if (bean.getSuccess().equals("true")) {
                         infBaseButton.setText("已完善");
                         cardPhotoButton.setText("已上传");
-                        infBaseButton.setTextColor(Color.parseColor("#faaa"));
-                        cardPhotoButton.setTextColor(Color.parseColor("#faaa"));
+                        infBaseButton.setTextColor(Color.parseColor("#DBDBDB"));
+                        cardPhotoButton.setTextColor(Color.parseColor("#DBDBDB"));
                         infBaseButton.setEnabled(false);
                         cardPhotoButton.setEnabled(false);
                     } else if (bean.getStatus().equals("532")) {
-                        Toast.makeText(getContext(), bean.getMsg(), Toast.LENGTH_SHORT).show();
+                        ToastUtil.getToast(getContext(), bean.getMsg());
                     } else if (bean.getStatus().equals("533")) {
-                        Toast.makeText(getContext(), bean.getMsg(), Toast.LENGTH_SHORT).show();
+                        ToastUtil.getToast(getContext(), bean.getMsg());
                         infBaseButton.setText("已完善");
                     }
                 }
@@ -103,30 +115,53 @@ public class personal_idCard extends Fragment implements View.OnClickListener {
             intent.putExtra("select fragment", "infChange");
             startActivity(intent);
         } else if (id == R.id.inf_cancel) {
-            if (infBaseButton.getText().equals("完善信息 >") &&
-                    cardPhotoButton.getText().equals("上传证件 >")) {
-                Toast.makeText(getActivity(), "未实名认证!", Toast.LENGTH_SHORT).show();
-                mRetrofit.cancelIdentity(userid);
-                infBaseButton.setText("完善信息 >");
-                cardPhotoButton.setText("上传证件 >");
-                infBaseButton.setTextColor(Color.parseColor("#33ccff"));
-                cardPhotoButton.setTextColor(Color.parseColor("#33ccff"));
-                infBaseButton.setEnabled(true);
-                cardPhotoButton.setEnabled(true);
-            } else {
-                mRetrofit.cancelIdentity(userid);
-                infBaseButton.setText("完善信息 >");
-                cardPhotoButton.setText("上传证件 >");
-                infBaseButton.setTextColor(Color.parseColor("#33ccff"));
-                cardPhotoButton.setTextColor(Color.parseColor("#33ccff"));
-                infBaseButton.setEnabled(true);
-                cardPhotoButton.setEnabled(true);
-                Toast.makeText(getActivity(), "实名认证取消成功!", Toast.LENGTH_SHORT).show();
-            }
+            alertDialog();
         } else if (id == R.id.back) {
             getActivity().onBackPressed();
         } else if (id == R.id.background) {
-            Toast.makeText(getActivity(), "开发中!尽请期待!", Toast.LENGTH_SHORT).show();
+            ToastUtil.getToast(getContext(), "开发中!尽请期待!");
+        }
+    }
+
+    private void alertDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle("取消实名提示!");
+        dialog.setMessage("确认取消实名吗?");
+        dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cancelClick();
+            }
+        });
+        dialog.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void cancelClick() {
+        if (infBaseButton.getText().equals("完善信息 >") &&
+                cardPhotoButton.getText().equals("上传证件 >")) {
+            Toast.makeText(getActivity(), "未实名认证!", Toast.LENGTH_SHORT).show();
+            mRetrofit.cancelIdentity(getActivity(), userid);
+            infBaseButton.setText("完善信息 >");
+            cardPhotoButton.setText("上传证件 >");
+            infBaseButton.setTextColor(Color.parseColor("#33ccff"));
+            cardPhotoButton.setTextColor(Color.parseColor("#33ccff"));
+            infBaseButton.setEnabled(true);
+            cardPhotoButton.setEnabled(true);
+        } else {
+            mRetrofit.cancelIdentity(getActivity(), userid);
+            infBaseButton.setText("完善信息 >");
+            cardPhotoButton.setText("上传证件 >");
+            infBaseButton.setTextColor(Color.parseColor("#33ccff"));
+            cardPhotoButton.setTextColor(Color.parseColor("#33ccff"));
+            infBaseButton.setEnabled(true);
+            cardPhotoButton.setEnabled(true);
+            ToastUtil.getToast(getContext(), "实名认证取消成功!");
         }
     }
 

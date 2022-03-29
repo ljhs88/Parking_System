@@ -25,7 +25,7 @@ public class ShowChargeUI extends ShowUI {
 
     @Override
     public void showImage() {
-        Glide.with(activity).load(information.getData().getOwnerImage()).
+        Glide.with(activity).load(information.getData().get(0).getOwnerImage()).
                 into((ImageView) activity.findViewById(R.id.show_photo));
         super.showImage();
     }
@@ -44,15 +44,15 @@ public class ShowChargeUI extends ShowUI {
         TextView location = activity.findViewById(R.id.show_text11);
         TextView overTimePrice = activity.findViewById(R.id.show_text12);
 
-        adminName.setText(information.getData().getAdminName());
-        adminMobile.setText(information.getData().getAdminMobile());
-        ownerName.setText(information.getData().getOwnerName());
-        ownerMobile.setText(information.getData().getOwnerMobile());
-        ownerNum.setText(information.getData().getOwnerNum());
-        hourPrice.setText(information.getData().getPrice());
-        province.setText(information.getData().getProvince());
-        location.setText(information.getData().getAddress());
-        overTimePrice.setText(information.getData().getFinePrice());
+        adminName.setText(information.getData().get(0).getAdminName());
+        adminMobile.setText(information.getData().get(0).getAdminMobile());
+        ownerName.setText(information.getData().get(0).getOwnerName());
+        ownerMobile.setText(information.getData().get(0).getOwnerMobile());
+        ownerNum.setText(information.getData().get(0).getOwnerNum());
+        hourPrice.setText(String.valueOf(information.getData().get(0).getPrice()));
+        province.setText(information.getData().get(0).getProvince());
+        location.setText(information.getData().get(0).getAddress());
+        overTimePrice.setText(information.getData().get(0).getFinePrice());
 
         super.showText();
     }
@@ -60,7 +60,7 @@ public class ShowChargeUI extends ShowUI {
     @Override
     public void showToolBar() {
         Toolbar toolbar = activity.findViewById(R.id.show_toolbar);
-        toolbar.setTitle(information.getData().getOwnerNum());
+        toolbar.setTitle(information.getData().get(0).getOwnerNum());
         toolbar.setNavigationOnClickListener(view -> activity.finish());
         super.showToolBar();
     }

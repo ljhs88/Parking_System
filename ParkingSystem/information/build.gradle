@@ -48,7 +48,8 @@ android {
 }
 
 dependencies {
-
+    // 支付功能
+    api 'com.alipay.sdk:alipaysdk-android:+@aar'
     api rootProject.ext.androidxLibs
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
