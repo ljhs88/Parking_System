@@ -60,7 +60,7 @@
                     app:layout_constraintTop_toTopOf="@+id/card1"
                     app:layout_constraintStart_toEndOf="@+id/card1"
                     android:layout_marginStart="10dp"
-                    android:text="wo不理智"
+                    android:text="用户昵称"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
 
@@ -71,7 +71,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/username"
                     app:layout_constraintStart_toStartOf="@+id/username"
                     android:layout_marginTop="5dp"
-                    android:text="1955087785"
+                    android:text="用户电话"
                     android:textStyle="bold"
                     android:textSize="15dp"/>
 

@@ -109,9 +109,8 @@ public class personal_information extends Fragment implements View.OnClickListen
         call.enqueue(new Callback<informationBean>() {
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
-                if (response.body()!=null) {
-                    informationBean bean = response.body();
-                    Log.d("123", "GET:"+response.body().toString());
+                informationBean bean = response.body();
+                if (bean.isSuccess() && bean.getData() != null) {
                     edit_name.setText(bean.getData().getNickname());
                     if (bean.getData().getSex() == 1) {
                         edit_male.setText("男");

@@ -122,7 +122,7 @@ public class informationFragment extends Fragment implements View.OnClickListene
             @Override
             public void onResponse(Call<informationBean> call, Response<informationBean> response) {
                 informationBean bean = response.body();
-                if (bean != null && bean.isSuccess()) {
+                if (bean.isSuccess() && bean.getData() != null) {
                     textNickname.setText(bean.getData().getNickname());
                     textPhone.setText(bean.getData().getMobile());
                     //Log.d("123", "faceImg:"+bean.getData().getFace());

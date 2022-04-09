@@ -72,7 +72,7 @@ public class personal_wallet extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<getWalletBean> call, Response<getWalletBean> response) {
                 getWalletBean bean = response.body();
-                if (bean != null&&bean.getSuccess()==true) {
+                if (bean != null&&bean.getSuccess()==true&&bean.getData()!=null) {
                     Log.d("123", bean.toString());
                     money.setText(String.valueOf(bean.getData().getBalance()));
                     walletId = bean.getData().getId();
