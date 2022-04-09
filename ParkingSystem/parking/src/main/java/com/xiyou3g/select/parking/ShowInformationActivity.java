@@ -5,21 +5,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Text;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.xiyou3g.select.parking.UI.ShowChargeUI;
 import com.xiyou3g.select.parking.UI.ShowStallUI;
@@ -27,8 +23,11 @@ import com.xiyou3g.select.parking.UI.ShowUI;
 import com.xiyou3g.select.parking.api.ChargeAndStallService;
 import com.xiyou3g.select.parking.bean.ShowInformation;
 import com.xiyou3g.select.parking.bean.chargebean;
+import com.xiyou3g.select.parking.bean.orderbean;
 import com.xiyou3g.select.parking.bean.stallbean;
 import com.xiyou3g.select.parking.util.RetrofitManager;
+import com.xiyou3g.select.parking.util.ToastUtil;
+import com.xiyou3g.select.parking.util.toolBar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,9 +37,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import com.xiyou3g.select.parking.bean.orderbean;
-import com.xiyou3g.select.parking.util.ToastUtil;
-import com.xiyou3g.select.parking.util.toolBar;
 
 public class ShowInformationActivity extends AppCompatActivity implements View.OnClickListener {
 

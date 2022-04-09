@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">ParkingSystem</string>
-    <string name="shared_parking">共享</string>
+    <string name="shared_parking">主页</string>
     <string name="my">我的</string>
     <string name="shared_stall">共享停车位</string>
     <string name="shared_charge">共享充电桩</string>
+    <string name="order">订单</string>
+
 </resources>

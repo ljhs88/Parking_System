@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    android:layout_margin="12dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/item_type_text"
+            android:layout_margin="12dp"
+            android:text="停车位"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/item_type_text"
+            app:layout_constraintTop_toBottomOf="@id/item_type_text"
+            android:layout_margin="12dp"
+            android:text="地址"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:id="@+id/item_address_text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/item_address_text"
+            app:layout_constraintTop_toBottomOf="@id/item_address_text"
+            android:layout_margin="12dp"
+            android:id="@+id/item_startTime_text"
+            android:text="开始时间"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/item_address_text"
+            app:layout_constraintTop_toBottomOf="@id/item_startTime_text"
+            android:layout_margin="12dp"
+            android:id="@+id/item_endTime_text"
+            android:text="结束时间"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_address_text"
+            app:layout_constraintBottom_toBottomOf="@id/item_address_text"
+            android:layout_marginEnd="24dp"
+            android:text="已完成"
+            android:id="@+id/item_status_text"
+            android:textColor="@color/black"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/item_status_text"
+            app:layout_constraintTop_toBottomOf="@id/item_startTime_text"
+            app:layout_constraintBottom_toTopOf="@id/item_endTime_text"
+            android:id="@+id/item_price_text"
+            android:text="12元"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+
+

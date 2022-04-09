@@ -1,14 +1,8 @@
 package com.xiyou3g.information;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,10 +16,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.alipay.sdk.app.PayTask;
 import com.xiyou3g.information.Utility.PayResult;
 import com.xiyou3g.information.Utility.SignUtils;
 import com.xiyou3g.information.Utility.toolBar;
+import com.xiyou3g.information.retrofit.mRetrofit;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -35,7 +34,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import com.xiyou3g.information.retrofit.mRetrofit;
 
 public class reChargeActivity extends AppCompatActivity implements View.OnClickListener{
 

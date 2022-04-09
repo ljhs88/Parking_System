@@ -25,7 +25,9 @@
         android:theme="@style/Theme.ParkingSystem">
         <activity
             android:name=".ShowSharedActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.Parking"
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"

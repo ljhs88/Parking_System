@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Customer</string>
+    <string name="CompleteOrder">完成订单</string>
+    <string name="address_text">地址:</string>
+    <string name="type">类型:</string>
+    <string name="car">车牌:</string>
+    <string name="startTime">开始时间:</string>
+    <string name="endTime">结束时间:</string>
+    <string name="eleNum">用电量:</string>
+    <string name="orderPrice">订单价格:</string>
+    <string name="subPrice">优惠价格:</string>
+    <string name="finePrice">罚时价格:</string>
+    <string name="payPrice">应付价格:</string>
+    <string name="complete_order">完成订单</string>
 </resources>

@@ -52,6 +52,12 @@ dependencies {
     api rootProject.ext.androidxLibs
     api rootProject.ext.commonLibs
     api rootProject.ext.annotationLibs
+    api rootProject.ext.retrofitLibs
+    implementation 'org.jetbrains:annotations:15.0'
+    implementation 'org.jetbrains:annotations:15.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.android.car.ui:car-ui-lib:+'
+    implementation 'com.google.android.material:material:1.4.0'
     annotationProcessor rootProject.ext.annotationLibs
     api project(":baseapplication")
 

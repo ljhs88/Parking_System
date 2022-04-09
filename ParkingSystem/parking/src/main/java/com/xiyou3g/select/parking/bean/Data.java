@@ -196,4 +196,32 @@ public class Data {
         return finePrice;
     }
 
+    @Override
+    public String toString() {
+        return "Data{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", auditState=" + auditState +
+                ", ispublish=" + ispublish +
+                ", status=" + status +
+                ", ownerName='" + ownerName + '\'' +
+                ", ownerMobile='" + ownerMobile + '\'' +
+                ", ownerImage='" + ownerImage + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", address='" + address + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", ownerNum='" + ownerNum + '\'' +
+                ", price=" + price +
+                ", image1='" + image1 + '\'' +
+                ", image2='" + image2 + '\'' +
+                ", image3='" + image3 + '\'' +
+                ", adminName='" + adminName + '\'' +
+                ", adminMobile='" + adminMobile + '\'' +
+                ", isfine=" + isfine +
+                ", finePrice=" + finePrice +
+                '}';
+    }
 }

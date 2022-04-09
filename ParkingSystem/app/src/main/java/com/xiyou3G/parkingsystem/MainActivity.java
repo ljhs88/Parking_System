@@ -27,6 +27,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.xiyou3G.parkingsystem.fragment.HomeFragment;
+import com.xiyou3G.parkingsystem.fragment.ListFragment;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,13 +38,10 @@ import java.util.Locale;
 @Route(path = "/app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
-    private Fragment parking_fragment;
-    private Fragment information_fragment;
     private Fragment[] fragments;
-    private FrameLayout mainFrame;
-    private BottomNavigationView bottomNavigationView;
     private static final int PARKING = 0;
-    private static final int MY = 1;
+    private static final int MY = 2;
+    private static final int LIST = 1;
     private static int thisFragment = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //设置状态栏透明
-        makeStatusBarTransparent(this);
+
         //状态栏文字自适应
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         String[] p;
@@ -73,16 +72,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        parking_fragment = (Fragment) ARouter.getInstance().build("/parking/ParkingFragment").navigation();
-        information_fragment = (Fragment) ARouter.getInstance().build("/information/informationFragment").navigation();
-        fragments = new Fragment[]{parking_fragment, information_fragment};
-        mainFrame = findViewById(R.id.frame_layout);
-        getSupportFragmentManager().beginTransaction().replace(R.id.shared_frame, parking_fragment).show(parking_fragment).commit();
-        bottomNavigationView = findViewById(R.id.nav_view);
+        Fragment home_fragment = new HomeFragment();
+        Fragment list_fragment = new ListFragment();
+        Fragment information_fragment = (Fragment) ARouter.getInstance().build("/information/informationFragment").navigation();
+        fragments = new Fragment[]{home_fragment, list_fragment, information_fragment};
+        FrameLayout mainFrame = findViewById(R.id.frame_layout);
+        getSupportFragmentManager().beginTransaction().replace(R.id.shared_frame, home_fragment).show(home_fragment).commit();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.shared_parking) {
+                if (item.getItemId() == R.id.home_parking) {
                     if (thisFragment != PARKING) {
                         switchFragment(thisFragment, PARKING);
                         thisFragment = PARKING;
@@ -94,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
                         thisFragment = MY;
                         return true;
                     }
+                } else if (item.getItemId() == R.id.list_parking) {
+                    if (item.getItemId() != LIST) {
+                        switchFragment(thisFragment, LIST);
+                        thisFragment = LIST;
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -102,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 切换fragment
-     * @param thisFragment
-     * @param index
+     * @param thisFragment 当前fragment
+     * @param index 切换的fragment
      */
     private void switchFragment(int thisFragment, int index) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

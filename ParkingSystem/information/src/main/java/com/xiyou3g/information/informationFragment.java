@@ -1,29 +1,15 @@
 package com.xiyou3g.information;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.bumptech.glide.Glide;
-import com.xiyou3g.information.Utility.StringAndBitmap;
-import com.xiyou3g.information.bean.informationBean;
-import com.xiyou3g.information.bean.requestInformationBean;
-import com.xiyou3g.information.Utility.HttpImgThread;
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,21 +19,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
+import com.xiyou3g.information.Utility.PhotoChoice;
+import com.xiyou3g.information.Utility.StringAndBitmap;
+import com.xiyou3g.information.bean.informationBean;
 import com.xiyou3g.information.retrofit.Api;
+import com.xiyou3g.information.retrofit.mRetrofit;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -55,11 +41,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import com.xiyou3g.information.retrofit.mRetrofit;
-import com.xiyou3g.information.Utility.PhotoChoice;
-import com.xiyou3g.information.Utility.ToastUtil;
 
 @Route(path = "/information/informationFragment")
 public class informationFragment extends Fragment implements View.OnClickListener {
