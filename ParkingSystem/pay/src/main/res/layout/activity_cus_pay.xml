@@ -13,6 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/pay_toolbar"
+        android:background="@color/white"
         >
 
         <TextView
@@ -28,10 +29,12 @@
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp"
+        android:layout_height="36dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pay_toolbar"
         android:id="@+id/pay_tab"
+        android:background="@color/white"
+
         />
 
     <androidx.viewpager2.widget.ViewPager2

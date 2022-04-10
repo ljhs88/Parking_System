@@ -16,7 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.xiyou3g.baseapplication.eventbus.EventMessage;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.xiyou3g.select.customer.register.Api.IdentifyingCodeService;
 import com.xiyou3g.select.customer.register.Api.LoginService;
 import com.xiyou3g.select.customer.register.bean.IdentifyingCodeResponse;
@@ -26,8 +26,6 @@ import com.xiyou3g.select.customer.register.util.NumberMatch;
 import com.xiyou3g.select.customer.register.util.RetrofitManager;
 import com.xiyou3g.select.customer.register.util.TimeCountUtil;
 import com.xiyou3g.select.customer.register.util.ToastUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -109,23 +107,9 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
                         .putString("userToken", loginResponse.getData().getUserToken())
                         .putString("mobile", loginResponse.getData().getMobile())
                         .apply();
-                /*LoginUtil.isLogin = true;
-                LoginUtil.password = "admin";*/
-                EventBus.getDefault().post(new EventMessage(
-                        loginResponse.getData().getFace()+","+
-                                loginResponse.getData().getNickname()+","+
-                                loginResponse.getData().getSex()+","+
-                                loginResponse.getData().getBirthday()+","+
-                                loginResponse.getData().getCountry()+
-                                loginResponse.getData().getProvince()+
-                                loginResponse.getData().getCity()+
-                                loginResponse.getData().getDistrict()+","+
-                                loginResponse.getData().getMobile()+","+
-                                loginResponse.getData().getDescription()));           //发送EventBus
-                //EventBus.getDefault().postSticky(loginResponse);
 
-                EventBus.getDefault().postSticky(loginResponse);
-                //Log.d("TAG", "onResponse: " + loginResponse);
+                ARouter.getInstance().build("/app/MainActivity").navigation();
+
             }
 
             @Override

@@ -44,7 +44,7 @@ public class StringAndBitmap {
     public static File getFile(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        File file = new File(Environment.getExternalStorageDirectory() + "/temp.jepg");
+        File file = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
         try {
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);

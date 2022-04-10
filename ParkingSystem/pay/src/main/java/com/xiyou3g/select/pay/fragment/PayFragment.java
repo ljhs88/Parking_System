@@ -1,10 +1,10 @@
 package com.xiyou3g.select.pay.fragment;
 
 import android.annotation.SuppressLint;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +32,7 @@ import retrofit2.Response;
 
 public class PayFragment extends Fragment {
 
+    private static final String TAG = "TAGPay";
     private RecyclerView recyclerView;
     private View view;
     private final RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
@@ -44,10 +45,12 @@ public class PayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.layout_pay_fragment, container, false);
         initView();
+        request();
         return view;
     }
 
     private void initView() {
+        Log.d(TAG, "initView:pay ");
         swipeRefreshLayout = view.findViewById(R.id.pay_swipe_fresh);
         swipeRefreshLayout.setOnRefreshListener(this::request);
         recyclerView = view.findViewById(R.id.pay_recyclerView);
@@ -57,7 +60,7 @@ public class PayFragment extends Fragment {
     private void request() {
 
         PayService orderService = retrofitManager.getRetrofit().create(PayService.class);
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
         String userId = sharedPreferences.getString("userId", "");
         orderService.getPay(userId).enqueue(new Callback<PayResponse>() {
             @SuppressLint("NotifyDataSetChanged")

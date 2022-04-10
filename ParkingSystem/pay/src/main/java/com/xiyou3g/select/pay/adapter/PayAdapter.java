@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.xiyou3g.select.pay.R;
 import com.xiyou3g.select.pay.bean.Data;
 
+import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class PayAdapter extends RecyclerView.Adapter<PayAdapter.ViewHolder> {
 
@@ -33,7 +35,7 @@ public class PayAdapter extends RecyclerView.Adapter<PayAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Data data = list.get(position);
         holder.price.setText(String.valueOf(data.getPayPrice()));
-        holder.time.setText(data.getPayTime().toString());
+        holder.time.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(data.getPayTime()));
         if (data.getPayType() == 0) {
             holder.type.setText("支付宝");
         } else if (data.getPayType() == 1) {

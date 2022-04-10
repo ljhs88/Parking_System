@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -223,14 +224,14 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
             CreateInformation createInformation = saveInformation();
             if (checkCreateInformation(createInformation)) {
                 EventBus.getDefault().postSticky(createInformation);
-                /*SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences("data", MODE_PRIVATE);
                     String userId = sharedPreferences.getString("userId", "");
                     String mobile = sharedPreferences.getString("mobile", "");
-                    String userToken = sharedPreferences.getString("userToken", "");*/
+                    String userToken = sharedPreferences.getString("userToken", "");
                 if (STATUS == STALL) {
                     CreateStallData createStallData = new CreateStallData();
 
-                    String userId = "946762136657330176";
+
                     createStallData.setUserId(userId);
                     createStallData.setAuditState(1);
                     createStallData.setIspublish(0);
@@ -291,7 +292,6 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
                 } else if (STATUS == CHARGING) {
                     CreateChargeData createChargeData = new CreateChargeData();
 
-                    String userId = "946762136657330176";
                     createChargeData.setUserId(userId);
                     createChargeData.setAuditState(1);
                     createChargeData.setIspublish(0);
@@ -305,13 +305,13 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
                     createChargeData.setLongitude(String.valueOf(thisLatLng.longitude));
                     createChargeData.setLatitude(String.valueOf(thisLatLng.latitude));
                     createChargeData.setOwnerNum(createInformation.getOwnerNum());
-                    createChargeData.setHourPrice(createInformation.getPrice());
+                    createChargeData.setPrice(createInformation.getPrice());
                     createChargeData.setAdminName(createInformation.getAdminName());
                     createChargeData.setAdminMobile(createInformation.getAdminMobile());
                     createChargeData.setFinePrice(createInformation.getFinePrice());
 
                     RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),new Gson().toJson(createChargeData));
-
+                    Log.d("TAG", "onClick: create " + createChargeData);
                     CreateChargeService createChargeService = retrofitManager.getRetrofit().create(CreateChargeService.class);
                     createChargeService.createCharge(userId, requestBody).enqueue(new Callback<CreateChargeResponse>() {
                         @Override
@@ -323,8 +323,9 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
                             MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(),
                                     RequestBody.create(MediaType.parse("multipart/form-data"), file));
                             Map<String, RequestBody> map = new HashMap<>();
-                            assert createChargeResponse != null;
-                            map.put("spId", RequestBody.create(MediaType.parse("multipart/form-data"), createChargeResponse.getData().getId()));
+                            Log.d("TAG", "onResponse: createCharge " + createChargeResponse);
+
+                            map.put("scId", RequestBody.create(MediaType.parse("multipart/form-data"), createChargeResponse.getData().getId()));
                             map.put("type", RequestBody.create(MediaType.parse("multipart/form-data"), "0"));
                             createChargeService.upLoadPhoto(map, body).enqueue(new Callback<PhotoResponse>() {
                                 @Override
@@ -334,6 +335,13 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
                                     assert photoResponse != null;
                                     if (photoResponse.isSuccess()) {
                                         finish();
+                                    } else {
+                                        Cus_ParkingActivity.this.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ToastUtil.getToast(Cus_ParkingActivity.this, "创建失败，请重试");
+                                            }
+                                        });
                                     }
 
                                 }

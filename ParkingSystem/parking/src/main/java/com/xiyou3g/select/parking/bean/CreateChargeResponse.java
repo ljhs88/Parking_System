@@ -34,4 +34,13 @@ public class CreateChargeResponse {
         return data;
     }
 
+    @Override
+    public String toString() {
+        return "CreateChargeResponse{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", success=" + success +
+                ", data=" + data +
+                '}';
+    }
 }

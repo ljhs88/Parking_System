@@ -29,6 +29,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="200dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_toolbar"
         app:cardCornerRadius="20dp"
@@ -37,11 +38,10 @@
         android:layout_margin="12dp"
         >
 
-        <com.xiyou3G.parkingsystem.view.MyBanner
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.youth.banner.Banner
             android:id="@+id/home_banner"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
 
@@ -102,6 +102,7 @@
         android:background="@color/white"
         android:layout_marginTop="12dp"
         android:layout_marginStart="0.5dp"
+
         >
 
         <TextView
@@ -129,5 +130,23 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shared_charge"
+        android:background="#D3D3D3"
+        android:id="@+id/view2"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/home_charge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

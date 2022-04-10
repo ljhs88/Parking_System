@@ -10,7 +10,6 @@ import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.xiyou3g.select.parking.R;
-import com.xiyou3g.select.parking.bean.ShowInformation;
 import com.xiyou3g.select.parking.bean.stallbean;
 
 public class ShowStallUI extends ShowUI {
@@ -25,8 +24,11 @@ public class ShowStallUI extends ShowUI {
 
     @Override
     public void showImage() {
-        Glide.with(activity).load(information.getData().get(0).getOwnerImage())
+        String url = information.getData().get(0).getOwnerImage();
+        url = url.substring(0, 4) + url.substring(5);
+        Glide.with(activity).load(url)
                 .into((ImageView) activity.findViewById(R.id.show_photo));
+        Log.d("123", "showImage: ");
         super.showImage();
     }
 

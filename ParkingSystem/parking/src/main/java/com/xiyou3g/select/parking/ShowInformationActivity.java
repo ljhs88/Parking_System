@@ -85,8 +85,8 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
 
         buttonClick();
         getStatus();
+        Log.d("123", String.valueOf(thisLatLng.latitude)+""+String.valueOf(thisLatLng.longitude));
         show();
-
     }
 
     @SuppressLint("ResourceAsColor")
@@ -103,6 +103,7 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
      * @param activity
      */
     private void getCharge(Activity activity) {
+        Log.d("123", "getCharge");
         Retrofit retrofit = retrofitManager.getRetrofit();
         ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
         Call<chargebean> call = api.postCharge(String.valueOf(thisLatLng.longitude),
@@ -132,6 +133,7 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
      * @param activity
      */
     private void getStall(Activity activity) {
+        Log.d("123", "getStall");
         Retrofit retrofit = retrofitManager.getRetrofit();
         ChargeAndStallService api = retrofit.create(ChargeAndStallService.class);
         Call<stallbean> call = api.postStall(String.valueOf(thisLatLng.longitude),
@@ -159,7 +161,9 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
     }
 
     private void show() {
+        Log.d("123", String.valueOf(STATUS));
         if (STATUS == CHARGE) {
+            Log.d("123", "show");
             getCharge(this);
         } else if (STATUS == STALL) {
             getStall(this);
@@ -216,7 +220,7 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
                     .withDouble("longitude", longitude)
                     .withString("destination", name)
                     .navigation();
-        } else if (view.getId() == R.id.delete_button) {
+        }/* else if (view.getId() == R.id.delete_button) {
             bottomSheetDialog = new BottomSheetDialog(this);
             bottomSheetDialog.setContentView(R.layout.layout_bottomsheetdialog_delete);
             Button sure_button = bottomSheetDialog.getWindow().findViewById(R.id.sure_button);
@@ -224,7 +228,7 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
             sure_button.setOnClickListener(this);
             cancel_sure_button.setOnClickListener(this);
             bottomSheetDialog.show();
-        } else if (view.getId() == R.id.sure_button) {
+        }*/ else if (view.getId() == R.id.sure_button) {
             bottomSheetDialog.cancel();
         } else if (view.getId() == R.id.cancel_sure_button) {
             bottomSheetDialog.cancel();

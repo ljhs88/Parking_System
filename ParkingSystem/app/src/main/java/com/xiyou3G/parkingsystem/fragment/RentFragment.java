@@ -1,6 +1,8 @@
 package com.xiyou3G.parkingsystem.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,9 +53,9 @@ public class RentFragment extends Fragment {
     private void request() {
         Log.d(TAG, "request: " + "rent");
         RentService rentService = retrofitManager.getRetrofit().create(RentService.class);
-        /*SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");*/
-        rentService.getAllRent("946762136657330176").enqueue(new Callback<RentResponse>() {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
+        rentService.getAllRent(userId).enqueue(new Callback<RentResponse>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<RentResponse> call, @NonNull Response<RentResponse> response) {

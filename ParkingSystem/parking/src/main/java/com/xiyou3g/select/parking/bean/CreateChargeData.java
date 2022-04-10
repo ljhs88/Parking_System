@@ -16,7 +16,7 @@ public class CreateChargeData {
     private String longitude;
     private String latitude;
     private String ownerNum;
-    private int hourPrice;
+    private int price;
     private String image1;
     private String image2;
     private String image3;
@@ -126,11 +126,11 @@ public class CreateChargeData {
         return ownerNum;
     }
 
-    public void setHourPrice(int hourPrice) {
-        this.hourPrice = hourPrice;
+    public void setPrice(int hourPrice) {
+        this.price = hourPrice;
     }
-    public int getHourPrice() {
-        return hourPrice;
+    public int getPrice() {
+        return price;
     }
 
     public void setImage1(String image1) {
@@ -182,5 +182,33 @@ public class CreateChargeData {
 
     public void setFinePrice(int finePrice) {
         this.finePrice = finePrice;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateChargeData{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", auditState=" + auditState +
+                ", ispublish=" + ispublish +
+                ", status=" + status +
+                ", ownerName='" + ownerName + '\'' +
+                ", ownerMobile='" + ownerMobile + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", address='" + address + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", ownerNum='" + ownerNum + '\'' +
+                ", hourPrice=" + price +
+                ", image1='" + image1 + '\'' +
+                ", image2='" + image2 + '\'' +
+                ", image3='" + image3 + '\'' +
+                ", adminName='" + adminName + '\'' +
+                ", adminMobile='" + adminMobile + '\'' +
+                ", isFine='" + isFine + '\'' +
+                ", finePrice=" + finePrice +
+                '}';
     }
 }

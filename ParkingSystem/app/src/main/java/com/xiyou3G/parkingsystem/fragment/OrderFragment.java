@@ -1,6 +1,8 @@
 package com.xiyou3G.parkingsystem.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,9 +64,9 @@ public class OrderFragment extends Fragment {
     private void request() {
         Log.d(TAG, "request: ");
         OrderService orderService = retrofitManager.getRetrofit().create(OrderService.class);
-        /*SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", "");*/
-        orderService.getAllOrder("946468093863919616").enqueue(new Callback<AllOrderResponse>() {
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", "");
+        orderService.getAllOrder(userId).enqueue(new Callback<AllOrderResponse>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<AllOrderResponse> call, @NonNull Response<AllOrderResponse> response) {

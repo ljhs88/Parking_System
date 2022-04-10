@@ -38,7 +38,9 @@ import com.xiyou3g.select.parking.bean.CreateInformation;
 import com.xiyou3g.select.parking.bean.CreateStallResponse;
 import com.xiyou3g.select.parking.getbean.Data;
 import com.xiyou3g.select.parking.getbean.GetChargeOrStallResponse;
+import com.xiyou3g.select.parking.util.Icon;
 import com.xiyou3g.select.parking.util.RetrofitManager;
+import com.xiyou3g.select.parking.util.ToastUtil;
 import com.xiyou3g.select.parking.util.UpWindow;
 
 import org.greenrobot.eventbus.EventBus;
@@ -177,6 +179,12 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
     public boolean onMarkerClick(Marker marker) {
         LatLng latLng = marker.getPosition();
         Intent intent = new Intent(getContext(), ShowInformationActivity.class);
+
+        if (Icon.PARK.equals(marker.getIcons().get(0))) {
+            STATUS = PARKING;
+        } else if (Icon.CHARGE.equals(marker.getIcons().get(0))) {
+            STATUS = CHARGE;
+        }
         intent.putExtra("STATUS", STATUS);
         intent.putExtra("latitude", latLng.latitude);
         intent.putExtra("longitude", latLng.longitude);
@@ -285,30 +293,40 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
             @Override
             public void onResponse(@NonNull Call<GetChargeOrStallResponse> call, @NonNull Response<GetChargeOrStallResponse> response) {
                 GetChargeOrStallResponse getChargeOrStallResponse = response.body();
-                assert getChargeOrStallResponse != null;
-                List<Data> list = getChargeOrStallResponse.getData();
-                for (Data data : list) {
-                    String id = data.getContent().getName();
-                    getNearbyService.postStall(id).enqueue(new Callback<CreateStallResponse>() {
-                        @Override
-                        public void onResponse(@NonNull Call<CreateStallResponse> call, @NonNull Response<CreateStallResponse> response) {
-                            CreateStallResponse createParkingResponse = response.body();
-                            assert createParkingResponse != null;
-                            com.xiyou3g.select.parking.bean.Data data1 = createParkingResponse.getData();
-                            String address = data1.getAddress();
-                            LatLng latLng = new LatLng(Double.parseDouble(data1.getLatitude()), Double.parseDouble(data1.getLongitude()));
-                            Objects.requireNonNull(getActivity()).runOnUiThread(()->{
-                                aMap.addMarker(new MarkerOptions().title(address).position(latLng).
-                                        icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_image)));
-                            });
+                if (getChargeOrStallResponse != null && getChargeOrStallResponse.getData() != null) {
 
-                        }
+                    List<Data> list = getChargeOrStallResponse.getData();
+                    Log.d("TAG", "onResponse: data" + list);
+                    for (Data data : list) {
+                        String id = data.getContent().getName();
+                        getNearbyService.postStall(id).enqueue(new Callback<CreateStallResponse>() {
+                            @Override
+                            public void onResponse(@NonNull Call<CreateStallResponse> call, @NonNull Response<CreateStallResponse> response) {
+                                CreateStallResponse createStallResponse = response.body();
+                                Log.d("TAG", "onResponse:1 " + createStallResponse);
 
-                        @Override
-                        public void onFailure(@NonNull Call<CreateStallResponse> call, @NonNull Throwable t) {
+                                if (createStallResponse != null && createStallResponse.getSuccess()) {
+                                    com.xiyou3g.select.parking.bean.Data data1 = createStallResponse.getData();
+                                    Log.d("TAG", "onResponse: " + data1);
+                                    String address = data1.getAddress();
+                                    LatLng latLng = new LatLng(Double.parseDouble(data1.getLatitude()), Double.parseDouble(data1.getLongitude()));
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+                                        aMap.addMarker(new MarkerOptions().title(address).position(latLng).
+                                                icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_image)));
+                                    });
+                                } else if (createStallResponse != null && !createStallResponse.getSuccess()) {
+                                    ToastUtil.getToast(getContext(), createStallResponse.getMsg());
+                                }
 
-                        }
-                    });
+
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<CreateStallResponse> call, @NonNull Throwable t) {
+
+                            }
+                        });
+                    }
                 }
             }
 
@@ -325,29 +343,36 @@ public class ParkingFragment extends Fragment implements AMap.OnMapLongClickList
             @Override
             public void onResponse(@NonNull Call<GetChargeOrStallResponse> call, @NonNull Response<GetChargeOrStallResponse> response) {
                 GetChargeOrStallResponse getChargeOrStallResponse = response.body();
-                assert getChargeOrStallResponse != null;
-                List<Data> list = getChargeOrStallResponse.getData();
-                for (Data data : list) {
-                    String id = data.getContent().getName();
-                    getNearbyService.postCharge(id).enqueue(new Callback<CreateChargeResponse>() {
-                        @Override
-                        public void onResponse(@NonNull Call<CreateChargeResponse> call, @NonNull Response<CreateChargeResponse> response) {
-                            CreateChargeResponse createChargeResponse = response.body();
-                            assert createChargeResponse != null;
-                            com.xiyou3g.select.parking.bean.Data data1 = createChargeResponse.getData();
-                            String address = data1.getAddress();
-                            LatLng latLng = new LatLng(Double.parseDouble(data1.getLatitude()), Double.parseDouble(data1.getLongitude()));
-                            Objects.requireNonNull(getActivity()).runOnUiThread(()->{
-                                aMap.addMarker(new MarkerOptions().title(address).position(latLng).
-                                        icon(BitmapDescriptorFactory.fromResource(R.drawable.charge)));
-                            });
-                        }
+                if (getChargeOrStallResponse != null && getChargeOrStallResponse.getData() != null) {
+                    List<Data> list = getChargeOrStallResponse.getData();
+                    for (Data data : list) {
+                        String id = data.getContent().getName();
+                        getNearbyService.postCharge(id).enqueue(new Callback<CreateChargeResponse>() {
+                            @Override
+                            public void onResponse(@NonNull Call<CreateChargeResponse> call, @NonNull Response<CreateChargeResponse> response) {
+                                CreateChargeResponse createChargeResponse = response.body();
 
-                        @Override
-                        public void onFailure(@NonNull Call<CreateChargeResponse> call, @NonNull Throwable t) {
+                                if (createChargeResponse != null && createChargeResponse.getSuccess()) {
+                                    com.xiyou3g.select.parking.bean.Data data1 = createChargeResponse.getData();
+                                    String address = data1.getAddress();
+                                    LatLng latLng = new LatLng(Double.parseDouble(data1.getLatitude()), Double.parseDouble(data1.getLongitude()));
+                                    Log.d("TAG", "onResponse: charge" + data1);
+                                    Objects.requireNonNull(getActivity()).runOnUiThread(() -> {
+                                        aMap.addMarker(new MarkerOptions().title(address).position(latLng).
+                                                icon(BitmapDescriptorFactory.fromResource(R.drawable.charge)));
+                                    });
+                                } else if (createChargeResponse != null && !createChargeResponse.getSuccess()) {
+                                    ToastUtil.getToast(getContext(), createChargeResponse.getMsg());
+                                }
 
-                        }
-                    });
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<CreateChargeResponse> call, @NonNull Throwable t) {
+
+                            }
+                        });
+                    }
                 }
             }
 

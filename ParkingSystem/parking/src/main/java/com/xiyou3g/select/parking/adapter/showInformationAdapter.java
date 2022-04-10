@@ -10,9 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.xiyou3g.select.parking.R;
-import com.xiyou3g.select.parking.UI.ShowChargeUI;
-import com.xiyou3g.select.parking.UI.ShowUI;
-import com.xiyou3g.select.parking.bean.*;
+import com.xiyou3g.select.parking.bean.chargebean;
+import com.xiyou3g.select.parking.bean.stallbean;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class showInformationAdapter extends RecyclerView.Adapter<showInformation
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_show_information, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_show_information, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
