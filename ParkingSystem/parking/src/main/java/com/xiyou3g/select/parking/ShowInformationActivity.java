@@ -246,12 +246,13 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
         } else if (STATUS == STALL) {
             posId = stallbean.getData().get(0).getId();
         }
-        Log.d("123", posId+","+userId);
+        Log.d("TAG123", posId+","+userId);
         api.postCreate(posId, userId).enqueue(new Callback<orderbean>() {
             @Override
             public void onResponse(Call<orderbean> call, Response<orderbean> response) {
                 orderbean bean = response.body();
                 Log.d("123", response.toString());
+                Log.d("TAG123", "onResponse: " + bean);
                 if (bean != null && bean.isSuccess()) {
                     Log.d("123", bean.toString());
                     /**

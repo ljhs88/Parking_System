@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -14,10 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.xiyou3G.parkingsystem.api.TokenService;
 import com.xiyou3G.parkingsystem.bean.TokenResponse;
-import com.xiyou3g.select.parking.Cus_ParkingActivity;
+import com.xiyou3g.select.customer.register.Cus_LoginActivity;
 import com.xiyou3g.select.parking.util.RetrofitManager;
-
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,14 +27,14 @@ public class SplashActivity extends AppCompatActivity {
 
     private final RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
 
-    private boolean isLogin = false;
+    private boolean isLogin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Objects.requireNonNull(getSupportActionBar()).hide();
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -51,13 +50,13 @@ public class SplashActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
 
+            Intent intent;
             if (isLogin) {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
+                intent = new Intent(SplashActivity.this, MainActivity.class);
             } else {
-                Intent intent = new Intent(SplashActivity.this, Cus_ParkingActivity.class);
-                startActivity(intent);
+                intent = new Intent(SplashActivity.this, Cus_LoginActivity.class);
             }
+            startActivity(intent);
             finish();
         }, 3000);
 
@@ -73,8 +72,13 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<TokenResponse> call, @NonNull Response<TokenResponse> response) {
                 TokenResponse tokenResponse = response.body();
-                assert tokenResponse != null;
-                isLogin = tokenResponse.getSuccess();
+                Log.d("TAG123", "onResponse: " + response);
+                if (tokenResponse == null) {
+                    isLogin = false;
+                } else {
+                    isLogin = tokenResponse.getSuccess();
+                }
+
             }
 
             @Override
