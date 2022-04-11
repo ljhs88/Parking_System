@@ -2,6 +2,7 @@ package com.xiyou3G.parkingsystem.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.MapsInitializer;
+import com.amap.api.navi.NaviSetting;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
@@ -48,6 +51,13 @@ public class HomeFragment extends Fragment implements Inputtips.InputtipsListene
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // 在构造MapView之前必须进行合规检查，设置接口之前保证隐私政策合规
+        MapsInitializer.updatePrivacyShow(getContext(),true,true);
+        MapsInitializer.updatePrivacyAgree(getContext(),true);
+        // 导航的合规接口
+        NaviSetting.updatePrivacyShow(getContext(), true, true);
+        NaviSetting.updatePrivacyAgree(getContext(), true);
+
         view = inflater.inflate(R.layout.layout_home_fragment, container, false);
         initLocation();
         initView();

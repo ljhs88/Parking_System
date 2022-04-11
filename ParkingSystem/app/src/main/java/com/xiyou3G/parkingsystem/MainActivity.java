@@ -33,6 +33,7 @@ import com.xiyou3G.parkingsystem.fragment.ListFragment;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
+import com.xiyou3g.baseapplication.collect.ActivityCollector;
 
 
 @Route(path = "/app/MainActivity")
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCollector.addActivity(this);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.xiyou3G.parkingsystem.api.TokenService;
 import com.xiyou3G.parkingsystem.bean.TokenResponse;
+import com.xiyou3g.baseapplication.collect.ActivityCollector;
 import com.xiyou3g.select.customer.register.Cus_LoginActivity;
 import com.xiyou3g.select.parking.util.RetrofitManager;
 
@@ -34,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        ActivityCollector.addActivity(this);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

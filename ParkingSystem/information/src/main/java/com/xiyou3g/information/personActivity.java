@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,13 +23,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.xiyou3g.information.Utility.ActivityCollector;
 import com.xiyou3g.information.personal.personal_history;
 import com.xiyou3g.information.personal.personal_history2;
 import com.xiyou3g.information.personal.personal_idCard;
 import com.xiyou3g.information.personal.personal_information;
 import com.xiyou3g.information.personal.personal_setting;
 import com.xiyou3g.information.personal.personal_wallet;
+import com.xiyou3g.baseapplication.collect.ActivityCollector;
 
 @Route(path = "/information/personalActivity")
 public class personActivity extends AppCompatActivity{
@@ -44,9 +45,10 @@ public class personActivity extends AppCompatActivity{
 
         // 添加activity
         ActivityCollector.addActivity(this);
+        Log.d("123", ActivityCollector.activities.size()+"per");
 
         //设置状态栏透明
-        makeStatusBarTransparent(this);
+        //makeStatusBarTransparent(this);
         //状态栏文字自适应
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.xiyou3g.baseapplication.collect.ActivityCollector;
 
 public class ShowSharedActivity extends AppCompatActivity {
 
@@ -15,6 +16,9 @@ public class ShowSharedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_shared);
+
+        ActivityCollector.addActivity(this);
+
         Intent intent = getIntent();
         String status = intent.getStringExtra("Status");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

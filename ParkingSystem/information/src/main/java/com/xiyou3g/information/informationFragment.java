@@ -42,6 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import com.xiyou3g.information.Utility.ActivityCollector;
 
 @Route(path = "/information/informationFragment")
 public class informationFragment extends Fragment implements View.OnClickListener {

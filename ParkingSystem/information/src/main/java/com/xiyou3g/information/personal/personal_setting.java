@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.xiyou3g.information.R;
-import com.xiyou3g.information.Utility.ActivityCollector;
+import com.xiyou3g.baseapplication.collect.ActivityCollector;
 
 public class personal_setting extends Fragment implements View.OnClickListener {
 
@@ -95,7 +96,7 @@ public class personal_setting extends Fragment implements View.OnClickListener {
         dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                getActivity().finish();
+                ActivityCollector.finishAll();
                 ARouter.getInstance().build("/customer/Cus_LoginActivity").navigation();
             }
         });

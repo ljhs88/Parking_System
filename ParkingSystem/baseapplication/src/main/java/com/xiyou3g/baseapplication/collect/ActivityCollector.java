@@ -1,4 +1,4 @@
-package com.xiyou3g.information.Utility;
+package com.xiyou3g.baseapplication.collect;
 
 import android.app.Activity;
 
