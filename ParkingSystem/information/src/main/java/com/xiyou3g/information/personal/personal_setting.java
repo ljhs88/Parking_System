@@ -1,7 +1,10 @@
 package com.xiyou3g.information.personal;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.xiyou3g.information.R;
+import com.xiyou3g.information.Utility.ActivityCollector;
 
 public class personal_setting extends Fragment implements View.OnClickListener {
 
@@ -23,6 +27,8 @@ public class personal_setting extends Fragment implements View.OnClickListener {
     private Button back;
     private Button backToDesk_button;
     private Button changeAccount;
+
+    private Activity activity;
 
     @Nullable
     @Override
@@ -52,8 +58,33 @@ public class personal_setting extends Fragment implements View.OnClickListener {
         } else if (id == R.id.changeAccount) {
             alertDialog();
         } else if (id == R.id.backToDesk) {
-            getActivity().finish();
+            backDialog();
         }
+    }
+
+    private void backDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle("退出账号提示!");
+        dialog.setMessage("确认退出当前账号吗?");
+        dialog.setCancelable(true);
+        dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE).edit();
+                editor.putString("userId", "");
+                editor.putString("mobile", "");
+                editor.putString("userToken", "");
+                editor.apply();
+                ActivityCollector.finishAll();
+            }
+        });
+        dialog.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     private void alertDialog() {

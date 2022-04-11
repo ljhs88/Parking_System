@@ -18,17 +18,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.xiyou3g.information.Utility.ActivityCollector;
 import com.xiyou3g.information.identity.cardPhotoFragment;
 import com.xiyou3g.information.identity.infBaseFragment;
 
 public class identityActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identity);
+
+        // 添加activity
+        ActivityCollector.addActivity(this);
 
         //设置状态栏透明
         makeStatusBarTransparent(this);

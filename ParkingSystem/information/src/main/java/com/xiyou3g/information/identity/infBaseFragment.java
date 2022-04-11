@@ -51,7 +51,6 @@ public class infBaseFragment extends Fragment implements View.OnClickListener {
 
         Bundle bundle = getArguments();
         type = bundle.getString("type");
-        Log.d("123", "type :"+type);
 
         /**
          * 获取userid

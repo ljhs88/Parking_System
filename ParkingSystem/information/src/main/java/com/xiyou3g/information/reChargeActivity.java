@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.alipay.sdk.app.PayTask;
+import com.xiyou3g.information.Utility.ActivityCollector;
 import com.xiyou3g.information.Utility.PayResult;
 import com.xiyou3g.information.Utility.SignUtils;
 import com.xiyou3g.information.Utility.toolBar;
@@ -81,6 +82,9 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re_charge);
+
+        // 添加activity
+        ActivityCollector.addActivity(this);
 
         /**
          * 获取walletId

@@ -33,6 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import com.xiyou3g.information.retrofit.Api;
+import com.xiyou3g.information.Utility.ActivityCollector;
 
 @Route(path = "/information/Cus_InformationActivity")
 public class Cus_InformationActivity extends AppCompatActivity {
@@ -42,6 +43,9 @@ public class Cus_InformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cus_information);
+
+        // 添加activity
+        ActivityCollector.addActivity(this);
 
         //设置状态栏透明
         makeStatusBarTransparent(this);
