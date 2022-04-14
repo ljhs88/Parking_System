@@ -39,9 +39,12 @@ public class RentRecyclerAdapter extends RecyclerView.Adapter<RentRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RentItem rentItem = list.get(position);
+        Log.d("TAG", "onBindViewHolder: " + rentItem);
         holder.price.setText(String.valueOf(rentItem.getPrice()));
         holder.startTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(rentItem.getStartTime()));
-        holder.endTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(rentItem.getEndTime()));
+        if (rentItem.getEndTime() != null) {
+            holder.endTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(rentItem.getEndTime()));
+        }
         if (rentItem.getStatus() == 0) {
             holder.status.setText("未完成");
         } else {
