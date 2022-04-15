@@ -46,6 +46,9 @@ public class CustomerActivity extends AppCompatActivity {
     private Button completeButton;
     private final RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
 
+    CloseOrderService closeOrderService = retrofitManager.getRetrofit().create(CloseOrderService.class);
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,11 +58,7 @@ public class CustomerActivity extends AppCompatActivity {
     }
 
     private void request() {
-        CloseOrderService closeOrderService = retrofitManager.getRetrofit().create(CloseOrderService.class);
-        Map<String, String> map = new HashMap<>();
-        map.put("eleNum", "4");
-        map.put("orderId", orderId);
-        map.put("subPrice", "0");
+
 
         closeOrderService.findOrder(orderId).enqueue(new Callback<CloseOrderResponse>() {
             @Override
@@ -88,60 +87,7 @@ public class CustomerActivity extends AppCompatActivity {
                     if (data.getIscancel() == 1) {
                         completeButton.setVisibility(View.GONE);
                     }
-                    completeButton.setOnClickListener(view->{
-                        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CustomerActivity.this, R.style.BottomSheetDialog);
-                        bottomSheetDialog.setContentView(R.layout.layout_bottom_pay);
-                        Button button = bottomSheetDialog.getWindow().findViewById(R.id.wallet);
-                        button.setOnClickListener(v->{
 
-                            closeOrderService.closeOrder(orderId).enqueue(new Callback<CloseOrderResponse>() {
-                                @Override
-                                public void onResponse(@NonNull Call<CloseOrderResponse> call, @NonNull Response<CloseOrderResponse> response) {
-
-                                }
-
-                                @Override
-                                public void onFailure(@NonNull Call<CloseOrderResponse> call, @NonNull Throwable t) {
-
-                                }
-                            });
-
-                            Map<String, String> map = new HashMap<>();
-                            map.put("orderId", orderId);
-                            map.put("payType", "0");
-
-                            closeOrderService.updateOrder(map).enqueue(new Callback<CloseOrderResponse>() {
-                                @Override
-                                public void onResponse(@NonNull Call<CloseOrderResponse> call, @NonNull Response<CloseOrderResponse> response) {
-
-
-                                }
-
-                                @Override
-                                public void onFailure(@NonNull Call<CloseOrderResponse> call, @NonNull Throwable t) {
-
-                                }
-                            });
-
-                            closeOrderService.payOrder(map).enqueue(new Callback<PayResultResponse>() {
-                                @Override
-                                public void onResponse(@NonNull Call<PayResultResponse> call, @NonNull Response<PayResultResponse> response) {
-                                    PayResultResponse payResultResponse = response.body();
-                                    assert payResultResponse != null;
-                                    ToastUtil.getToast(CustomerActivity.this, payResultResponse.getMsg());
-                                    if (payResultResponse.getSuccess()) {
-                                        finish();
-                                    }
-
-                                }
-
-                                @Override
-                                public void onFailure(@NonNull Call<PayResultResponse> call, @NonNull Throwable t) {
-
-                                }
-                            });
-                        });
-                    });
                 });
             }
 
@@ -180,8 +126,73 @@ public class CustomerActivity extends AppCompatActivity {
         finePrice = findViewById(R.id.complete_finePrice_text2);
         payPrice = findViewById(R.id.complete_payPrice_text2);
         completeButton = findViewById(R.id.complete_button);
+        completeButton.setClickable(true);
         Intent intent = getIntent();
         orderId = intent.getStringExtra("orderId");
+        Log.d("TAG", "initView: " + 1);
+        completeButton.setOnClickListener(view->{
+            Log.d("TAG", "initView: ");
+            BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(CustomerActivity.this, R.style.BottomSheetDialog);
+            bottomSheetDialog.setContentView(R.layout.layout_bottom_pay);
+
+            Button button = bottomSheetDialog.getWindow().findViewById(R.id.wallet);
+
+            button.setOnClickListener(v->{
+
+                Map<String, String> updateMap = new HashMap<>();
+                updateMap.put("eleNum", "4");
+                updateMap.put("orderId", orderId);
+                updateMap.put("subPrice", "0");
+                closeOrderService.updateOrder(updateMap).enqueue(new Callback<CloseOrderResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<CloseOrderResponse> call, @NonNull Response<CloseOrderResponse> response) {
+                        Log.d("TAG", "onResponse:TAG " + response.body());
+
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<CloseOrderResponse> call, @NonNull Throwable t) {
+                        Log.e("TAG", "onFailure:TAG " + t.toString());
+                    }
+                });
+
+
+                Map<String, String> map = new HashMap<>();
+                map.put("orderId", orderId);
+                map.put("payType", "2");
+                Log.d("TAG", "initView:123 " + orderId);
+                closeOrderService.payOrder(map).enqueue(new Callback<PayResultResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<PayResultResponse> call, @NonNull Response<PayResultResponse> response) {
+                        PayResultResponse payResultResponse = response.body();
+                        Log.d("TAG", "onResponse:TAG " + payResultResponse);
+
+                        ToastUtil.getToast(CustomerActivity.this, payResultResponse.getMsg());
+                        if (payResultResponse.getSuccess()) {
+                            closeOrderService.closeOrder(orderId).enqueue(new Callback<CloseOrderResponse>() {
+                                @Override
+                                public void onResponse(@NonNull Call<CloseOrderResponse> call, @NonNull Response<CloseOrderResponse> response) {
+
+                                }
+
+                                @Override
+                                public void onFailure(@NonNull Call<CloseOrderResponse> call, @NonNull Throwable t) {
+
+                                }
+                            });
+                            finish();
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<PayResultResponse> call, @NonNull Throwable t) {
+
+                    }
+                });
+            });
+            bottomSheetDialog.show();
+        });
 
     }
 }

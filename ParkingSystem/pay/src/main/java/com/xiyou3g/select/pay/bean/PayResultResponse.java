@@ -38,4 +38,13 @@ public class PayResultResponse {
         return data;
     }
 
+    @Override
+    public String toString() {
+        return "PayResultResponse{" +
+                "status=" + status +
+                ", msg='" + msg + '\'' +
+                ", success=" + success +
+                ", data=" + data +
+                '}';
+    }
 }

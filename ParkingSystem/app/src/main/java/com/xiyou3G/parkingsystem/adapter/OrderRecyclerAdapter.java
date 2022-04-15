@@ -51,7 +51,10 @@ public class OrderRecyclerAdapter extends RecyclerView.Adapter<OrderRecyclerAdap
         holder.address.setText(orderItem.getAddress());
 
         holder.startTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(orderItem.getStartTime()));
-        holder.endTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(orderItem.getEndTime()));
+        if (orderItem.getEndTime() != null) {
+            holder.endTime.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.CHINA).format(orderItem.getEndTime()));
+        }
+
         holder.price.setText(String.valueOf(orderItem.getPrice()));
         if (orderItem.getStatus() == 0) {
             holder.status.setText("未完成");

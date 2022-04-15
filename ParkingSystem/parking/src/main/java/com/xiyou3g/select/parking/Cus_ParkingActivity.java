@@ -234,7 +234,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
 
                     createStallData.setUserId(userId);
                     createStallData.setAuditState(1);
-                    createStallData.setIspublish(0);
+                    createStallData.setIspublish(1);
                     createStallData.setStatus(0);
                     createStallData.setOwnerName(createInformation.getName());
                     createStallData.setOwnerMobile(createInformation.getOwnerMobile());
@@ -294,7 +294,7 @@ public class Cus_ParkingActivity extends AppCompatActivity implements View.OnCli
 
                     createChargeData.setUserId(userId);
                     createChargeData.setAuditState(1);
-                    createChargeData.setIspublish(0);
+                    createChargeData.setIspublish(1);
                     createChargeData.setStatus(0);
                     createChargeData.setOwnerName(createInformation.getName());
                     createChargeData.setOwnerMobile(createInformation.getOwnerMobile());
