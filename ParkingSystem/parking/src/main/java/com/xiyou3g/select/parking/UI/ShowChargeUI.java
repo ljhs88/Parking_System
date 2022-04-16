@@ -26,10 +26,11 @@ public class ShowChargeUI extends ShowUI {
     @Override
     public void showImage() {
         String url = information.getData().get(0).getOwnerImage();
-        url = url.substring(0, 4) + url.substring(5);
-        Glide.with(activity).load(url)
-                .into((ImageView) activity.findViewById(R.id.show_photo));
-        Log.d("123", "showImage: ");
+        if (url != null) {
+            url = url.substring(0, 4) + url.substring(5);
+            Glide.with(activity).load(url)
+                    .into((ImageView) activity.findViewById(R.id.show_photo));
+        }
         super.showImage();
     }
 

@@ -40,7 +40,7 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
     private EditText accountEditText;
     private EditText passwordEditText;
     private boolean success;
-    private RetrofitManager retrofitManager;
+    private final RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
     private boolean loginSuccess;
 
     @Override
@@ -100,15 +100,22 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 LoginResponse loginResponse = response.body();
-                assert loginResponse != null;
-                loginSuccess = loginResponse.getSuccess();
-                getSharedPreferences("data", MODE_PRIVATE)
-                        .edit().putString("userId", loginResponse.getData().getId())
-                        .putString("userToken", loginResponse.getData().getUserToken())
-                        .putString("mobile", loginResponse.getData().getMobile())
-                        .apply();
 
-                ARouter.getInstance().build("/app/MainActivity").navigation();
+                if (loginResponse != null) {
+                    loginSuccess = loginResponse.getSuccess();
+                    if (loginSuccess) {
+                        getSharedPreferences("data", MODE_PRIVATE)
+                                .edit().putString("userId", loginResponse.getData().getId())
+                                .putString("userToken", loginResponse.getData().getUserToken())
+                                .putString("mobile", loginResponse.getData().getMobile())
+                                .apply();
+                        ARouter.getInstance().build("/app/MainActivity").navigation();
+                        finish();
+                    } else {
+                        ToastUtil.getToast(Cus_LoginActivity.this, loginResponse.getMsg());
+                    }
+
+                }
 
             }
 
@@ -131,7 +138,6 @@ public class Cus_LoginActivity extends AppCompatActivity implements View.OnClick
             String mobile = accountEditText.getText().toString();
             if (accountMatch(mobile)) {
                 TimeCountUtil timeCountUtil = new TimeCountUtil(60000L, 1000L, Cus_LoginActivity.this, get_code_button);
-                retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
                 IdentifyingCodeService identifyingCodeService = retrofitManager.getRetrofit().create(IdentifyingCodeService.class);
 
                 identifyingCodeService.getIdentifyingCode(mobile).enqueue(new Callback<IdentifyingCodeResponse>() {
