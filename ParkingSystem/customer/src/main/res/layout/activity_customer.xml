@@ -12,6 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/complete_toolbar"
+        android:background="@color/white"
         >
 
         <TextView
@@ -33,7 +34,6 @@
         android:layout_margin="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_address_text1"
-        android:textColor="@color/black"
         android:text="@string/address_text"
         />
 
@@ -56,7 +56,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_type_text1"
-        android:textColor="@color/black"
         android:text="@string/type"
         />
 
@@ -79,7 +78,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_car_text1"
-        android:textColor="@color/black"
         android:text="@string/car"
         />
 
@@ -102,7 +100,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_startTime_text1"
-        android:textColor="@color/black"
         android:text="@string/startTime"
         />
 
@@ -125,7 +122,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_endTime_text1"
-        android:textColor="@color/black"
         android:text="@string/endTime"
         />
 
@@ -148,7 +144,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_eleNum_text1"
-        android:textColor="@color/black"
         android:text="@string/eleNum"
         />
 
@@ -171,7 +166,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_orderPrice_text1"
-        android:textColor="@color/black"
         android:text="@string/orderPrice"
         />
 
@@ -194,7 +188,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_subPrice_text1"
-        android:textColor="@color/black"
         android:text="@string/subPrice"
         />
 
@@ -217,7 +210,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_finePrice_text1"
-        android:textColor="@color/black"
         android:text="@string/finePrice"
         />
 
@@ -240,7 +232,6 @@
         android:layout_marginTop="24dp"
         android:textSize="16sp"
         android:id="@+id/complete_payPrice_text1"
-        android:textColor="@color/black"
         android:text="@string/payPrice"
         />
 

@@ -92,4 +92,19 @@ public class PayData {
         return iscancel;
     }
 
+    @Override
+    public String toString() {
+        return "PayData{" +
+                "id='" + id + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userWalletId='" + userWalletId + '\'' +
+                ", proId='" + proId + '\'' +
+                ", proWalletId='" + proWalletId + '\'' +
+                ", payPrice=" + payPrice +
+                ", payType=" + payType +
+                ", payTime=" + payTime +
+                ", iscancel=" + iscancel +
+                '}';
+    }
 }
