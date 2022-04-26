@@ -5,7 +5,7 @@ if (InformationIsDebug.toBoolean()) {
 }
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         if (InformationIsDebug.toBoolean()) {
@@ -47,7 +47,9 @@ android {
     }
 }
 
-dependencies {
+dependencies{
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     // 支付功能
     api 'com.alipay.sdk:alipaysdk-android:+@aar'
     api rootProject.ext.androidxLibs

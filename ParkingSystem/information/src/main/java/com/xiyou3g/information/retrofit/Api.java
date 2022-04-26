@@ -65,7 +65,7 @@ public interface Api {
 
     /*----------------------------*/
     @FormUrlEncoded
-    @POST("wallet/getWallet")
+    @POST("wallet/queryWallet")
     Call<getWalletBean> getWalletInf(@Field("userId") String userId);
 
     @FormUrlEncoded

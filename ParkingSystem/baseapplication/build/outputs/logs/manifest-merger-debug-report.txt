@@ -1,45 +1,73 @@
 -- Merging decision tree log ---
 manifest
+<<<<<<< HEAD
+ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:1-23:12
+=======
 ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:1-19:12
 INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:1-19:12
 INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:1-19:12
+>>>>>>> 8151b49b7f9800001efbdd5962825292773f0864
 	package
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:3:5-42
-		INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-		INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:3:5-42
+		INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:11-69
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:2:11-69
 application
+<<<<<<< HEAD
+ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:5:5-21:19
+=======
 ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:5:5-17:19
+>>>>>>> 8151b49b7f9800001efbdd5962825292773f0864
 	android:supportsRtl
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:10:9-35
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:10:9-35
 	android:label
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:8:9-41
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:8:9-41
 	android:roundIcon
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:9:9-54
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:9:9-54
 	android:icon
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:7:9-43
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:7:9-43
 	android:allowBackup
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:6:9-35
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:6:9-35
 	android:theme
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:11:9-51
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:11:9-51
 activity#com.xiyou3g.baseapplication.BaseActivity
+<<<<<<< HEAD
+ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:12:9-20:20
+=======
 ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:12:9-16:20
+>>>>>>> 8151b49b7f9800001efbdd5962825292773f0864
 	android:exported
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:14:13-36
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:14:13-36
 	android:name
+<<<<<<< HEAD
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:13:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:15:13-19:29
+action#android.intent.action.MAIN
+ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:16:17-69
+	android:name
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:16:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:18:17-77
+	android:name
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:18:27-74
+=======
 		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:13:13-41
+>>>>>>> 8151b49b7f9800001efbdd5962825292773f0864
 uses-sdk
-INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-		INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-		ADDED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
-		INJECTED from D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		ADDED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
+		INJECTED from D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml

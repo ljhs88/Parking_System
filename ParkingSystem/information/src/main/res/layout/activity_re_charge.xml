@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".reChargeActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <TextView
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -14,6 +14,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/white"
+        android:text="充值"
+        android:textColor="@color/black"
+        android:textSize="23dp"
+        android:gravity="center_horizontal|center"
         />
 
     <Button

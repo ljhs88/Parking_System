@@ -20,7 +20,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.alipay.sdk.app.PayTask;
 import com.xiyou3g.information.Utility.ActivityCollector;
 import com.xiyou3g.information.Utility.PayResult;
 import com.xiyou3g.information.Utility.SignUtils;
@@ -92,7 +91,7 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         walletId = intent.getStringExtra("walletId");
 
-        setToolbar();
+        //setToolbar();
 
         setViewId();
 
@@ -144,7 +143,7 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
             if (money.equals("")) {
                 Toast.makeText(this, "请输入充值金额!", Toast.LENGTH_SHORT).show();
             } else {
-                reChargeZFB(money);
+                reCharge();
             }
         }
     }
@@ -232,11 +231,11 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
-                PayTask alipay = new PayTask(reChargeActivity.this);
-                Map <String,String> result = alipay.payV2(payInfo,true);
+                //PayTask alipay = new PayTask(reChargeActivity.this);
+                //Map <String,String> result = alipay.payV2(payInfo,true);
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
-                msg.obj = result;
+                //msg.obj = result;
                 mHandler.sendMessage(msg);
             }
         };
