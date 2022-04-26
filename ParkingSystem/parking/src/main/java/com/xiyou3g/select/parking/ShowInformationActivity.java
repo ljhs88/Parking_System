@@ -248,9 +248,10 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
         }
         Log.d("TAG123", posId+","+userId);
         api.postCreate(posId, userId).enqueue(new Callback<orderbean>() {
+            orderbean bean;
             @Override
             public void onResponse(Call<orderbean> call, Response<orderbean> response) {
-                orderbean bean = response.body();
+                bean = response.body();
                 Log.d("123", response.toString());
                 Log.d("TAG123", "onResponse: " + bean);
                 if (bean != null && bean.isSuccess()) {
@@ -259,13 +260,13 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
                      * 导航按钮逻辑
                      */
                 } else {
-                    ToastUtil.getToast(ShowInformationActivity.this, "导航失败!请重新尝试!");
+                    ToastUtil.getToast(ShowInformationActivity.this, bean.getMsg());
                 }
             }
 
             @Override
             public void onFailure(Call<orderbean> call, Throwable t) {
-                ToastUtil.getToast(ShowInformationActivity.this, "导航失败!请重新尝试!");
+                ToastUtil.getToast(ShowInformationActivity.this, bean.getMsg());
             }
         });
     }
