@@ -70,7 +70,7 @@ public class RentFragment extends Fragment {
                     rentItems.add(new RentItem(data.getPayPrice(),
                             data.getStartTime(),
                             data.getEndTime(),
-                            data.getIscancel(),
+                            data.getIspay(),
                             data.getId()));
                 }
                 if (recyclerAdapter == null) {

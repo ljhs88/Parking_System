@@ -12,4 +12,5 @@
     <string name="finePrice">罚时价格:</string>
     <string name="payPrice">应付价格:</string>
     <string name="complete_order">完成订单</string>
+    <string name="pay">支付</string>
 </resources>
