@@ -5,7 +5,7 @@ if (ParkingIsDebug.toBoolean()) {
 }
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         if (ParkingIsDebug.toBoolean()) {

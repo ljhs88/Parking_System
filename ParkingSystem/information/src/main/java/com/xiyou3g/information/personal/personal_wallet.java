@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.xiyou3g.information.R;
 import com.xiyou3g.information.Utility.ToastUtil;
 import com.xiyou3g.information.Utility.toolBar;
@@ -34,7 +36,7 @@ import com.xiyou3g.information.bean.*;
 
 public class personal_wallet extends Fragment implements View.OnClickListener {
 
-
+    private SwipeRefreshLayout refreshLayout;
     private View view;
     private TextView money;
     private Button back;
@@ -45,6 +47,7 @@ public class personal_wallet extends Fragment implements View.OnClickListener {
     private String mobile;
 
 
+    @SuppressLint("ResourceAsColor")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,16 +60,42 @@ public class personal_wallet extends Fragment implements View.OnClickListener {
 
         //userId = "946762136657330176";
 
-        setToolbar();
+        //setToolbar();
 
         setViewId();
 
         getWalletInformation();
 
+        refreshLayout = view.findViewById(R.id.refresh);
+        refreshLayout.setColorSchemeColors(R.color.black);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                getWalletInformation();
+                                refreshLayout.setRefreshing(false);
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+
         return view;
     }
 
     private void getWalletInformation() {
+
         Retrofit retrofit = mRetrofit.getInstance();
         mRetrofit.api.getWalletInf(userId).enqueue(new Callback<getWalletBean>() {
             @Override

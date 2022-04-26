@@ -4,7 +4,7 @@ if (RegisterIsDebug.toBoolean()) {
     apply plugin: 'com.android.library'		 //不能单独运行，相当于一个依赖库，
 }
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         if (RegisterIsDebug.toBoolean()) {
