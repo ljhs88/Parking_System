@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private final RetrofitManager retrofitManager = RetrofitManager.createRetrofitManager("http://101.201.78.192:8888/");
 
-    private boolean isLogin = true;
+    private boolean isLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

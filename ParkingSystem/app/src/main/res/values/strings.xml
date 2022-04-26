@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ParkingSystem</string>
+    <string name="app_name">SharedParking—无忧充停</string>
     <string name="shared_parking">主页</string>
     <string name="my">我的</string>
     <string name="shared_stall">共享停车位</string>
