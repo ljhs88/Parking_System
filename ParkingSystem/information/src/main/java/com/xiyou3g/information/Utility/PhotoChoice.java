@@ -1,6 +1,7 @@
 package com.xiyou3g.information.Utility;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class PhotoChoice {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // 判断存储卡是否可以用，可用进行存储
         if (hasSdcard()) {
+            @SuppressLint("SimpleDateFormat")
             SimpleDateFormat timeStampFormat = new SimpleDateFormat(
                     "yyyy_MM_dd_HH_mm_ss");
             String filename = timeStampFormat.format(new Date());

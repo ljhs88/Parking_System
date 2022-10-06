@@ -256,9 +256,6 @@ public class ShowInformationActivity extends AppCompatActivity implements View.O
                 Log.d("TAG123", "onResponse: " + bean);
                 if (bean != null && bean.isSuccess()) {
                     Log.d("123", bean.toString());
-                    /**
-                     * 导航按钮逻辑
-                     */
                 } else {
                     ToastUtil.getToast(ShowInformationActivity.this, bean.getMsg());
                 }

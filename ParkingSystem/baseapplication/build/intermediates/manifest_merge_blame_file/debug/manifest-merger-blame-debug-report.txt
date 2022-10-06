@@ -9,11 +9,7 @@
 7-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml
 8
 9    <application
-<<<<<<< HEAD
-9-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:5:5-21:19
-=======
-9-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:5:5-17:19
->>>>>>> 8151b49b7f9800001efbdd5962825292773f0864
+9-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:5:5-17:19
 10        android:allowBackup="true"
 10-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:6:9-35
 11        android:icon="@mipmap/ic_launcher"
@@ -27,34 +23,12 @@
 15        android:theme="@style/Theme.ParkingSystem" >
 15-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:11:9-51
 16        <activity
-<<<<<<< HEAD
-16-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:12:9-20:20
-=======
-16-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:12:9-16:20
->>>>>>> 8151b49b7f9800001efbdd5962825292773f0864
+16-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:12:9-16:20
 17            android:name="com.xiyou3g.baseapplication.BaseActivity"
 17-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:13:13-41
 18            android:exported="true" >
-<<<<<<< HEAD
 18-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:14:13-36
-19            <intent-filter>
-19-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:15:13-19:29
-20                <action android:name="android.intent.action.MAIN" />
-20-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:16:17-69
-20-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:16:25-66
-21
-22                <category android:name="android.intent.category.LAUNCHER" />
-22-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:18:17-77
-22-->D:\AndroidProject备份\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:18:27-74
-23            </intent-filter>
-24        </activity>
-25    </application>
-26
-27</manifest>
-=======
-18-->D:\ParkingSystem\Parking_System\ParkingSystem\baseapplication\src\main\AndroidManifest.xml:14:13-36
 19        </activity>
 20    </application>
 21
 22</manifest>
->>>>>>> 8151b49b7f9800001efbdd5962825292773f0864

@@ -31,6 +31,8 @@ public class StringAndBitmap {
             return null;
         }
     }
+
+
     public static String bitmapToString(Bitmap bitmap){
         //用户在活动中上传的图片转换成String进行存储
         if(bitmap!=null){
