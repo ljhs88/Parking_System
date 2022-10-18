@@ -199,7 +199,7 @@ public class CustomerActivity extends AppCompatActivity {
                                                     public void onResponse(@NonNull Call<PayResultResponse> call, @NonNull Response<PayResultResponse> response) {
                                                         PayResultResponse payResultResponse = response.body();
                                                         Log.d("TAG", "onResponse: pay" + orderId);
-                                                        if (payResultResponse != null) {
+                                                        if (payResultResponse != null && payResultResponse.getSuccess()) {
                                                             finish();
                                                         }
                                                     }
