@@ -50,25 +50,14 @@ android {
 dependencies{
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    // 支付功能
-    api 'com.alipay.sdk:alipaysdk-android:+@aar'
-    api rootProject.ext.androidxLibs
-    api rootProject.ext.commonLibs
-    api rootProject.ext.annotationLibs
-    implementation 'org.litepal.guolindev:core:3.2.3'
-    api rootProject.ext.androidxLibs
-    api rootProject.ext.commonLibs
-    api rootProject.ext.annotationLibs
-    api rootProject.ext.retrofitLibs
-    implementation 'com.google.android.gms:play-services-basement:17.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.gms:play-services-basement:18.1.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     annotationProcessor rootProject.ext.annotationLibs
     api project(":baseapplication")
-
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 }
