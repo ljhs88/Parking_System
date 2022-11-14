@@ -157,8 +157,7 @@ public class cardPhotoFragment extends Fragment implements View.OnClickListener 
         if (personBitmap != null && flowerBitmap != null) {
             isPhotoUpload = true;
             File file1 = StringAndBitmap.getFile(personBitmap);
-            mRetrofit.setCardPhoto(getActivity(), file1.getAbsolutePath(),
-                    userid, 1);
+            mRetrofit.setCardPhoto(getActivity(), file1.getAbsolutePath(), userid, 1);
             Intent intent = new Intent();
             intent.putExtra("type", "cardPhoto");
             getActivity().setResult(2, intent);

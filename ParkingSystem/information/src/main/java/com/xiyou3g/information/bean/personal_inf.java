@@ -2,9 +2,7 @@ package com.xiyou3g.information.bean;
 
 import android.graphics.Bitmap;
 
-import org.litepal.crud.LitePalSupport;
-
-public class personal_inf extends LitePalSupport {
+public class personal_inf  {
 
     private int id;
     private String name;

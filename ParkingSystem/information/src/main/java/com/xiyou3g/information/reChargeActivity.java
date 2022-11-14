@@ -85,13 +85,13 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
         // 添加activity
         ActivityCollector.addActivity(this);
 
-        /**
+        /*
          * 获取walletId
          */
         Intent intent = getIntent();
         walletId = intent.getStringExtra("walletId");
 
-        //setToolbar();
+        setToolbar();
 
         setViewId();
 
@@ -162,9 +162,7 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
                      * docType=1) 建议商户依赖异步通知
                      */
                     String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-                    Log.d("123", "resultInfo="+resultInfo);
                     String resultStatus = payResult.getResultStatus();
-                    Log.d("123", "resultStatus="+resultStatus);
                     // 判断resultStatus 为“9000”则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 上传充值信息
@@ -204,10 +202,8 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
                 orderInfo1+
                 "&notify_url=https://api.xx.com/receive_notify.htm"+
                 orderInfo2;
-        Log.d("123", orderInfo);
         // 对订单信息进行签名
         String sign = sign(orderInfo);
-        Log.d("123", sign);
         String encodeBiz = null;
         String encodeUrl = null;
         String encodeSign = null;
@@ -226,16 +222,14 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
                 "&notify_url="+ encodeUrl +
                 orderInfo2 +
                 "&sign=" + encodeSign;
-        Log.d("123", payInfo);
 
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {
-                //PayTask alipay = new PayTask(reChargeActivity.this);
-                //Map <String,String> result = alipay.payV2(payInfo,true);
+                PayTask alipay = new PayTask(reChargeActivity.this);
+                Map <String,String> result = alipay.payV2(payInfo,true);
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
-                //msg.obj = result;
                 mHandler.sendMessage(msg);
             }
         };
@@ -311,7 +305,7 @@ public class reChargeActivity extends AppCompatActivity implements View.OnClickL
         orderInfo2 = orderInfo2 + "&version=1.0";
 
         // 支付宝服务器主动通知商户服务器里指定的页面 http/https 路径，建议商户使用 https。
-        //orderInfo = orderInfo + "&notify_url=https://api.xx.com/receive_notify.htm";
+        //orderInfo = orderInfo + "&notify_url=https://api.xx.com/receive_notify.html";
 
     }
 

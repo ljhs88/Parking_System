@@ -26,8 +26,7 @@ public class StringAndBitmap {
             byte[] bytes= Base64.decode(string,Base64.URL_SAFE);
             bitmap= BitmapFactory.decodeByteArray(bytes,0,bytes.length);
             return bitmap;
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -41,8 +40,7 @@ public class StringAndBitmap {
             byte[] bytes = stream.toByteArray();// 转为byte数组
             string=Base64.encodeToString(bytes,Base64.DEFAULT);
             return string;
-        }
-        else{
+        } else {
             return "";
         }
     }

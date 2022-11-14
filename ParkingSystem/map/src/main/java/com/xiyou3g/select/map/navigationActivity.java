@@ -73,6 +73,7 @@ public class navigationActivity extends AppCompatActivity implements AMapNaviLis
         aMapNaviViewOptions.setRouteListButtonShow(true);
 
         mAMapNaviView.setAMapNaviViewListener(this);
+
         try {
             mAMapNavi = AMapNavi.getInstance(this);
             mAMapNavi.setUseInnerVoice(true);//使用内置语音播报
@@ -114,22 +115,20 @@ public class navigationActivity extends AppCompatActivity implements AMapNaviLis
     @Override
     public void onInitNaviSuccess() {
         // 起点信息
-        List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
+        List<NaviLatLng> startList = new ArrayList();
         startList.add(new NaviLatLng(mLatitude,mLongitude));
         // 终点信息
-        List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
+        List<NaviLatLng> endList = new ArrayList();
         endList.add(new NaviLatLng(latitude, longitude));
         strategy = mAMapNavi.strategyConvert(true, false, false, false, false);
         // 经纬度算路
         mAMapNavi.calculateDriveRoute(startList, endList, null, PathPlanningStrategy.DRIVING_MULTIPLE_ROUTES_DEFAULT);
-        Log.d("123", "算路成功");
     }
 
     @Override
     public void onCalculateRouteSuccess(int[] ints) {
         mAMapNavi.startNavi(NaviType.GPS);// 实时导航
         //mAMapNavi.startNavi(NaviType.EMULATOR);// 模拟导航
-        Log.d("123", "开始导航");
     }
 
     @Override

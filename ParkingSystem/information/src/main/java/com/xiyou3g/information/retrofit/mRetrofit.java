@@ -50,11 +50,6 @@ public class mRetrofit {
         File file = new File(strPath);
         MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("file", file.getName(),
                 RequestBody.create(MediaType.parse("multipart/form-data"), file));
-        //Log.d("123","file:" + imageBodyPart.toString());
-        /*MultipartBody.Part idBodyPart = MultipartBody.Part.createFormData("userId", userid,
-                RequestBody.create(MediaType.parse("multipart/form-data"), userid));
-        MultipartBody.Part typeBodyPart = MultipartBody.Part.createFormData("type", type,
-                RequestBody.create(MediaType.parse("multipart/form-data"), type));*/
         Map<String, RequestBody> map = new HashMap<>();
         map.put("userId", RequestBody.create(MediaType.parse("multipart/form-data"), userid));
         map.put("type", RequestBody.create(MediaType.parse("multipart/form-data"), type));

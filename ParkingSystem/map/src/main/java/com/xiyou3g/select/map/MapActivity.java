@@ -66,22 +66,19 @@ public class MapActivity extends AppCompatActivity {
         // 设置碎片
         //replaceFragment(new mapFragment());
         ARouter.getInstance().inject(this);
-        Log.d("123", "经纬度"+String.valueOf(latitude + longitude));
         // 直接导航
         GoToNavigation();
     }
 
     private void GoToNavigation() {
         // 开始导航
-        //起点 定位点
-        Log.d("123", "起点：" + mLatitude + "," + mLongitude);
-        Log.d("123", "终点：" + latitude + "," + longitude);
-        Poi start = new Poi("我的位置", new LatLng(mLatitude,mLongitude), null);
-        //途经点
+        // 起点 定位点
+        Poi start = new Poi("我的位置", new LatLng(mLatitude, mLongitude), null);
+        // 途经点
         List<Poi> poiList = new ArrayList();
         //poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
-        //终点
-        Poi end = new Poi(destination, new LatLng(latitude,longitude), null);
+        // 终点
+        Poi end = new Poi(destination, new LatLng(latitude, longitude), null);
         // 组件参数配置
         AmapNaviParams params = new AmapNaviParams(start, poiList, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
         // 启动组件

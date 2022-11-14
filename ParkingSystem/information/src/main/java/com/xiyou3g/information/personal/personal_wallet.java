@@ -95,8 +95,6 @@ public class personal_wallet extends Fragment implements View.OnClickListener {
     }
 
     private void getWalletInformation() {
-
-        Retrofit retrofit = mRetrofit.getInstance();
         mRetrofit.api.getWalletInf(userId).enqueue(new Callback<getWalletBean>() {
             @Override
             public void onResponse(Call<getWalletBean> call, Response<getWalletBean> response) {
