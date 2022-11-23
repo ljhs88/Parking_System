@@ -7,17 +7,11 @@ import android.widget.ListView;
 
 
 public class MyListView extends ListView {
-    private boolean mHandleOver;
     private int mLastY = 0;
     private int mDy = 0;
 
-    private final static int TOP = 0;
-
-    private final static int MOVE = 1;
-
-    private final static int BOTTOM = 2;
-
-    private static int CURRENT = TOP;
+    private boolean mIsScrolledToTop = true;
+    private boolean mIsScrolledToBottom = false;
 
     private MyScrollView mScrollView;
 
@@ -33,7 +27,6 @@ public class MyListView extends ListView {
         super(context, attrs, defStyleAttr);
     }
 
-
     public void setScrollview(MyScrollView my_scrollview) {
         this.mScrollView = my_scrollview;
     }
@@ -44,22 +37,17 @@ public class MyListView extends ListView {
         int y = (int) ev.getY();
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:{
-                mHandleOver = false;
+                mScrollView.requestDisallowInterceptTouchEvent(true);
                 break;
             }
             case MotionEvent.ACTION_MOVE:{
                 mDy = y - mLastY;
-                if (mDy > 0 && CURRENT == TOP){
+                if ((mDy > 0 && mIsScrolledToBottom == true) || mIsScrolledToTop == true){
                     this.mScrollView.requestDisallowInterceptTouchEvent(false);
                 }
                 break;
             }
             case MotionEvent.ACTION_UP:{
-                //证明手指滑动放在了ListView上面，没有放在
-                //ScrollView上面，mHandleOver在ScrollView
-                //中进行了处理，用于判断当前滑动是在ScrollView
-                //还是ListView
-                mHandleOver = true;
                 break;
             }
         }
@@ -67,7 +55,21 @@ public class MyListView extends ListView {
         return super.dispatchTouchEvent(ev);
     }
 
-    public boolean getHandleOver(){
-        return mHandleOver;
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (android.os.Build.VERSION.SDK_INT < 9) {
+            if (getScrollY() == 0) {
+                mIsScrolledToTop = true;
+                mIsScrolledToBottom = false;
+            } else if (getScrollY() + getHeight() - getPaddingTop() - getPaddingBottom() ==
+                    getChildAt(0).getHeight()) {
+                mIsScrolledToBottom = true;
+                mIsScrolledToTop = false;
+            } else {
+                mIsScrolledToTop = false;
+                mIsScrolledToBottom = false;
+            }
+        }
     }
 }
